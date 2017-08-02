@@ -1,0 +1,26 @@
+<resources>
+
+    <!--Tela login-->
+    <string name="app_name">Business Game</string>
+    <string name="bemVindo">Bem vindo ao</string>
+    <string name="ra">RA</string>
+    <string name="senha">Senha</string>
+    <string name="entrar">Entrar</string>
+    <string name="esqueciSenha"><u>Esqueci a senha</u></string>
+
+    <!--Tela principal-->
+    <string name="novaPartida">Nova Partida</string>
+    <string name="tabuleiro">Tabuleiro</string>
+    <string name="perguntas">Perguntas</string>
+    <string name="equipes">Equipes</string>
+    <string name="configuracoes">Configurações</string>
+    <string name="encerrar">Encerrar</string>
+
+    <!--Tela Configurações-->
+    <string name="configPartida">Configurações da partida</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+</resources>

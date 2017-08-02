@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.kaua.businessgame.tela_configuracoes">
+
+    <include
+        layout="@layout/mytoolbar"
+        android:id="@+id/tb_configuracao"/>
+
+    <TextView
+        android:id="@+id/tvConfigPartida"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="90dp"
+        android:text="@string/configPartida"
+        android:textSize="26sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/tvQtdGrupos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/configPartida"
+        android:textSize="26sp"
+        android:layout_below="@+id/tvConfigPartida"
+        android:layout_alignStart="@+id/tvConfigPartida"
+        android:layout_marginTop="60dp" />
+
+    <Spinner
+        android:id="@+id/spnGrupos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+</RelativeLayout>
