@@ -5,10 +5,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class tela_login extends AppCompatActivity {
 
     private Button btnEntrar;
+    private EditText edtRA;
+    private EditText edtSenha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +24,8 @@ public class tela_login extends AppCompatActivity {
 
     public void setView(){
         btnEntrar = (Button) findViewById(R.id.btnEntrar);
+        edtRA = (EditText) findViewById(R.id.edtRA);
+        edtSenha = (EditText) findViewById(R.id.edtSenha);
     }
 
     public void setClick(){

@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".tela_principal" />
-        <activity android:name=".tela_configuracoes"></activity>
+        <activity android:name=".tela_configuracoes" />
+        <activity android:name=".tela_tabuleiro"></activity>
     </application>
 
 </manifest>

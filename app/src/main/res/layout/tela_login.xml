@@ -40,7 +40,10 @@
         <EditText
             android:id="@+id/edtRA"
             android:layout_width="match_parent"
+            android:maxLength="6"
+            android:inputType="number"
             android:layout_height="wrap_content"
+            android:maxLines="1"
             android:hint="@string/ra"/>
     </android.support.design.widget.TextInputLayout>
 
@@ -57,6 +60,9 @@
             android:id="@+id/edtSenha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxLength="6"
+            android:inputType="numberPassword"
+            android:maxLines="1"
             android:hint="@string/senha"/>
     </android.support.design.widget.TextInputLayout>
 
