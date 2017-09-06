@@ -83,6 +83,7 @@ public class tela_principal extends AppCompatActivity
 //        if (id == R.id.nav_novapartda) {
 
 
+
 //        } else if (id == R.id.nav_tabuleiro) {
 //
 //        } else if (id == R.id.nav_perguntas) {
