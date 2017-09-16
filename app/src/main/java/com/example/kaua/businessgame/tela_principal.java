@@ -3,6 +3,7 @@ package com.example.kaua.businessgame;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class tela_principal extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -80,21 +82,21 @@ public class tela_principal extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-//        if (id == R.id.nav_novapartda) {
-
-
-
-//        } else if (id == R.id.nav_tabuleiro) {
-//
-//        } else if (id == R.id.nav_perguntas) {
-//
-//        } else if (id == R.id.nav_equipes) {
-//
-//        } else if (id == R.id.nav_configuracoes) {
-//
-//        } else if (id == R.id.nav_encerrar) {
-//
-//        }
+        switch (id){
+            case R.id.nav_novapartda:
+                Toast.makeText(this, "Nova partida", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_tabuleiro:
+                break;
+            case R.id.nav_perguntas:
+                break;
+            case R.id.nav_equipes:
+                break;
+            case R.id.nav_configuracoes:
+                break;
+            case R.id.nav_encerrar:
+                break;
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

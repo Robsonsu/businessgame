@@ -48,8 +48,8 @@ public class tela_login extends AppCompatActivity {
         btnEntrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                startActivity(new Intent(tela_login.this, tela_principal.class));
-                retrofitConverter();
+                startActivity(new Intent(tela_login.this, tela_principal.class));
+//                retrofitConverter();
             }
         });
     }
