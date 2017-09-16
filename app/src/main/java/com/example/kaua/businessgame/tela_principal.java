@@ -23,6 +23,7 @@ public class tela_principal extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tela_principal);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

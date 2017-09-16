@@ -21,6 +21,8 @@ import retrofit2.Response;
 
 public class tela_login extends AppCompatActivity {
 
+
+    private Button btnCadastro;
     private Button btnEntrar;
     private EditText edtRA;
     private EditText edtSenha;
@@ -42,6 +44,7 @@ public class tela_login extends AppCompatActivity {
         edtRA = (EditText) findViewById(R.id.edtRA);
         edtSenha = (EditText) findViewById(R.id.edtSenha);
         tvEsqueciSenha = (TextView) findViewById(R.id.tvEsqueciSenha);
+        btnCadastro = (Button) findViewById(R.id.btnCadastro);
     }
 
     public void setClick(){
@@ -50,6 +53,13 @@ public class tela_login extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(tela_login.this, tela_principal.class));
 //                retrofitConverter();
+            }
+        });
+
+        btnCadastro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(tela_login.this, tela_cadastro.class));
             }
         });
     }

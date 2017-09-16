@@ -90,13 +90,14 @@
         android:textStyle="bold"/>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnCadastro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cadastrar"
         android:layout_above="@+id/tvEsqueciSenha"
         android:layout_alignEnd="@+id/tilSenha"
         android:layout_weight="0.80"
+        android:onClick="TelaCadastrar"
         android:layout_toEndOf="@+id/textView2" />
 
     <TextView
