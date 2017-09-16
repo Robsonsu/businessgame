@@ -11,7 +11,7 @@
         android:id="@+id/tvBemvindo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="88dp"
         android:text="@string/bemVindo"
         android:textSize="26sp"
         android:layout_alignParentTop="true"
@@ -66,15 +66,17 @@
             android:hint="@string/senha"/>
     </android.support.design.widget.TextInputLayout>
 
+
     <Button
         android:id="@+id/btnEntrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tilSenha"
-        android:layout_marginTop="23dp"
+        android:layout_marginTop="20dp"
         android:text="@string/entrar"
-        android:layout_alignEnd="@+id/tilSenha"
-        android:layout_alignStart="@+id/tilSenha" />
+        android:layout_weight="0.96"
+        android:layout_alignStart="@+id/tilSenha"
+        android:layout_toStartOf="@+id/textView2" />
 
     <TextView
         android:id="@+id/tvEsqueciSenha"
@@ -86,5 +88,25 @@
         android:text="@string/esqueciSenha"
         android:textSize="16sp"
         android:textStyle="bold"/>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cadastrar"
+        android:layout_above="@+id/tvEsqueciSenha"
+        android:layout_alignEnd="@+id/tilSenha"
+        android:layout_weight="0.80"
+        android:layout_toEndOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvAppname"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:text="" />
+
 
 </RelativeLayout >
