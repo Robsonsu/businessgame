@@ -1,5 +1,6 @@
 package com.example.kaua.businessgame;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -85,15 +86,17 @@ public class tela_principal extends AppCompatActivity
 
         switch (id){
             case R.id.nav_novapartda:
-                Toast.makeText(this, "Nova partida", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(tela_principal.this, tela_novaPartida.class));
                 break;
             case R.id.nav_tabuleiro:
+                startActivity(new Intent(tela_principal.this, tela_tabuleiro.class));
                 break;
             case R.id.nav_perguntas:
                 break;
             case R.id.nav_equipes:
                 break;
             case R.id.nav_configuracoes:
+                startActivity(new Intent(tela_principal.this, tela_configuracoes.class));
                 break;
             case R.id.nav_encerrar:
                 break;
