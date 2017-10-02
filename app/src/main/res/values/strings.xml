@@ -1,12 +1,16 @@
 <resources>
 
+    <!--Uso geral-->
+    <string name="senha">Senha</string>
+    <string name="cancelar">Cancelar</string>
+
     <!--Tela login-->
     <string name="app_name">Business Game</string>
     <string name="bemVindo">Bem vindo ao</string>
-    <string name="ra">RA</string>
-    <string name="senha">Senha</string>
+    <string name="login">Login</string>
     <string name="entrar">Entrar</string>
     <string name="esqueciSenha"><u>Esqueci a senha</u></string>
+    <string name="cadastrar">Você é novo por aqui? Cadastre-se!</string>
 
     <!--Tela principal-->
     <string name="novaPartida">Nova Partida</string>
@@ -16,11 +20,37 @@
     <string name="configuracoes">Configurações</string>
     <string name="encerrar">Encerrar</string>
 
-    <!--Tela Configurações-->
+    <!--Tela cadastro-->
+    <string name="cadastro">Cadastro</string>
+    <string name="repetirSenha">Repetir a senha</string>
+    <string name="nome">Nome</string>
+    <string name="professor">Professor</string>
+    <string name="aluno">Aluno</string>
+    <string name="criarConta">Criar conta</string>
+
+    <!--Tela configurações-->
     <string name="configPartida">Configurações da partida</string>
+    <string name="qtdGrupos">Quantidade de Grupos</string>
+    <string name="numeroGrupo">Grupo %s</string>
+    <string name="iniciar">Iniciar</string>
+
+    <!--Tela Token-->
+    <string name="tokenAcesso">Token de Acesso</string>
+    <string name="aguardandoParticipantes">Aguardando participantes&#8230;</string>
+    <string name="usuarioConectados">%s usuários conectados&#8230;</string>
+    <string name="avancar">Avançar</string>
+
+    <!--Tela Iniciar Partida-->
+    <string name="iniciarPartida">Iniciar Partida</string>
+    <string name="insiraToken">Insira o Token para iniciar uma nova partida</string>
+    <string name="hintToken">Token&#8230;</string>
+    <string name="conectar">Conectar</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -1,12 +1,10 @@
 package com.example.kaua.businessgame;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,10 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 public class tela_principal extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        TelaToken.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +40,13 @@ public class tela_principal extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fl_principal, new TelaConfiguracoes()); // newInstance() is a static factory method.
+        transaction.addToBackStack(null);
+        transaction.commit();
+
+//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+//        navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -86,7 +89,7 @@ public class tela_principal extends AppCompatActivity
 
         switch (id){
             case R.id.nav_novapartda:
-                startActivity(new Intent(tela_principal.this, tela_novaPartida.class));
+//                startActivity(new Intent(tela_principal.this, tela_novaPartida.class));
                 break;
             case R.id.nav_tabuleiro:
                 startActivity(new Intent(tela_principal.this, tela_tabuleiro.class));
@@ -96,7 +99,6 @@ public class tela_principal extends AppCompatActivity
             case R.id.nav_equipes:
                 break;
             case R.id.nav_configuracoes:
-                startActivity(new Intent(tela_principal.this, tela_configuracoes.class));
                 break;
             case R.id.nav_encerrar:
                 break;
@@ -105,5 +107,10 @@ public class tela_principal extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

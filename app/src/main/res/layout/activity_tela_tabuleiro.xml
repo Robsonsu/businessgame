@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.kaua.businessgame.tela_tabuleiro"
-    >
+    tools:context="com.example.kaua.businessgame.tela_tabuleiro">
 
     <LinearLayout
         android:id="@+id/linBoardGame"
@@ -22,8 +21,6 @@
         <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content"/>
     </LinearLayout>
-
 </RelativeLayout>

@@ -1,0 +1,68 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.kaua.businessgame.TelaConfiguracoes">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:background="@drawable/bg_cards"
+        android:padding="30dp"
+        android:layout_margin="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/configPartida"
+            android:textSize="22sp"
+            android:textColor="@android:color/black"
+            android:gravity="center"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilQtdGrupo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edtQtdGrupo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="@string/qtdGrupos"
+                android:textColorHint="@color/color_default_blue"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvQtdGrupos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnCancelarConfig"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="@string/cancelar"
+                android:background="@drawable/selector_button_gray"
+                android:layout_margin="2dp"/>
+
+            <Button
+                android:id="@+id/btnIniciarConfig"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="@string/iniciar"
+                android:textColor="@android:color/white"
+                android:background="@drawable/selector_button_blue"
+                android:layout_margin="2dp"/>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

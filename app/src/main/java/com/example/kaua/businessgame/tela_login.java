@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +23,7 @@ import retrofit2.Response;
 public class tela_login extends AppCompatActivity {
 
 
-    private Button btnCadastro;
+    private TextView tvCadastro;
     private Button btnEntrar;
     private EditText edtRA;
     private EditText edtSenha;
@@ -46,7 +45,7 @@ public class tela_login extends AppCompatActivity {
         edtRA = (EditText) findViewById(R.id.edtRA);
         edtSenha = (EditText) findViewById(R.id.edtSenha);
         tvEsqueciSenha = (TextView) findViewById(R.id.tvEsqueciSenha);
-        btnCadastro = (Button) findViewById(R.id.btnCadastro);
+        tvCadastro = (TextView) findViewById(R.id.tvCadastro);
     }
 
     public void setClick(){
@@ -58,10 +57,9 @@ public class tela_login extends AppCompatActivity {
             }
         });
 
-        btnCadastro.setOnClickListener(new View.OnClickListener() {
+        tvCadastro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(tela_login.this, tela_cadastro.class));
             }
         });
     }

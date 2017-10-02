@@ -1,0 +1,77 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.kaua.businessgame.TelaNovaPartida">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:background="@drawable/bg_cards"
+        android:padding="30dp"
+        android:layout_margin="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/iniciarPartida"
+            android:textSize="22sp"
+            android:textColor="@android:color/black"
+            android:gravity="center"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="15dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/gamepad_variant"
+                android:layout_marginStart="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/insiraToken"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_marginTop="15dp">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/tilToken"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edtToken"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textVisiblePassword"
+                    android:hint="@string/hintToken" />
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/btnConectar"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="@string/conectar"
+                android:textColor="@android:color/white"
+                android:background="@drawable/selector_button_blue"
+                android:layout_margin="10dp"
+                android:drawableEnd="@drawable/signal_variant"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"/>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

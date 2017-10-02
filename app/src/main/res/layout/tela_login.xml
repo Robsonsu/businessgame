@@ -11,7 +11,7 @@
         android:id="@+id/tvBemvindo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="88dp"
+        android:layout_marginTop="26dp"
         android:text="@string/bemVindo"
         android:textSize="26sp"
         android:layout_alignParentTop="true"
@@ -21,7 +21,6 @@
         android:id="@+id/tvAppname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
         android:text="@string/app_name"
         android:textSize="30sp"
         android:layout_below="@+id/tvBemvindo"
@@ -33,18 +32,18 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="112dp"
+        android:layout_marginTop="38dp"
         android:layout_below="@+id/tvAppname"
-        android:layout_centerHorizontal="true">
+        android:layout_alignParentStart="true">
 
         <EditText
             android:id="@+id/edtRA"
             android:layout_width="match_parent"
-            android:maxLength="6"
-            android:inputType="number"
             android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:hint="@string/ra"/>
+            android:hint="@string/login"
+            android:inputType="number"
+            android:maxLength="6"
+            android:maxLines="1" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -71,43 +70,30 @@
         android:id="@+id/btnEntrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tilSenha"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:text="@string/entrar"
-        android:layout_weight="0.96"
+        android:layout_below="@+id/tilSenha"
         android:layout_alignStart="@+id/tilSenha"
-        android:layout_toStartOf="@+id/textView2" />
+        android:layout_alignEnd="@+id/tilSenha" />
 
     <TextView
         android:id="@+id/tvEsqueciSenha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnEntrar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="32dp"
         android:text="@string/esqueciSenha"
         android:textSize="16sp"
-        android:textStyle="bold"/>
-
-    <Button
-        android:id="@+id/btnCadastro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cadastrar"
-        android:layout_above="@+id/tvEsqueciSenha"
-        android:layout_alignEnd="@+id/tilSenha"
-        android:layout_weight="0.80"
-        android:onClick="TelaCadastrar"
-        android:layout_toEndOf="@+id/textView2" />
+        android:textStyle="bold"
+        android:layout_below="@+id/btnEntrar"
+        android:layout_centerHorizontal="true" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tvCadastro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvAppname"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
-        android:text="" />
-
+        android:text="@string/cadastrar"
+        android:layout_marginTop="28dp"
+        android:layout_below="@+id/tvEsqueciSenha"
+        android:layout_alignEnd="@+id/tvAppname" />
 
 </RelativeLayout >
