@@ -15,7 +15,8 @@ import android.view.MenuItem;
 
 public class tela_principal extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        TelaToken.OnFragmentInteractionListener{
+        TelaToken.OnFragmentInteractionListener,
+        TelaConfiguracoes.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

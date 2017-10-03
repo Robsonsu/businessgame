@@ -33,6 +33,7 @@
     <string name="qtdGrupos">Quantidade de Grupos</string>
     <string name="numeroGrupo">Grupo %s</string>
     <string name="iniciar">Iniciar</string>
+    <string name="erroQtdGrupos">No máximo 10 grupos</string>
 
     <!--Tela Token-->
     <string name="tokenAcesso">Token de Acesso</string>
