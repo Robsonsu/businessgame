@@ -52,7 +52,7 @@ public class tela_tabuleiro extends AppCompatActivity {
 
                 int dice1Throw = r.nextInt(6) + 1;
                 int dice2Throw = r.nextInt(6) + 1;
-
+                int diceSoma = dice1Throw + dice2Throw;
                 setImagedice1(dice1Throw);
                 setImagedice2(dice2Throw);
 
@@ -62,8 +62,8 @@ public class tela_tabuleiro extends AppCompatActivity {
                     dice2Point++;
                 }
 
-                tv_dice1.setText("DICE1: " + dice1Point);
-                tv_dice2.setText("DICE2: " + dice2Point);
+               // tv_dice1.setText("DICE1: " + dice1Point);
+                tv_dice2.setText("SOMA: " + diceSoma );
 
                 Animation rotate = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate);
                 iv_dice1.startAnimation(rotate);
