@@ -46,8 +46,8 @@ public class tela_principal extends AppCompatActivity
         transaction.addToBackStack(null);
         transaction.commit();
 
-//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-//        navigationView.setNavigationItemSelectedListener(this);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override

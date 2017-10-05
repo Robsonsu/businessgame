@@ -3,6 +3,7 @@ package com.example.kaua.businessgame;
 import android.content.Context;
 
 
+import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.annotation.SuppressLint;
@@ -10,84 +11,111 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.Random;
+
 public class tela_tabuleiro extends AppCompatActivity {
-
-    final static int maxN = 10;
-    private Context context;
-    private ImageView[][] ivCell = new ImageView[maxN][maxN];
-
-    private Drawable[] drawCell = new Drawable[4];//0 is empty, 1 is player, 2 is bot, 3 is background
-
-    private Button btnPlay;
-    private TextView tvTurn;
-    private int[][] valueCell = new int[maxN][maxN];///0 is empty,1 is player,2 is bot
-    private boolean firstMove;
-    private int xMove, yMove;//x and y axis of cell => define position of cell
-    private int turnPlay;// whose turn?
 
     public tela_tabuleiro(){
 
     }
 
+    ImageView iv_dice1, iv_dice2;
+    TextView tv_dice1, tv_dice2;
+
+    Random r;
+
+    int dice1Point = 0, dice2Point = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_tabuleiro);
-        context = this;
-        loadResources();
-        designBoardGame();
 
-    }
+        iv_dice1 = (ImageView) findViewById(R.id.dice1);
+        iv_dice2 = (ImageView) findViewById(R.id.dice2);
 
-    private void loadResources() {
-        drawCell[3] = context.getResources().getDrawable(R.drawable.cell_bg);//background
-        //copy 2 image for 2 drawable player and bot
-        //edit it :D
-        drawCell[0] = null;//empty cell
+        tv_dice1 = (TextView) findViewById(R.id.tv_dice1);
+        tv_dice2 = (TextView) findViewById(R.id.tv_dice2);
 
-    }
+        r = new Random();
 
-    @SuppressLint("NewApi")
-    private void designBoardGame() {
-        //create layoutparams to optimize size of cell
-        // we create a horizotal linearlayout for a row
-        // which contains maxN imageView in
-        //need to find out size of cell first
+        iv_dice2.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
 
-        int sizeofCell = Math.round(ScreenWidth() / maxN);
-        LinearLayout.LayoutParams lpRow = new LinearLayout.LayoutParams(sizeofCell * maxN, sizeofCell);
-        LinearLayout.LayoutParams lpCell = new LinearLayout.LayoutParams(sizeofCell, sizeofCell);
+                int dice1Throw = r.nextInt(6) + 1;
+                int dice2Throw = r.nextInt(6) + 1;
 
-        LinearLayout linBoardGame = (LinearLayout) findViewById(R.id.linBoardGame);
+                setImagedice1(dice1Throw);
+                setImagedice2(dice2Throw);
 
-        //create cells
-        for (int i = 0; i < maxN; i++) {
-            LinearLayout linRow = new LinearLayout(context);
-            //make a row
+                if(dice1Throw > dice2Throw){
+                    dice1Point++;
+                }else{
+                    dice2Point++;
+                }
 
-            for (int j = 0; j < maxN; j++) {
-                    ivCell[i][j] = new ImageView(context);
-                    //make a cell
-                    //need to set background default for cell
-                    //cell has 3 status, empty(defautl),player,bot
-                    ivCell[i][j].setBackground(drawCell[3]);
-                    linRow.addView(ivCell[i][j], lpCell);
+                tv_dice1.setText("DICE1: " + dice1Point);
+                tv_dice2.setText("DICE2: " + dice2Point);
 
+                Animation rotate = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate);
+                iv_dice1.startAnimation(rotate);
+                iv_dice2.startAnimation(rotate);
             }
-            linBoardGame.addView(linRow, lpRow);
+        });
+    }
 
+    public void setImagedice1(int num){
+        switch (num){
+            case 1:
+                iv_dice1.setImageResource(R.drawable.dice1);
+                break;
+            case 2:
+                iv_dice1.setImageResource(R.drawable.dice2);
+                break;
+            case 3:
+                iv_dice1.setImageResource(R.drawable.dice3);
+                break;
+            case 4:
+                iv_dice1.setImageResource(R.drawable.dice4);
+                break;
+            case 5:
+                iv_dice1.setImageResource(R.drawable.dice5);
+                break;
+            case 6:
+                iv_dice1.setImageResource(R.drawable.dice6);
+                break;
+        }
+    }
+    public void setImagedice2(int num){
+        switch (num){
+            case 1:
+                iv_dice2.setImageResource(R.drawable.dice1);
+                break;
+            case 2:
+                iv_dice2.setImageResource(R.drawable.dice2);
+                break;
+            case 3:
+                iv_dice2.setImageResource(R.drawable.dice3);
+                break;
+            case 4:
+                iv_dice2.setImageResource(R.drawable.dice4);
+                break;
+            case 5:
+                iv_dice2.setImageResource(R.drawable.dice5);
+                break;
+            case 6:
+                iv_dice2.setImageResource(R.drawable.dice6);
+                break;
         }
     }
 
-    private float ScreenWidth() {
-        Resources resources = context.getResources();//ok
-        DisplayMetrics dm = resources.getDisplayMetrics();
-        return dm.widthPixels;
-    }
 
 }
