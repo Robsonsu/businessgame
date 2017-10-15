@@ -16,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ServiceGenerator {
 
     //URL base do endpoint. Deve sempre terminar com /
-    public static final String API_BASE_URL = "http://192.168.56.1:8090/api/";
+    public static final String API_BASE_URL = "http://200.155.117.240:8090/api/";
 
     public static <S> S createService(Class<S> serviceClass) {
 
@@ -28,9 +28,6 @@ public class ServiceGenerator {
                 .readTimeout(15, TimeUnit.SECONDS);
 
         httpClient.addInterceptor(loggingInterceptor);
-
-        String raw = loggingInterceptor.toString();
-
 
         //Instância do retrofit
         Retrofit retrofit = new Retrofit.Builder()

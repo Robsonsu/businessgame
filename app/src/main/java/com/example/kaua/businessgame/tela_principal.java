@@ -1,5 +1,6 @@
 package com.example.kaua.businessgame;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,7 +17,9 @@ import android.view.MenuItem;
 public class tela_principal extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         TelaToken.OnFragmentInteractionListener,
-        TelaConfiguracoes.OnFragmentInteractionListener{
+        TelaConfiguracoes.OnFragmentInteractionListener,
+        TelaCadastro.OnFragmentInteractionListener,
+        TelaNovaPartida.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,9 +91,12 @@ public class tela_principal extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
         switch (id){
             case R.id.nav_novapartda:
-//                startActivity(new Intent(tela_principal.this, tela_novaPartida.class));
+                transaction.replace(R.id.fl_principal, TelaNovaPartida.newInstance());
+                transaction.commit();
                 break;
             case R.id.nav_tabuleiro:
                 startActivity(new Intent(tela_principal.this, tela_tabuleiro.class));
@@ -100,6 +106,8 @@ public class tela_principal extends AppCompatActivity
             case R.id.nav_equipes:
                 break;
             case R.id.nav_configuracoes:
+                transaction.replace(R.id.fl_principal, TelaConfiguracoes.newInstance());
+                transaction.commit();
                 break;
             case R.id.nav_encerrar:
                 break;

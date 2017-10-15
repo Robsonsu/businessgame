@@ -1,4 +1,4 @@
-package com.example.kaua.businessgame;
+package com.example.kaua.businessgame.Response;
 
 /**
  * Created by Kauã on 10/09/2017.

@@ -41,7 +41,7 @@ public class tela_tabuleiro extends AppCompatActivity {
         iv_dice1 = (ImageView) findViewById(R.id.dice1);
         iv_dice2 = (ImageView) findViewById(R.id.dice2);
 
-        tv_dice1 = (TextView) findViewById(R.id.tv_dice1);
+//        tv_dice1 = (TextView) findViewById(R.id.tv_dice1);
         tv_dice2 = (TextView) findViewById(R.id.tv_dice2);
 
         r = new Random();

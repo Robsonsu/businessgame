@@ -6,26 +6,26 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.Spinner;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class TelaConfiguracoes extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private RecyclerView rvListaGrupos;
-    private EditText edtQtdGrupos;
+    private Spinner spnQtdGrupos;
     private LinearLayout llBtn;
     private Context context;
     private ArrayList<Grupo> grupos = new ArrayList<Grupo>();
     private ArrayList<String> lideres = new ArrayList<>();
+    private Button btnOkGrupos;
 
     public TelaConfiguracoes() {
         // Required empty public constructor
@@ -60,54 +60,70 @@ public class TelaConfiguracoes extends Fragment {
 
     public void setView(View v){
         rvListaGrupos = (RecyclerView) v.findViewById(R.id.rvQtdGrupos);
-        edtQtdGrupos = (EditText) v.findViewById(R.id.edtQtdGrupo);
+        spnQtdGrupos = (Spinner) v.findViewById(R.id.spnQtdGrupo);
         llBtn = (LinearLayout) v.findViewById(R.id.llBtnConfig);
+        btnOkGrupos = (Button) v.findViewById(R.id.btnOkGrupos);
+
+        String[] grupos = new String[]{"1 Grupo", "2 Grupos", "3 Grupos", "4 Grupos", "5 Grupos"};
+
+        ArrayAdapter<String> arrayGrupos = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, grupos);
+        arrayGrupos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnQtdGrupos.setAdapter(arrayGrupos);
     }
 
     public void acoesViews(){
-        edtQtdGrupos.setOnKeyListener(new View.OnKeyListener()
-        {
-            public boolean onKey(View v, int keyCode, KeyEvent event)
-            {
-                if (event.getAction() == KeyEvent.ACTION_DOWN)
-                {
-                    switch (keyCode)
-                    {
-                        case KeyEvent.KEYCODE_DPAD_CENTER:
-                        case KeyEvent.KEYCODE_ENTER:
-
-                            int qtdGrupos = Integer.parseInt(edtQtdGrupos.getText().toString());
-                            if (qtdGrupos > 10){
-                                Toast.makeText(context, R.string.erroQtdGrupos, Toast.LENGTH_LONG).show();
-                                return false;
-                            }
-
-                            grupos.clear();
-                            Grupo grupo;
-
-                            for (int i = 0; i < qtdGrupos; i++){
-                                grupo = new Grupo();
-                                grupo.setIdGrupo(String.valueOf(i+1));
-                                grupo.setLideres(lideres);
-                                grupos.add(grupo);
-                            }
-
-                            // Create adapter passing in the sample user data
-                            adapterGrupos adapter = new adapterGrupos(context, grupos);
-                            // Attach the adapter to the recyclerview to populate items
-                            rvListaGrupos.setAdapter(adapter);
-                            // Set layout manager to position the items
-                            rvListaGrupos.setLayoutManager(new LinearLayoutManager(context));
-
-                            llBtn.setVisibility(View.VISIBLE);
-                            return true;
-                        default:
-                            break;
-                    }
-                }
-                return false;
+        btnOkGrupos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setarLideres(spnQtdGrupos.getSelectedItemPosition() + 1);
             }
         });
+//        spnQtdGrupos.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                switch (spnQtdGrupos.getSelectedItemPosition()){
+//                    case 1:
+//                        setarLideres(1);
+//                        break;
+//                    case 2:
+//                        setarLideres(2);
+//                        break;
+//                    case 3:
+//                        setarLideres(3);
+//                        break;
+//                    case 4:
+//                        setarLideres(4);
+//                        break;
+//                    case 5:
+//                        setarLideres(5);
+//                        break;
+//                    default:
+//                        llBtn.setVisibility(View.GONE);
+//                        break;
+//                }
+//            }
+//        });
+    }
+
+    public void setarLideres(int qtdGrupos){
+        grupos.clear();
+        Grupo grupo;
+
+        for (int i = 0; i < qtdGrupos; i++){
+            grupo = new Grupo();
+            grupo.setIdGrupo(String.valueOf(i+1));
+            grupo.setLideres(lideres);
+            grupos.add(grupo);
+        }
+
+        // Create adapter passing in the sample user data
+        adapterGrupos adapter = new adapterGrupos(context, grupos);
+        // Attach the adapter to the recyclerview to populate items
+        rvListaGrupos.setAdapter(adapter);
+        // Set layout manager to position the items
+        rvListaGrupos.setLayoutManager(new LinearLayoutManager(context));
+
+        llBtn.setVisibility(View.VISIBLE);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -15,19 +15,19 @@ import java.util.List;
  * Created by Kauã on 01/10/2017.
  */
 
-public class adapterGrupos extends RecyclerView.Adapter<adapterGrupos.ViewHolder>  {
+public class adapterLideres extends RecyclerView.Adapter<adapterLideres.ViewHolder>  {
 
     private List<Grupo> grupos;
     private Context context;
     private OnDataSelected  onDataSelected;
 
-    public adapterGrupos(Context context, List<Grupo> grupos) {
+    public adapterLideres(Context context, List<Grupo> grupos) {
         this.context = context;
         this.grupos = grupos;
     }
 
     @Override
-    public adapterGrupos.ViewHolder onCreateViewHolder(ViewGroup parent,int viewType) {
+    public adapterLideres.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_grupos, parent, false);
 
         ViewHolder viewHolder = new ViewHolder(view);
