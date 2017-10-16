@@ -13,6 +13,8 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,6 +30,7 @@ public class tela_tabuleiro extends AppCompatActivity {
 
     ImageView iv_dice1, iv_dice2;
     TextView tv_dice1, tv_dice2;
+    WebView wv_tabuleiro;
 
     Random r;
 
@@ -38,13 +41,15 @@ public class tela_tabuleiro extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_tabuleiro);
 
+
+        wv_tabuleiro = (WebView) findViewById(R.id.wv_tabuleiro);
         iv_dice1 = (ImageView) findViewById(R.id.dice1);
         iv_dice2 = (ImageView) findViewById(R.id.dice2);
-
 //        tv_dice1 = (TextView) findViewById(R.id.tv_dice1);
         tv_dice2 = (TextView) findViewById(R.id.tv_dice2);
-
         r = new Random();
+        setWebView();
+
 
         iv_dice2.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -70,6 +75,14 @@ public class tela_tabuleiro extends AppCompatActivity {
                 iv_dice2.startAnimation(rotate);
             }
         });
+    }
+
+    public void setWebView(){
+        String url ="http://201.33.89.128:8090/tcc/tabuleiro?token_partida=2838023A";
+
+        WebSettings webSettings = wv_tabuleiro.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        wv_tabuleiro.loadUrl(url);
     }
 
     public void setImagedice1(int num){
