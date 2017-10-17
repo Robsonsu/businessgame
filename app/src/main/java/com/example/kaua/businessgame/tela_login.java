@@ -2,6 +2,7 @@ package com.example.kaua.businessgame;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,7 +12,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kaua.businessgame.Request.EfetuarLogin;
 import com.example.kaua.businessgame.Response.RespostaServidor;
+import com.google.gson.Gson;
 
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -51,8 +54,8 @@ public class tela_login extends AppCompatActivity {
         btnEntrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                startActivity(new Intent(tela_login.this, tela_principal.class));
-                retrofitConverter();
+                startActivity(new Intent(tela_login.this, tela_principal.class));
+//                retrofitConverter(edtRA.getText().toString(), edtSenha.getText().toString());
             }
         });
 
@@ -63,14 +66,21 @@ public class tela_login extends AppCompatActivity {
         });
     }
 
-    public void retrofitConverter() {
-        final String json  =  "[\n" +
-                "{\n" +
-                "\t\"login\":\"123456\",\n" +
-                "\t\"senha\":\"123456\"\n" +
-                "\t\n" +
-                "}\n" +
-                "]";
+    public void retrofitConverter(String login, String senha) {
+        EfetuarLogin efetuarLogin = new EfetuarLogin();
+        efetuarLogin.setLogin(login);
+        efetuarLogin.setSenha(senha);
+
+        Gson gson = new Gson();
+        String json = gson.toJson(efetuarLogin);
+
+//        final String json  =  "[\n" +
+//                "{\n" +
+//                "\t\"login\":\"123456\",\n" +
+//                "\t\"senha\":\"123456\"\n" +
+//                "\t\n" +
+//                "}\n" +
+//                "]";
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), json);
 
         RetrofitService service = ServiceGenerator.createService(RetrofitService.class);

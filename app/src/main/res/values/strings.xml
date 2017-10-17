@@ -48,6 +48,9 @@
     <string name="hintToken">Token&#8230;</string>
     <string name="conectar">Conectar</string>
 
+    <!--Tela tabuleiro-->
+    <string name="valor" formatted="false">Valor: %s</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 

@@ -45,7 +45,7 @@ public class tela_principal extends AppCompatActivity
         toggle.syncState();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fl_principal, new TelaConfiguracoes()); // newInstance() is a static factory method.
+        transaction.replace(R.id.fl_principal, new TelaCadastro()); // newInstance() is a static factory method.
         transaction.addToBackStack(null);
         transaction.commit();
 

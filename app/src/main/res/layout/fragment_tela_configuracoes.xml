@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.kaua.businessgame.TelaConfiguracoes">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -13,57 +13,72 @@
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
         android:layout_margin="20dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/configPartida"
-            android:textSize="22sp"
-            android:textColor="@android:color/black"
-            android:gravity="center"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/qtdGrupos"
-            android:layout_marginTop="10dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <Spinner
-                android:id="@+id/spnQtdGrupo"
-                android:layout_width="0dp"
-                android:layout_weight="0.8"
-                android:layout_height="match_parent"
-                android:textColorHint="@color/color_default_blue"/>
-
-            <Button
-                android:id="@+id/btnOkGrupos"
-                android:layout_width="0dp"
-                android:layout_weight="0.2"
-                android:textColor="@color/colorSecondaryLight"
-                android:text="@string/ok"
-                android:layout_height="25dp"
-                android:background="@drawable/selector_button_blue"/>
-        </LinearLayout>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvQtdGrupos"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp" />
+            android:orientation="vertical"
+            android:layout_alignParentTop="true"
+            android:layout_above="@+id/llBtnConfig">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/configPartida"
+                android:textSize="22sp"
+                android:textColor="@android:color/black"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/qtdGrupos"
+                android:layout_marginTop="20dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <Spinner
+                    android:id="@+id/spnQtdGrupo"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.8"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/color_default_blue"/>
+
+                <Button
+                    android:id="@+id/btnOkGrupos"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.2"
+                    android:textColor="@color/colorSecondaryLight"
+                    android:text="@string/ok"
+                    android:layout_height="25dp"
+                    android:background="@drawable/selector_button_blue"/>
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvQtdGrupos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/llBtnConfig"
             android:visibility="invisible"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
+            android:layout_gravity="bottom"
+            android:foregroundGravity="bottom"
+            android:orientation="horizontal"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:layout_alignParentBottom="true">
 
             <Button
                 android:id="@+id/btnCancelarConfig"
@@ -82,5 +97,5 @@
                 android:background="@drawable/selector_button_blue"
                 android:layout_margin="2dp"/>
         </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>
