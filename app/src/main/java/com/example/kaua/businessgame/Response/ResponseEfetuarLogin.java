@@ -1,5 +1,6 @@
 package com.example.kaua.businessgame.Response;
 
+
 /**
  * Created by Kauã on 10/09/2017.
  */
@@ -8,8 +9,35 @@ public class ResponseEfetuarLogin {
 
 
     private String sucess;
-    private DataEfetuarLogin data;
+    private String cd_usuario;
+    private String nome;
+    private String sessao;
     private String message;
+
+    public String getCd_usuario() {
+        return cd_usuario;
+    }
+
+    public void setCd_usuario(String cd_usuario) {
+        this.cd_usuario = cd_usuario;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getSessao() {
+        return sessao;
+    }
+
+    public void setSessao(String sessao) {
+        this.sessao = sessao;
+    }
+
 
     public ResponseEfetuarLogin(){}
 
@@ -30,11 +58,5 @@ public class ResponseEfetuarLogin {
         this.message = message;
     }
 
-    public DataEfetuarLogin getData() {
-        return data;
-    }
 
-    public void setData(DataEfetuarLogin data) {
-        this.data = data;
-    }
 }

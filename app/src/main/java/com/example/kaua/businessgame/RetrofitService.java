@@ -1,5 +1,6 @@
 package com.example.kaua.businessgame;
 
+import com.example.kaua.businessgame.Response.ResponseAPI;
 import com.example.kaua.businessgame.Response.ResponseEfetuarLogin;
 import com.example.kaua.businessgame.Response.RespostaServidor;
 
@@ -19,7 +20,7 @@ public interface RetrofitService {
 //    @Headers("X-Mashape-Key: AuuyclCPjcmshv2iOPq190OpzLrMp1FJWwejsnJrdfwOUr4h44")
 
     @POST("efetuarlogin")
-    Call<ResponseEfetuarLogin> efetuarlogin(@Body RequestBody requestBody);
+    Call<ResponseAPI> efetuarlogin(@Body RequestBody requestBody);
 
     @POST("encerrarSessao")
     Call<RespostaServidor> encerrarSessao(@Body RequestBody requestBody);

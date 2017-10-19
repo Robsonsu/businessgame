@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kaua.businessgame.Request.EfetuarLogin;
+import com.example.kaua.businessgame.Response.ResponseAPI;
 import com.example.kaua.businessgame.Response.ResponseEfetuarLogin;
 import com.example.kaua.businessgame.Response.RespostaServidor;
 import com.google.gson.Gson;
@@ -23,6 +24,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class tela_login extends AppCompatActivity {
 
@@ -34,6 +36,8 @@ public class tela_login extends AppCompatActivity {
     private TextView tvEsqueciSenha;
     private ProgressDialog progress;
     ResponseEfetuarLogin resposta = new ResponseEfetuarLogin();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,60 +101,62 @@ public class tela_login extends AppCompatActivity {
 
         RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
 
-        Call<ResponseEfetuarLogin> call = service.efetuarlogin(body);
+        Call<ResponseAPI> call = service.efetuarlogin(body);
 
-        call.enqueue(new Callback<ResponseEfetuarLogin>() {
+        call.enqueue(new Callback<ResponseAPI>() {
+
             @Override
-            public void onResponse(Call<ResponseEfetuarLogin> call, Response<ResponseEfetuarLogin> response) {
+            public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
 
-                if (response.isSuccessful()) {
+                try
+                {
+                    //get your response....
+                  //  response.body();
+                    String json = response.body().sucess.toString();
+                    if (json.equals("true")) {
 
-                    ResponseEfetuarLogin respostaServidor = response.body();
+                      //  ResponseEfetuarLogin respostaServidor = response.body();
 
-                    //verifica aqui se o corpo da resposta não é nulo
-                    if (respostaServidor != null) {
+                        //verifica aqui se o corpo da resposta não é nulo
 
-                        if(respostaServidor.isSucess()=="true") {
+                     ResponseAPI  respostaAPi = new ResponseAPI(response.body().sucess, response.body().cd_usuario,
+                                response.body().nome, response.body().sessao, response.body().message
+                                );
 
-                           // resposta.setData(respostaServidor.getData());
-                            resposta.setMessage(respostaServidor.getMessage());
-                            //resposta.setResult(respostaServidor.getResult());
-                            resposta.setSucess(respostaServidor.isSucess());
+                               // progress.dismiss();
+                                mostrarData(respostaAPi.message + "\n" );
 
-                            progress.dismiss();
-                            mostrarData(resposta.getMessage() + "\n" + resposta.getData() + "\n");
+                                Intent it = new Intent(tela_login.this, tela_principal.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("fragment", "tela_principal");
+                                it.putExtras(bundle);
+                                startActivity(it);
 
-                                            Intent it = new Intent(tela_login.this, tela_principal.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("fragment", "tela_principal");
-                it.putExtras(bundle);
-                startActivity(it);
 
-                        } else{
 
-                            Toast.makeText(getApplicationContext(),"Insira unidade e valores válidos", Toast.LENGTH_SHORT).show();
-                        }
 
                     } else {
 
-                        Toast.makeText(getApplicationContext(),"Resposta nula do servidor", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Resposta não foi sucesso", Toast.LENGTH_SHORT).show();
+                        // segura os erros de requisição
+                        ResponseBody errorBody = response.errorBody();
+                        mostrarData(errorBody.toString());
                     }
-
-                } else {
-
-                    Toast.makeText(getApplicationContext(),"Resposta não foi sucesso", Toast.LENGTH_SHORT).show();
-                    // segura os erros de requisição
-                    ResponseBody errorBody = response.errorBody();
-                    mostrarData(errorBody.toString());
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
                 }
 
-                progress.dismiss();
+
+
+              //  progress.dismiss();
             }
 
             @Override
-            public void onFailure(Call<ResponseEfetuarLogin> call, Throwable t) {
-
-                Toast.makeText(getApplicationContext(),"Erro na chamada ao servidor", Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<ResponseAPI> call, Throwable t)
+            {
+                Toast.makeText(getApplicationContext(), "Erro na chamada ao servidor", Toast.LENGTH_SHORT).show();
             }
         });
     }
