@@ -13,6 +13,7 @@ public class RespostaServidor {
 
     public RespostaServidor(){}
 
+
     public String getResult() {
         return result;
     }
