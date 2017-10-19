@@ -25,9 +25,16 @@ public class tela_principal extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tela_principal);
+
+        setView();
+        setAcoesView();
+        carregarTela(getIntent().getExtras());
+    }
+
+    public void setView(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
- //       setSupportActionBar(toolbar);
+        //       setSupportActionBar(toolbar);
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -44,13 +51,32 @@ public class tela_principal extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fl_principal, new TelaCadastro()); // newInstance() is a static factory method.
-        transaction.addToBackStack(null);
-        transaction.commit();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    public void setAcoesView(){}
+
+    public void carregarTela(Bundle bundle){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        String sFrag = bundle.getString("fragment");
+
+        if (sFrag != null){
+            switch (sFrag){
+                case "TelaCadastro":
+                    transaction.replace(R.id.fl_principal, new TelaCadastro()); // newInstance() is a static factory method.
+                    break;
+                case "TelaToken":
+                    transaction.replace(R.id.fl_principal, new TelaToken()); // newInstance() is a static factory method.
+                    break;
+                case "TelaNovaPartida":
+                    transaction.replace(R.id.fl_principal, new TelaNovaPartida()); // newInstance() is a static factory method.
+                    break;
+            }
+
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
     }
 
     @Override

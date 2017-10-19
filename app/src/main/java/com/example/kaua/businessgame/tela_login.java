@@ -3,6 +3,7 @@ package com.example.kaua.businessgame;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.TestLooperManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kaua.businessgame.Request.EfetuarLogin;
+import com.example.kaua.businessgame.Response.ResponseEfetuarLogin;
 import com.example.kaua.businessgame.Response.RespostaServidor;
 import com.google.gson.Gson;
 
@@ -31,7 +33,7 @@ public class tela_login extends AppCompatActivity {
     private EditText edtSenha;
     private TextView tvEsqueciSenha;
     private ProgressDialog progress;
-    RespostaServidor resposta = new RespostaServidor();
+    ResponseEfetuarLogin resposta = new ResponseEfetuarLogin();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +56,23 @@ public class tela_login extends AppCompatActivity {
         btnEntrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(tela_login.this, tela_principal.class));
-//                retrofitConverter(edtRA.getText().toString(), edtSenha.getText().toString());
+//                Intent it = new Intent(tela_login.this, tela_principal.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putString("fragment", "tela_principal");
+//                it.putExtras(bundle);
+//                startActivity(it);
+               retrofitConverter(edtRA.getText().toString(), edtSenha.getText().toString());
             }
         });
 
         tvCadastro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent it = new Intent(tela_login.this, tela_principal.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("fragment", "TelaCadastro");
+                it.putExtras(bundle);
+                startActivity(it);
             }
         });
     }
@@ -81,32 +92,39 @@ public class tela_login extends AppCompatActivity {
 //                "\t\n" +
 //                "}\n" +
 //                "]";
+        json = "["+json+"]";
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), json);
 
         RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
 
-        Call<RespostaServidor> call = service.efetuarlogin(body);
+        Call<ResponseEfetuarLogin> call = service.efetuarlogin(body);
 
-        call.enqueue(new Callback<RespostaServidor>() {
+        call.enqueue(new Callback<ResponseEfetuarLogin>() {
             @Override
-            public void onResponse(Call<RespostaServidor> call, Response<RespostaServidor> response) {
+            public void onResponse(Call<ResponseEfetuarLogin> call, Response<ResponseEfetuarLogin> response) {
 
                 if (response.isSuccessful()) {
 
-                    RespostaServidor respostaServidor = response.body();
+                    ResponseEfetuarLogin respostaServidor = response.body();
 
                     //verifica aqui se o corpo da resposta não é nulo
                     if (respostaServidor != null) {
 
-                        if(respostaServidor.isSucess()) {
+                        if(respostaServidor.isSucess()=="true") {
 
-                            resposta.setData(respostaServidor.getData());
+                           // resposta.setData(respostaServidor.getData());
                             resposta.setMessage(respostaServidor.getMessage());
-                            resposta.setResult(respostaServidor.getResult());
+                            //resposta.setResult(respostaServidor.getResult());
                             resposta.setSucess(respostaServidor.isSucess());
 
                             progress.dismiss();
-                            mostrarData(resposta.getMessage() + "\n" + resposta.getData() + "\n" + resposta.getResult());
+                            mostrarData(resposta.getMessage() + "\n" + resposta.getData() + "\n");
+
+                                            Intent it = new Intent(tela_login.this, tela_principal.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("fragment", "tela_principal");
+                it.putExtras(bundle);
+                startActivity(it);
 
                         } else{
 
@@ -130,7 +148,7 @@ public class tela_login extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<RespostaServidor> call, Throwable t) {
+            public void onFailure(Call<ResponseEfetuarLogin> call, Throwable t) {
 
                 Toast.makeText(getApplicationContext(),"Erro na chamada ao servidor", Toast.LENGTH_SHORT).show();
             }

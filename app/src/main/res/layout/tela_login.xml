@@ -41,9 +41,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/nome"
-            android:inputType="number"
-            android:maxLength="6"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:text="professor"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -62,7 +61,8 @@
             android:maxLength="6"
             android:inputType="numberPassword"
             android:maxLines="1"
-            android:hint="@string/senha"/>
+            android:hint="@string/senha"
+            android:text="111111"/>
     </android.support.design.widget.TextInputLayout>
 
 

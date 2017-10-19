@@ -82,8 +82,8 @@ public class tela_tabuleiro extends AppCompatActivity {
     }
 
     public void setWebView(){
-//        String url ="http://201.33.89.128:8090/tcc/tabuleiro?token_partida=2838023A";
-        String url = "http://3.bp.blogspot.com/-UMYjDIJ13kY/T0-VjDIxWbI/AAAAAAAAAV4/CnKed9Fhn-g/s1600/jogo+do+resto.jpg";
+        String url ="http://189.50.182.76:8090/tcc/tabuleiro?token_partida=2838023A";
+        //String url = "http://3.bp.blogspot.com/-UMYjDIJ13kY/T0-VjDIxWbI/AAAAAAAAAV4/CnKed9Fhn-g/s1600/jogo+do+resto.jpg";
 
         // set web view client
         wv_tabuleiro.setWebViewClient(new MyWebViewClient());
