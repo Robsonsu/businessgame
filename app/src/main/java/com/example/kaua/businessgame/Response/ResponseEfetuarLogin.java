@@ -7,7 +7,8 @@ import com.google.gson.annotations.SerializedName;
  * Created by gabri on 19/10/2017.
  */
 
-public class responseEfetuarLogin {
+        public class responseEfetuarLogin {
+
         @SerializedName("sucess")
         public String sucess;
 
