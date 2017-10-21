@@ -2,12 +2,11 @@ package com.example.kaua.businessgame.Response;
 import com.google.gson.annotations.SerializedName;
 
 
-
 /**
  * Created by gabri on 19/10/2017.
  */
 
-public class responseEfetuarLogin {
+public class responseCadastrar {
         @SerializedName("sucess")
         public String sucess;
 
@@ -23,10 +22,10 @@ public class responseEfetuarLogin {
         @SerializedName("message")
         public String message;
 
-        public responseEfetuarLogin() {
+        public responseCadastrar() {
         }
 
-        public responseEfetuarLogin(String sucess, String cd_usuario, String nome, String sessao, String message  ) {
+        public responseCadastrar(String sucess, String cd_usuario, String nome, String sessao, String message  ) {
             this.sucess = sucess;
             this.cd_usuario = cd_usuario;
             this.nome = nome;

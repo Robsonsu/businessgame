@@ -13,8 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kaua.businessgame.Request.EfetuarLogin;
-import com.example.kaua.businessgame.Response.ResponseAPI;
-import com.example.kaua.businessgame.Response.ResponseEfetuarLogin;
+import com.example.kaua.businessgame.Response.responseEfetuarLogin;
 import com.google.gson.Gson;
 
 import okhttp3.RequestBody;
@@ -32,7 +31,6 @@ public class tela_login extends AppCompatActivity {
     private EditText edtSenha;
     private TextView tvEsqueciSenha;
     private ProgressDialog progress;
-    ResponseEfetuarLogin resposta = new ResponseEfetuarLogin();
 
 
 
@@ -98,45 +96,37 @@ public class tela_login extends AppCompatActivity {
 
         RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
 
-        Call<ResponseAPI> call = service.efetuarlogin(body);
+        Call<responseEfetuarLogin> call = service.efetuarlogin(body);
 
-        call.enqueue(new Callback<ResponseAPI>() {
+        call.enqueue(new Callback<responseEfetuarLogin>() {
 
             @Override
-            public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
+            public void onResponse(Call<responseEfetuarLogin> call, Response<responseEfetuarLogin> response) {
 
                 try
                 {
                     //get your response....
                   //  response.body();
-                    String json = response.body().getSucess().toString();
+                    String json = response.body().sucess.toString();
                     if (json.equals("true")) {
-
-                      //  ResponseEfetuarLogin respostaServidor = response.body();
 
                         //verifica aqui se o corpo da resposta não é nulo
 
-                     ResponseAPI  respostaAPi = new ResponseAPI(response.body().getSucess(), response.body().getCd_usuario(),
-                             response.body().getNome(), response.body().getSessao(), response.body().getMessage()
+                     responseEfetuarLogin respostaAPi = new responseEfetuarLogin(response.body().sucess, response.body().cd_usuario,
+                                response.body().nome, response.body().sessao, response.body().message
                                 );
 
+                        cacheAplicativo.setResponseEfetuarLogin(response.body());
+
                                // progress.dismiss();
-                                mostrarData(respostaAPi.getMessage() + "\n" );
+                                mostrarData(respostaAPi.message + "\n" );
 
-                        Bundle bundle = new Bundle();
-
-                        if (respostaAPi.getCd_tipousuario() == "P"){
-                            bundle.putString("fragment", "TelaConfiguracoes");
-                        } else {
-                            bundle.putString("fragment", "TelaToken");
-                        }
-
-                        Intent it = new Intent(tela_login.this, tela_principal.class);
-                        bundle.putString("fragment", "tela_principal");
-                        it.putExtras(bundle);
-                        startActivity(it);
+                                Intent it = new Intent(tela_login.this, tela_principal.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("fragment", "TelaNovaPartida");
+                                it.putExtras(bundle);
+                                startActivity(it);
                     } else {
-
                         Toast.makeText(getApplicationContext(),"Resposta não foi sucesso", Toast.LENGTH_SHORT).show();
                         // segura os erros de requisição
                         ResponseBody errorBody = response.errorBody();
@@ -148,11 +138,13 @@ public class tela_login extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+
+
               //  progress.dismiss();
             }
 
             @Override
-            public void onFailure(Call<ResponseAPI> call, Throwable t)
+            public void onFailure(Call<responseEfetuarLogin> call, Throwable t)
             {
                 Toast.makeText(getApplicationContext(), "Erro na chamada ao servidor", Toast.LENGTH_SHORT).show();
             }

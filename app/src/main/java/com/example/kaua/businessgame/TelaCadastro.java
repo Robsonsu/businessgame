@@ -179,6 +179,7 @@ public class TelaCadastro extends Fragment {
 
         Gson gson = new Gson();
         String json = gson.toJson(cadastrar);
+        json = "["+ json + "]";
 
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), json);
 
