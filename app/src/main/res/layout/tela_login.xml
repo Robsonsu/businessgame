@@ -7,6 +7,12 @@
     android:layout_height="match_parent"
     tools:context="com.example.kaua.businessgame.tela_login">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logotcc"
+        android:alpha="0.15"/>
+
     <TextView
         android:id="@+id/tvBemvindo"
         android:layout_width="wrap_content"

@@ -3,7 +3,6 @@ package com.example.kaua.businessgame;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.TestLooperManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import android.widget.Toast;
 import com.example.kaua.businessgame.Request.EfetuarLogin;
 import com.example.kaua.businessgame.Response.ResponseAPI;
 import com.example.kaua.businessgame.Response.ResponseEfetuarLogin;
-import com.example.kaua.businessgame.Response.RespostaServidor;
 import com.google.gson.Gson;
 
 import okhttp3.RequestBody;
@@ -24,7 +22,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class tela_login extends AppCompatActivity {
 
@@ -112,29 +109,32 @@ public class tela_login extends AppCompatActivity {
                 {
                     //get your response....
                   //  response.body();
-                    String json = response.body().sucess.toString();
+                    String json = response.body().getSucess().toString();
                     if (json.equals("true")) {
 
                       //  ResponseEfetuarLogin respostaServidor = response.body();
 
                         //verifica aqui se o corpo da resposta não é nulo
 
-                     ResponseAPI  respostaAPi = new ResponseAPI(response.body().sucess, response.body().cd_usuario,
-                                response.body().nome, response.body().sessao, response.body().message
+                     ResponseAPI  respostaAPi = new ResponseAPI(response.body().getSucess(), response.body().getCd_usuario(),
+                             response.body().getNome(), response.body().getSessao(), response.body().getMessage()
                                 );
 
                                // progress.dismiss();
-                                mostrarData(respostaAPi.message + "\n" );
+                                mostrarData(respostaAPi.getMessage() + "\n" );
 
-                                Intent it = new Intent(tela_login.this, tela_principal.class);
-                                Bundle bundle = new Bundle();
-                                bundle.putString("fragment", "tela_principal");
-                                it.putExtras(bundle);
-                                startActivity(it);
+                        Bundle bundle = new Bundle();
 
+                        if (respostaAPi.getCd_tipousuario() == "P"){
+                            bundle.putString("fragment", "TelaConfiguracoes");
+                        } else {
+                            bundle.putString("fragment", "TelaToken");
+                        }
 
-
-
+                        Intent it = new Intent(tela_login.this, tela_principal.class);
+                        bundle.putString("fragment", "tela_principal");
+                        it.putExtras(bundle);
+                        startActivity(it);
                     } else {
 
                         Toast.makeText(getApplicationContext(),"Resposta não foi sucesso", Toast.LENGTH_SHORT).show();
@@ -147,8 +147,6 @@ public class tela_login extends AppCompatActivity {
                 {
                     e.printStackTrace();
                 }
-
-
 
               //  progress.dismiss();
             }

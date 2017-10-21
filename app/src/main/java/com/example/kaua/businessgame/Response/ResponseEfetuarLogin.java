@@ -7,7 +7,6 @@ package com.example.kaua.businessgame.Response;
 
 public class ResponseEfetuarLogin {
 
-
     private String sucess;
     private String cd_usuario;
     private String nome;

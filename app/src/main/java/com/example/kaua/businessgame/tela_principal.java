@@ -72,6 +72,9 @@ public class tela_principal extends AppCompatActivity
                 case "TelaNovaPartida":
                     transaction.replace(R.id.fl_principal, new TelaNovaPartida()); // newInstance() is a static factory method.
                     break;
+                case "TelaConfiguracoes":
+                    transaction.replace(R.id.fl_principal, new TelaConfiguracoes());
+                    break;
             }
 
             transaction.addToBackStack(null);
