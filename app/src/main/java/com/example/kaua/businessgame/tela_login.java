@@ -116,8 +116,12 @@ public class tela_login extends AppCompatActivity {
 
                             //  ResponseEfetuarLogin respostaServidor = response.body();
 
-                            responseEfetuarLogin respostaAPi = new responseEfetuarLogin(response.body().getSucess(), response.body().getCd_usuario(),
-                                    response.body().getNome(), response.body().getSessao(), response.body().getMessage()
+                            responseEfetuarLogin respostaAPi = new responseEfetuarLogin(response.body().getSucess(),
+                                    response.body().getCd_usuario(),
+                                    response.body().getNome(),
+                                    response.body().getSessao(),
+                                    response.body().getMessage(),
+                                    response.body().getTp_usuario()
                             );
 
                             cacheAplicativo.setResponseEfetuarLogin(response.body());
@@ -130,11 +134,10 @@ public class tela_login extends AppCompatActivity {
                             if (respostaAPi.getTp_usuario().equals("1")) {
                                 bundle.putString("fragment", "TelaConfiguracoes");
                             } else {
-                                bundle.putString("fragment", "TelaToken");
+                                bundle.putString("fragment", "TelaNovaPartida");
                             }
 
                             Intent it = new Intent(tela_login.this, tela_principal.class);
-                            bundle.putString("fragment", "tela_principal");
                             it.putExtras(bundle);
                             startActivity(it);
                         } else {

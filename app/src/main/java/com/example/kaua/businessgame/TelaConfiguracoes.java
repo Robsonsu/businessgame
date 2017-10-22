@@ -19,13 +19,13 @@ import java.util.ArrayList;
 public class TelaConfiguracoes extends Fragment {
 
     private OnFragmentInteractionListener mListener;
-    private RecyclerView rvListaGrupos;
+//    private RecyclerView rvListaGrupos;
     private Spinner spnQtdGrupos;
     private LinearLayout llBtn;
     private Context context;
     private ArrayList<Grupo> grupos = new ArrayList<Grupo>();
     private ArrayList<String> lideres = new ArrayList<>();
-    private Button btnOkGrupos;
+//    private Button btnOkGrupos;
 
     public TelaConfiguracoes() {
         // Required empty public constructor
@@ -72,12 +72,12 @@ public class TelaConfiguracoes extends Fragment {
     }
 
     public void acoesViews(){
-        btnOkGrupos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setarLideres(spnQtdGrupos.getSelectedItemPosition() + 1);
-            }
-        });
+//        btnOkGrupos.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                setarLideres(spnQtdGrupos.getSelectedItemPosition() + 1);
+//            }
+//        });
 //        spnQtdGrupos.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -116,12 +116,12 @@ public class TelaConfiguracoes extends Fragment {
             grupos.add(grupo);
         }
 
-        // Create adapter passing in the sample user data
-        adapterGrupos adapter = new adapterGrupos(context, grupos);
-        // Attach the adapter to the recyclerview to populate items
-        rvListaGrupos.setAdapter(adapter);
-        // Set layout manager to position the items
-        rvListaGrupos.setLayoutManager(new LinearLayoutManager(context));
+//        // Create adapter passing in the sample user data
+//        adapterGrupos adapter = new adapterGrupos(context, grupos);
+//        // Attach the adapter to the recyclerview to populate items
+//        rvListaGrupos.setAdapter(adapter);
+//        // Set layout manager to position the items
+//        rvListaGrupos.setLayoutManager(new LinearLayoutManager(context));
 
         llBtn.setVisibility(View.VISIBLE);
     }

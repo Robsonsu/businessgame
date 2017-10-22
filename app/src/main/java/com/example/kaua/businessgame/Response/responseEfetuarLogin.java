@@ -30,12 +30,13 @@ public class responseEfetuarLogin {
     public responseEfetuarLogin() {
         }
 
-        public responseEfetuarLogin(String sucess, String cd_usuario, String nome, String sessao, String message  ) {
+        public responseEfetuarLogin(String sucess, String cd_usuario, String nome, String sessao, String message, String tp_usuario) {
             this.sucess = sucess;
             this.cd_usuario = cd_usuario;
             this.nome = nome;
             this.sessao = sessao;
             this.message = message;
+            this.tp_usuario = tp_usuario;
         }
 
     public String getSucess() {
