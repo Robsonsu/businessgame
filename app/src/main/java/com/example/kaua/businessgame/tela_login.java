@@ -74,16 +74,6 @@ public class tela_login extends AppCompatActivity {
                 Bundle bundle = new Bundle();
                 bundle.putString("fragment", "TelaCadastro");
 
-                //
-                SharedPreferences sp1 = getSharedPreferences("MainActivityPreferences", MODE_PRIVATE);
-                cacheTool.setCache(sp1,"pergunta_1","ali");
-
-                String teste = cacheTool.getCache(sp1, "pergunta_1");
-
-                cacheTool.cleanCache(sp1,"pergunta_1");
-
-                teste = cacheTool.getCache(sp1, "pergunta_1");
-               //
                 it.putExtras(bundle);
                 startActivity(it);
             }
