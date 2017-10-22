@@ -59,10 +59,10 @@ public class TelaConfiguracoes extends Fragment {
     }
 
     public void setView(View v){
-        rvListaGrupos = (RecyclerView) v.findViewById(R.id.rvQtdGrupos);
-        spnQtdGrupos = (Spinner) v.findViewById(R.id.spnQtdGrupo);
+//        rvListaGrupos = (RecyclerView) v.findViewById(R.id.rvQtdGrupos);
+        spnQtdGrupos = (Spinner) v.findViewById(R.id.spnQtdEquipes);
         llBtn = (LinearLayout) v.findViewById(R.id.llBtnConfig);
-        btnOkGrupos = (Button) v.findViewById(R.id.btnOkGrupos);
+//        btnOkGrupos = (Button) v.findViewById(R.id.btnOkGrupos);
 
         String[] grupos = new String[]{"1 Grupo", "2 Grupos", "3 Grupos", "4 Grupos", "5 Grupos"};
 

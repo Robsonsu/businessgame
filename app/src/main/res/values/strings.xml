@@ -31,6 +31,7 @@
     <!--Tela configurações-->
     <string name="configPartida">Configurações da partida</string>
     <string name="qtdGrupos">Quantidade de Grupos</string>
+    <string name="grupoPerguntas">Grupo de Perguntas</string>
     <string name="numeroLider">Líder %s</string>
     <string name="iniciar">Iniciar</string>
     <string name="erroQtdGrupos">No máximo 10 grupos</string>

@@ -3,11 +3,9 @@ package com.example.kaua.businessgame;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,9 +30,7 @@ public class tela_login extends AppCompatActivity {
     private EditText edtRA;
     private EditText edtSenha;
     private TextView tvEsqueciSenha;
-    private ProgressDialog progress;
-
-
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +68,6 @@ public class tela_login extends AppCompatActivity {
                 Intent it = new Intent(tela_login.this, tela_principal.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("fragment", "TelaCadastro");
-
                 it.putExtras(bundle);
                 startActivity(it);
             }
@@ -80,6 +75,13 @@ public class tela_login extends AppCompatActivity {
     }
 
     public void retrofitConverter(String login, String senha) {
+        dialog = new ProgressDialog(this); // this = YourActivity
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setMessage("Carregando. Aguarde...");
+        dialog.setIndeterminate(true);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
         EfetuarLogin efetuarLogin = new EfetuarLogin();
         efetuarLogin.setLogin(login);
         efetuarLogin.setSenha(senha);
@@ -105,50 +107,57 @@ public class tela_login extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<responseEfetuarLogin> call, Response<responseEfetuarLogin> response) {
-
+                dialog.dismiss();
                 try
                 {
-                    //get your response....
-                  //  response.body();
-                    String json = response.body().sucess.toString();
-                    if (json.equals("true")) {
+                    if (response.isSuccessful()) {
+                        String json = response.body().getSucess();
+                        if (json.equals("true")) {
 
-                        //verifica aqui se o corpo da resposta não é nulo
+                            //  ResponseEfetuarLogin respostaServidor = response.body();
 
-                     responseEfetuarLogin respostaAPi = new responseEfetuarLogin(response.body().sucess, response.body().cd_usuario,
-                                response.body().nome, response.body().sessao, response.body().message
-                                );
+                            responseEfetuarLogin respostaAPi = new responseEfetuarLogin(response.body().getSucess(), response.body().getCd_usuario(),
+                                    response.body().getNome(), response.body().getSessao(), response.body().getMessage()
+                            );
 
-                        cacheAplicativo.setResponseEfetuarLogin(response.body());
+                            cacheAplicativo.setResponseEfetuarLogin(response.body());
 
-                               // progress.dismiss();
-                                mostrarData(respostaAPi.message + "\n" );
+                            // progress.dismiss();
+//                            mostrarData(respostaAPi.getMessage() + "\n");
 
-                                Intent it = new Intent(tela_login.this, tela_principal.class);
-                                Bundle bundle = new Bundle();
-                                bundle.putString("fragment", "TelaNovaPartida");
-                                it.putExtras(bundle);
-                                startActivity(it);
+                            Bundle bundle = new Bundle();
+
+                            if (respostaAPi.getTp_usuario().equals("1")) {
+                                bundle.putString("fragment", "TelaConfiguracoes");
+                            } else {
+                                bundle.putString("fragment", "TelaToken");
+                            }
+
+                            Intent it = new Intent(tela_login.this, tela_principal.class);
+                            bundle.putString("fragment", "tela_principal");
+                            it.putExtras(bundle);
+                            startActivity(it);
+                        } else {
+
+                            Toast.makeText(getApplicationContext(), "Resposta não foi sucesso", Toast.LENGTH_SHORT).show();
+                            // segura os erros de requisição
+                            ResponseBody errorBody = response.errorBody();
+                            mostrarData(errorBody.toString());
+                        }
                     } else {
-                        Toast.makeText(getApplicationContext(),"Resposta não foi sucesso", Toast.LENGTH_SHORT).show();
-                        // segura os erros de requisição
-                        ResponseBody errorBody = response.errorBody();
-                        mostrarData(errorBody.toString());
+                        Toast.makeText(getApplicationContext(), "Resposta não foi sucesso", Toast.LENGTH_SHORT).show();
                     }
                 }
                 catch (Exception e)
                 {
                     e.printStackTrace();
                 }
-
-
-
-              //  progress.dismiss();
             }
 
             @Override
             public void onFailure(Call<responseEfetuarLogin> call, Throwable t)
             {
+                dialog.dismiss();
                 Toast.makeText(getApplicationContext(), "Erro na chamada ao servidor", Toast.LENGTH_SHORT).show();
             }
         });
