@@ -34,6 +34,5 @@ import com.google.gson.annotations.SerializedName;
             this.sessao = sessao;
             this.message = message;
         }
-
     }
 
