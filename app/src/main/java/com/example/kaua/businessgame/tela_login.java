@@ -3,9 +3,11 @@ package com.example.kaua.businessgame;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +33,7 @@ public class tela_login extends AppCompatActivity {
     private EditText edtSenha;
     private TextView tvEsqueciSenha;
     private ProgressDialog progress;
+    CacheTool cacheTool = new CacheTool();
 
 
 
@@ -70,6 +73,17 @@ public class tela_login extends AppCompatActivity {
                 Intent it = new Intent(tela_login.this, tela_principal.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("fragment", "TelaCadastro");
+
+                //
+                SharedPreferences sp1 = getSharedPreferences("MainActivityPreferences", MODE_PRIVATE);
+                cacheTool.setCache(sp1,"pergunta_1","ali");
+
+                String teste = cacheTool.getCache(sp1, "pergunta_1");
+
+                cacheTool.cleanCache(sp1,"pergunta_1");
+
+                teste = cacheTool.getCache(sp1, "pergunta_1");
+               //
                 it.putExtras(bundle);
                 startActivity(it);
             }
