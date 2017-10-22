@@ -33,7 +33,6 @@ public class tela_login extends AppCompatActivity {
     private EditText edtSenha;
     private TextView tvEsqueciSenha;
     private ProgressDialog progress;
-    CacheTool cacheTool = new CacheTool();
 
 
 
