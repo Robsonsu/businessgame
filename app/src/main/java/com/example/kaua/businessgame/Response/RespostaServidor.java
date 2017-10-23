@@ -1,26 +1,26 @@
 package com.example.kaua.businessgame.Response;
 
+import com.example.kaua.businessgame.GrupoPergunta;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+import java.util.Objects;
+
 /**
  * Created by Kauã on 10/09/2017.
  */
 
 public class RespostaServidor {
 
-    private String result;
+    @SerializedName("sucess")
     private boolean sucess;
-    private String data;
+    @SerializedName("data")
+    private List<Object> data;
+    @SerializedName("message")
     private String message;
 
-    public RespostaServidor(){}
+    public RespostaServidor(){  }
 
-
-    public String getResult() {
-        return result;
-    }
-
-    public void setResult(String result) {
-        this.result = result;
-    }
 
     public boolean isSucess() {
         return sucess;
@@ -30,11 +30,11 @@ public class RespostaServidor {
         this.sucess = sucess;
     }
 
-    public String getData() {
-        return data;
+    public List<Object> getData() {
+        return  this.data;
     }
 
-    public void setData(String data) {
+    public void setData(List<Object> data) {
         this.data = data;
     }
 

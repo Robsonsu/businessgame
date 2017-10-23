@@ -13,8 +13,20 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.example.kaua.businessgame.Response.RespostaServidor;
+import com.example.kaua.businessgame.Response.responseEfetuarLogin;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class TelaConfiguracoes extends Fragment {
 
@@ -23,7 +35,7 @@ public class TelaConfiguracoes extends Fragment {
     private Spinner spnQtdGrupos;
     private LinearLayout llBtn;
     private Context context;
-    private ArrayList<Grupo> grupos = new ArrayList<Grupo>();
+   // private ArrayList<Grupo> grupos = new ArrayList<Grupo>();
     private ArrayList<String> lideres = new ArrayList<>();
 //    private Button btnOkGrupos;
 
@@ -39,6 +51,7 @@ public class TelaConfiguracoes extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+
         }
     }
 
@@ -64,9 +77,14 @@ public class TelaConfiguracoes extends Fragment {
         llBtn = (LinearLayout) v.findViewById(R.id.llBtnConfig);
 //        btnOkGrupos = (Button) v.findViewById(R.id.btnOkGrupos);
 
-        String[] grupos = new String[]{"1 Grupo", "2 Grupos", "3 Grupos", "4 Grupos", "5 Grupos"};
+        String[] qt_equipes = new String[]{"1 ", "2 ", "3 ", "4 ", "5"};
+        try {
+          CarregaGruposPerguntas();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        ArrayAdapter<String> arrayGrupos = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, grupos);
+        ArrayAdapter<String> arrayGrupos = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, qt_equipes);
         arrayGrupos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnQtdGrupos.setAdapter(arrayGrupos);
     }
@@ -105,26 +123,29 @@ public class TelaConfiguracoes extends Fragment {
 //        });
     }
 
-    public void setarLideres(int qtdGrupos){
-        grupos.clear();
-        Grupo grupo;
+    public void CarregaGruposPerguntas() throws IOException {
 
-        for (int i = 0; i < qtdGrupos; i++){
-            grupo = new Grupo();
-            grupo.setIdGrupo(String.valueOf(i+1));
-            grupo.setLideres(lideres);
-            grupos.add(grupo);
-        }
+        RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
 
-//        // Create adapter passing in the sample user data
-//        adapterGrupos adapter = new adapterGrupos(context, grupos);
-//        // Attach the adapter to the recyclerview to populate items
-//        rvListaGrupos.setAdapter(adapter);
-//        // Set layout manager to position the items
-//        rvListaGrupos.setLayoutManager(new LinearLayoutManager(context));
+        Call<RespostaServidor> call = service.getByUserGrupo(cacheAplicativo.getResponseEfetuarLogin().getCd_usuario());
 
-        llBtn.setVisibility(View.VISIBLE);
+
+        call.enqueue(new Callback<RespostaServidor>() {
+            @Override
+            public void onResponse(Call<RespostaServidor> call, Response<RespostaServidor> response) {
+                response.body();
+            }
+
+            @Override
+            public void onFailure(Call<RespostaServidor> call, Throwable t) {
+            }
+        });
+
     }
+
+
+           // llBtn.setVisibility(View.VISIBLE);
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

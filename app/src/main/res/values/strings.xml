@@ -30,7 +30,7 @@
 
     <!--Tela configurações-->
     <string name="configPartida">Configurações da partida</string>
-    <string name="qtdGrupos">Quantidade de Grupos</string>
+    <string name="qtdGrupos">Quantidade de Equipes</string>
     <string name="grupoPerguntas">Grupo de Perguntas</string>
     <string name="numeroLider">Líder %s</string>
     <string name="iniciar">Iniciar</string>

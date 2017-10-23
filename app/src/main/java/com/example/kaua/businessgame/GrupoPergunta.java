@@ -1,0 +1,30 @@
+package com.example.kaua.businessgame;
+import com.google.gson.annotations.SerializedName;
+
+
+import java.util.List;
+
+/**
+ * Created by Kauã on 02/10/2017.
+ */
+
+public class GrupoPergunta {
+
+    @SerializedName("cdGrupo")
+    private String cdGrupo;
+
+    @SerializedName("nm_grupo")
+    private String nm_grupo;
+
+
+    public GrupoPergunta(String cdgrupo, String nm_equipe) {
+        this.cdGrupo = cdgrupo;
+        this.nm_grupo = nm_equipe;
+    }
+
+    public String getCdGrupo(){ return  this.cdGrupo; }
+    public String getNm_equipe(){ return  this.nm_grupo; }
+
+
+
+}

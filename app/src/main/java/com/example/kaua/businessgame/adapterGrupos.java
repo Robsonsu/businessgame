@@ -17,11 +17,11 @@ import java.util.List;
 
 public class adapterGrupos extends RecyclerView.Adapter<adapterGrupos.ViewHolder>  {
 
-    private List<Grupo> grupos;
+    private List<GrupoPergunta> grupos;
     private Context context;
     private OnDataSelected  onDataSelected;
 
-    public adapterGrupos(Context context, List<Grupo> grupos) {
+    public adapterGrupos(Context context, List<GrupoPergunta> grupos) {
         this.context = context;
         this.grupos = grupos;
     }
@@ -36,12 +36,12 @@ public class adapterGrupos extends RecyclerView.Adapter<adapterGrupos.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Grupo grupo = grupos.get(position);
-        holder.tvGrupo.setText(context.getString(R.string.numeroLider, grupo.getIdGrupo()));
+        GrupoPergunta grupo = grupos.get(position);
+     //   holder.tvGrupo.setText(context.getString(R.string.numeroLider, grupo.getIdGrupo()));
 
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, grupo.getLideres()); //selected item will look like a spinner set from XML
-        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        holder.spnLideres.setAdapter(spinnerArrayAdapter);
+      //  ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, grupos.); //selected item will look like a spinner set from XML
+       // spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+       // holder.spnLideres.setAdapter(spinnerArrayAdapter);
     }
 
     @Override
