@@ -1,9 +1,11 @@
 package com.example.kaua.businessgame;
 
+
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,10 +17,19 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+
 import com.example.kaua.businessgame.Response.RespostaServidor;
 import com.example.kaua.businessgame.Response.responseEfetuarLogin;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.internal.LinkedTreeMap;
+
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -133,7 +144,11 @@ public class TelaConfiguracoes extends Fragment {
         call.enqueue(new Callback<RespostaServidor>() {
             @Override
             public void onResponse(Call<RespostaServidor> call, Response<RespostaServidor> response) {
-                response.body();
+                Gson gson = new Gson();
+                JsonArray json = response.body().getData();
+                for (JsonElement j: json) {
+                    GrupoPergunta gp =  gson.fromJson(j.toString(), GrupoPergunta.class);
+                }
             }
 
             @Override

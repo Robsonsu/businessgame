@@ -1,7 +1,10 @@
 package com.example.kaua.businessgame.Response;
 
 import com.example.kaua.businessgame.GrupoPergunta;
+import com.google.gson.JsonArray;
 import com.google.gson.annotations.SerializedName;
+
+import org.json.JSONObject;
 
 import java.util.List;
 import java.util.Objects;
@@ -14,8 +17,10 @@ public class RespostaServidor {
 
     @SerializedName("sucess")
     private boolean sucess;
+
     @SerializedName("data")
-    private List<Object> data;
+    private JsonArray data;
+
     @SerializedName("message")
     private String message;
 
@@ -30,11 +35,11 @@ public class RespostaServidor {
         this.sucess = sucess;
     }
 
-    public List<Object> getData() {
+    public JsonArray getData() {
         return  this.data;
     }
 
-    public void setData(List<Object> data) {
+    public void setData(JsonArray data) {
         this.data = data;
     }
 
