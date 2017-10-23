@@ -1,4 +1,4 @@
-package com.example.kaua.businessgame;
+package com.example.kaua.businessgame.Model;
 import com.google.gson.annotations.SerializedName;
 
 

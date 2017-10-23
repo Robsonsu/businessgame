@@ -1,11 +1,19 @@
 package com.example.kaua.businessgame;
 
+import com.example.kaua.businessgame.Model.GrupoPergunta;
+import com.example.kaua.businessgame.Response.RespostaServidor;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -38,4 +46,5 @@ public class ServiceGenerator {
 
         return retrofit.create(serviceClass);
     }
+
 }
