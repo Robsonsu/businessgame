@@ -1,5 +1,6 @@
 package com.example.kaua.businessgame;
 
+import com.example.kaua.businessgame.Response.ResponseTokenPartida;
 import com.example.kaua.businessgame.Response.responseEfetuarLogin;
 import com.example.kaua.businessgame.Response.RespostaServidor;
 
@@ -28,8 +29,9 @@ public interface RetrofitService {
     Call<RespostaServidor> cadastrar(@Body RequestBody requestBody);
 
     @GET("partida/nova")
-    Call<RespostaServidor> novaPartida(@Query("id") String id,
-                                       @Query("qt") String qt);
+    Call<ResponseTokenPartida> novaPartida(@Query("id") String id,
+                                           @Query("qt") String qt,
+                                           @Query("grupo") String grupo);
 
     @GET("partida/conectaLider")
     Call<RespostaServidor> conectaLider(@Query("id") String id,
