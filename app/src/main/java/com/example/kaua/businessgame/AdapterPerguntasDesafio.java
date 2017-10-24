@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.kaua.businessgame.Model.GrupoPergunta;
+
 import java.util.ArrayList;
 
 import static android.support.v7.recyclerview.R.styleable.RecyclerView;
