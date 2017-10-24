@@ -63,7 +63,7 @@ public class TelaCadastro extends Fragment {
         edtNome = (EditText) view.findViewById(R.id.edtNomeCadastro);
         edtSenha = (EditText) view.findViewById(R.id.edtSenhaCadastro);
         edtRepetirSenha = (EditText) view.findViewById(R.id.edtConfirmarSenhaCadastro);
-      //  rgTpAcesso = (RadioGroup) view.findViewById(R.id.rgTpAcesso);
+        rgTpAcesso = (RadioGroup) view.findViewById(R.id.rgTpAcesso);
         btnCriarConta = (Button) view.findViewById(R.id.btnConfirmarCadastro);
     }
 
