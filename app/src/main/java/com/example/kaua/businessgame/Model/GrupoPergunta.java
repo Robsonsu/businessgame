@@ -1,4 +1,4 @@
-package com.example.kaua.businessgame;
+package com.example.kaua.businessgame.Model;
 import com.google.gson.annotations.SerializedName;
 
 
@@ -28,6 +28,8 @@ public class GrupoPergunta {
     public String getCdGrupo(){ return  this.cdGrupo; }
     public String getNm_equipe(){ return  this.nm_grupo; }
     public String getCriado_por(){ return  this.criado_por; }
+
+
 
 
 

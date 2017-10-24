@@ -1,13 +1,7 @@
 package com.example.kaua.businessgame.Response;
 
-import com.example.kaua.businessgame.GrupoPergunta;
 import com.google.gson.JsonArray;
 import com.google.gson.annotations.SerializedName;
-
-import org.json.JSONObject;
-
-import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by Kauã on 10/09/2017.
