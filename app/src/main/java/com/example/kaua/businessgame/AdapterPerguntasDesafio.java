@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.kaua.businessgame.Model.GrupoPergunta;
+import com.example.kaua.businessgame.Model.PerguntasDesafio;
 
 import java.util.ArrayList;
 
@@ -20,10 +21,12 @@ import static android.support.v7.recyclerview.R.styleable.RecyclerView;
 
 public class AdapterPerguntasDesafio extends RecyclerView.Adapter<AdapterPerguntasDesafio.ViewHolder> {
 
-    private ArrayList<GrupoPergunta> mList;
+    private Context context;
+    private ArrayList<PerguntasDesafio> mList;
 
     // data is passed into the constructor
-    AdapterPerguntasDesafio(ArrayList<GrupoPergunta> mList) {
+    AdapterPerguntasDesafio(Context context, ArrayList<PerguntasDesafio> mList) {
+        this.context = context;
         this.mList = mList;
     }
 
@@ -39,7 +42,17 @@ public class AdapterPerguntasDesafio extends RecyclerView.Adapter<AdapterPergunt
     // binds the data to the textview in each cell
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.btnPergunta.setText(position + 1);
+        PerguntasDesafio obj = mList.get(position);
+
+        holder.btnPergunta.setText(obj.getCdPergunta());
+
+        holder.btnPergunta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogPerguntas cdd=new dialogPerguntas(context);
+                cdd.show();
+            }
+        });
     }
 
     // total number of cells

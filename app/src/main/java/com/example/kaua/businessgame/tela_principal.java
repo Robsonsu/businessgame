@@ -19,7 +19,8 @@ public class tela_principal extends AppCompatActivity
         TelaToken.OnFragmentInteractionListener,
         TelaConfiguracoes.OnFragmentInteractionListener,
         TelaCadastro.OnFragmentInteractionListener,
-        TelaNovaPartida.OnFragmentInteractionListener{
+        TelaNovaPartida.OnFragmentInteractionListener,
+        TelaPergunta.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +75,9 @@ public class tela_principal extends AppCompatActivity
                     break;
                 case "TelaConfiguracoes":
                     transaction.replace(R.id.fl_principal, new TelaConfiguracoes());
+                    break;
+                case "TelaPergunta":
+                    transaction.replace(R.id.fl_principal, new TelaPergunta());
                     break;
             }
 

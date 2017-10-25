@@ -49,4 +49,39 @@ public class PerguntasDesafio {
     public String getCorreta(){return this.correta; };
     public String getAdd_por(){return this.add_por; };
 
+    public void setCdPergunta(String cdPergunta) {
+        this.cdPergunta = cdPergunta;
+    }
+
+    public void setDsPergunta(String dsPergunta) {
+        this.dsPergunta = dsPergunta;
+    }
+
+    public void setCdCategoria(String cdCategoria) {
+        this.cdCategoria = cdCategoria;
+    }
+
+    public void setDsResposta1(String dsResposta1) {
+        this.dsResposta1 = dsResposta1;
+    }
+
+    public void setDsResposta2(String dsResposta2) {
+        this.dsResposta2 = dsResposta2;
+    }
+
+    public void setDsResposta3(String dsResposta3) {
+        this.dsResposta3 = dsResposta3;
+    }
+
+    public void setDsResposta4(String dsResposta4) {
+        this.dsResposta4 = dsResposta4;
+    }
+
+    public void setCorreta(String correta) {
+        this.correta = correta;
+    }
+
+    public void setAdd_por(String add_por) {
+        this.add_por = add_por;
+    }
 }
