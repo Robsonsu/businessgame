@@ -45,9 +45,11 @@
 
     <!--Tela Iniciar Partida-->
     <string name="iniciarPartida">Iniciar Partida</string>
-    <string name="insiraToken">Insira o Token para iniciar uma nova partida</string>
-    <string name="hintToken">Token&#8230;</string>
+    <string name="insiraToken">Aguarde instruções do professor e insira o token informado</string>
+    <string name="hintToken">Token</string>
     <string name="conectar">Conectar</string>
+    <string name="lider">Líder</string>
+    <string name="integrante">Integrante</string>
 
     <!--Tela tabuleiro-->
     <string name="valor" formatted="false">Valor: %s</string>
