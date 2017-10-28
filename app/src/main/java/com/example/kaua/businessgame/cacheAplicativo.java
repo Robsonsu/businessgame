@@ -10,15 +10,13 @@ import com.example.kaua.businessgame.Response.responseEfetuarLogin;
 public class cacheAplicativo {
 
     private static responseEfetuarLogin responseEfetuarLogin;
-    private static String tokenpartida;
+    public static String tokenpartida;
 
     public static responseEfetuarLogin getResponseEfetuarLogin() {
         return responseEfetuarLogin;
     }
 
-    public  static String getTokenPartida(){ return tokenpartida; }
 
-    public  static void setTokenPartida(String token) { tokenpartida = token; }
 
 
     public static void setResponseEfetuarLogin(responseEfetuarLogin responseEfetuarLogin) {
