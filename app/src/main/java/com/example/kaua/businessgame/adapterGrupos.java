@@ -37,7 +37,7 @@ public class adapterGrupos extends RecyclerView.Adapter<adapterGrupos.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        GrupoPergunta grupo = grupos.get(position);
+        GrupoPergunta grupo = grupos.get(2);
      //   holder.tvGrupo.setText(context.getString(R.string.numeroLider, grupo.getIdGrupo()));
 
       //  ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, grupos.); //selected item will look like a spinner set from XML

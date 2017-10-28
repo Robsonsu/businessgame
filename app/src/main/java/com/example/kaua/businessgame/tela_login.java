@@ -53,12 +53,12 @@ public class tela_login extends AppCompatActivity {
         btnEntrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent it = new Intent(tela_login.this, tela_principal.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("fragment", "TelaToken");
-                it.putExtras(bundle);
-                startActivity(it);
-//               retrofitConverter(edtRA.getText().toString(), edtSenha.getText().toString());
+             //   Intent it = new Intent(tela_login.this, tela_principal.class);
+              //  Bundle bundle = new Bundle();
+             //   bundle.putString("fragment", "TelaToken");
+             //   it.putExtras(bundle);
+             //   startActivity(it);
+           retrofitConverter(edtRA.getText().toString(), edtSenha.getText().toString());
             }
         });
 
