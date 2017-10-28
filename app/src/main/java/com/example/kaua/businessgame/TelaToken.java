@@ -9,7 +9,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 public class TelaToken extends Fragment {
 
@@ -36,7 +38,9 @@ public class TelaToken extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tela_token, container, false);
 
         setView(view);
-
+        TextView tv = (TextView) view.findViewById(R.id.tvCodToken);
+        String token = cacheAplicativo.tokenpartida;
+        tv.setText(token);
         // Inflate the layout for this fragment
         return view;
     }

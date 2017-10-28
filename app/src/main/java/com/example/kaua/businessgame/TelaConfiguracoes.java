@@ -84,13 +84,9 @@ public class TelaConfiguracoes extends Fragment {
 
 
 
-
-
                 //if's the first time created
                 Fragment tela_token = new TelaToken();
-                Fragment config = new TelaConfiguracoes();
-
-
+                Fragment config = TelaConfiguracoes.this ;
                 FragmentTransaction fragmentTransaction = myFragmentManager.beginTransaction();
                 fragmentTransaction.remove(config);
                 fragmentTransaction.replace( android.R.id.content, tela_token, "TelaToken");
@@ -138,11 +134,9 @@ public class TelaConfiguracoes extends Fragment {
                 try {
                   response.body();
                     if (response.body().getSucess().equals("true")) {
-                        cacheAplicativo.setTokenPartida(response.body().getToken_partida());
-
-
-                        System.out.println(response.body().getMessage());
-
+                        String tk = response.body().getToken_partida();
+                        cacheAplicativo.tokenpartida = tk;
+                        System.out.println("TOKEN " + cacheAplicativo.tokenpartida);
                     }
                     else
                     {
