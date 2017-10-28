@@ -44,12 +44,22 @@
                 android:layout_margin="2dp"/>
         </LinearLayout>
     </LinearLayout>
-
     <WebView
         android:layout_width="match_parent"
         android:id="@+id/wv_tabuleiro"
         android:layout_height="370dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/rlDados"/>
+        android:layout_above="@+id/rlDados">
+
+    </WebView>
+
+    <TextView
+        android:id="@+id/tvTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/rlDados"
+        android:layout_marginTop="23dp"
+        android:textSize="32sp"
+        android:layout_toStartOf="@+id/rlDados" />
 </RelativeLayout>

@@ -1,9 +1,13 @@
 package com.example.kaua.businessgame;
 
+import android.app.Dialog;
 import android.content.Context;
 
 
+import android.content.DialogInterface;
 import android.media.Image;
+import android.os.CountDownTimer;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.annotation.SuppressLint;
@@ -31,7 +35,7 @@ public class tela_tabuleiro extends AppCompatActivity {
     }
 
     private ImageView iv_dice1, iv_dice2;
-    private TextView tv_dice1, tv_dice2;
+    private TextView tv_dice1, tv_dice2, tv_timer;
     private WebView wv_tabuleiro;
     private LinearLayout rlDados;
 
@@ -50,10 +54,11 @@ public class tela_tabuleiro extends AppCompatActivity {
         iv_dice2 = (ImageView) findViewById(R.id.dice2);
 //        tv_dice1 = (TextView) findViewById(R.id.tv_dice1);
         tv_dice2 = (TextView) findViewById(R.id.tv_dice2);
+        tv_timer = (TextView) findViewById(R.id.tvTimer);
+
         rlDados = (LinearLayout) findViewById(R.id.rlDados);
         r = new Random();
         setWebView();
-
 
         rlDados.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -77,6 +82,9 @@ public class tela_tabuleiro extends AppCompatActivity {
                 Animation rotate = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate);
                 iv_dice1.startAnimation(rotate);
                 iv_dice2.startAnimation(rotate);
+                timer();
+                mostrarPerguntaSomarSubtrair(dice1Throw,dice2Throw);
+
             }
         });
     }
@@ -149,5 +157,44 @@ public class tela_tabuleiro extends AppCompatActivity {
             view.loadUrl(url); // load the url
             return true;
         }
+    }
+
+    public void mostrarPerguntaSomarSubtrair(int dice1, int dice2){
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(tela_tabuleiro.this);
+        builder1.setCancelable(true);
+        builder1
+                .setMessage("Seus dados foram "+ dice1+ " e " + dice2 +", gostaria de somar ou subtrair")
+                .setNegativeButton(
+                "SUBTRAIR ( " + (dice1 - dice2) + " )",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                })
+                .setPositiveButton(
+                        "SOMAR ( " + (dice1 + dice2) + " )",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+    }
+
+    private void timer(){
+        CountDownTimer countDownTimer = new CountDownTimer(60 * 1000,1000) {
+            @Override
+            public void onTick(long l) {
+                tv_timer.setText("" + (l/1000));
+            }
+
+            @Override
+            public void onFinish() {
+                tv_timer.setText("Sem tempo");
+            }
+        }.start();
     }
 }
