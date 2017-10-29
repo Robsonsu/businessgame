@@ -12,11 +12,24 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.kaua.businessgame.Response.ResponseTokenPartida;
+import com.example.kaua.businessgame.Response.RespostaServidor;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class TelaToken extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private ProgressBar pb;
+    private TextView tvToken;
+    private TextView tvParticipantes;
+    private Button btnCancelar;
+    private Button btnAvancar;
+    private Context context;
 
     public TelaToken() {
         // Required empty public constructor
@@ -38,15 +51,60 @@ public class TelaToken extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tela_token, container, false);
 
         setView(view);
-        TextView tv = (TextView) view.findViewById(R.id.tvCodToken);
-        String token = cacheAplicativo.tokenpartida;
-        tv.setText(token);
+
         // Inflate the layout for this fragment
         return view;
     }
 
     public void setView(View v){
 //        pb = (ProgressBar) v.findViewById(R.id.pbToken);
+        tvToken = (TextView) v.findViewById(R.id.tvCodToken);
+        tvParticipantes = (TextView) v.findViewById(R.id.tvPartConectados);
+        btnCancelar = (Button) v.findViewById(R.id.btnCancelarToken);
+        btnAvancar = (Button) v.findViewById(R.id.btnAvancarToken);
+
+        tvToken.setText(cacheAplicativo.getTokenpartida());
+        tvParticipantes.setText(getString(R.string.usuarioConectados, "0"));
+
+        btnAvancar.setVisibility(View.GONE);
+    }
+
+    public void setAcoesViews(){
+
+    }
+
+    public void IniciarPartida(String qt_grupo, String cd_grupo) {
+        RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
+        Call<RespostaServidor> call = service.acessarPartida("id", "token");
+
+        call.enqueue(new Callback<RespostaServidor>() {
+            @Override
+            public void onResponse(Call<RespostaServidor> call, Response<RespostaServidor> response) {
+                if (response.isSuccessful()) {
+                    try {
+//                        if (response.body().getSucess().equals("true")) {
+//                            String tk = response.body().getToken_partida();
+//                            cacheAplicativo.setTokenpartida(tk);
+//                            System.out.println("TOKEN " + cacheAplicativo.getTokenpartida());
+//                        } else {
+//                            System.out.println(response.body().getMessage());
+//                            //MOSTRA ERRO NA TELA
+//                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(context, "Resposta não foi sucesso", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+
+            @Override
+            public void onFailure(Call<RespostaServidor> call, Throwable t) {
+                Toast.makeText(context, "Erro na chamada ao servidor", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -59,6 +117,7 @@ public class TelaToken extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
@@ -73,16 +132,6 @@ public class TelaToken extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

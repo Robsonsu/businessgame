@@ -142,7 +142,6 @@ public class tela_login extends AppCompatActivity {
                             it.putExtras(bundle);
                             startActivity(it);
                         } else {
-
                             Toast.makeText(getApplicationContext(), "Resposta não foi sucesso", Toast.LENGTH_SHORT).show();
                             // segura os erros de requisição
                             ResponseBody errorBody = response.errorBody();
