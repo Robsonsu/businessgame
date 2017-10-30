@@ -5,8 +5,10 @@ import android.content.Context;
 
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.CountDownTimer;
+import android.os.SystemClock;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,8 +25,11 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Random;
 
@@ -38,7 +43,12 @@ public class tela_tabuleiro extends AppCompatActivity {
     private TextView tv_dice1, tv_dice2, tv_timer;
     private WebView wv_tabuleiro;
     private LinearLayout rlDados;
+    private RadioButton rb1, rb2,rb3,rb4, rbEscolhido;
+    private int diceSubtrair, diceSomar, Auxiliar;
+    private String CasaTotal, Escolhido;
 
+    SharedPreferences sharedPreferencedice;
+    CacheTool cacheDice = new CacheTool();
     Random r;
 
     int dice1Point = 0, dice2Point = 0;
@@ -47,6 +57,7 @@ public class tela_tabuleiro extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_tabuleiro);
+        sharedPreferencedice = getSharedPreferences("telatabuleiro",MODE_PRIVATE);
 
 
         wv_tabuleiro = (WebView) findViewById(R.id.wv_tabuleiro);
@@ -58,6 +69,7 @@ public class tela_tabuleiro extends AppCompatActivity {
 
         rlDados = (LinearLayout) findViewById(R.id.rlDados);
         r = new Random();
+
         setWebView();
 
         rlDados.setOnClickListener(new View.OnClickListener(){
@@ -84,7 +96,6 @@ public class tela_tabuleiro extends AppCompatActivity {
                 iv_dice2.startAnimation(rotate);
                 timer();
                 mostrarPerguntaSomarSubtrair(dice1Throw,dice2Throw);
-
             }
         });
     }
@@ -159,26 +170,45 @@ public class tela_tabuleiro extends AppCompatActivity {
         }
     }
 
-    public void mostrarPerguntaSomarSubtrair(int dice1, int dice2){
+    public void mostrarPerguntaSomarSubtrair(final int dice1,final int dice2){
+
+
+        sharedPreferencedice = getSharedPreferences("telatabuleiro",MODE_PRIVATE);
+        CasaTotal = cacheDice.getCache(sharedPreferencedice,"telatabuleiro");
+        //if(CasaTotal != ""){Auxiliar =  Integer.parseInt(CasaTotal);}
+
+
+         diceSubtrair = dice1 - dice2;
+         diceSomar = dice1 + dice2;
+
+        if(diceSubtrair < 0){  diceSubtrair = diceSubtrair * (-1);     }
         AlertDialog.Builder builder1 = new AlertDialog.Builder(tela_tabuleiro.this);
         builder1.setCancelable(true);
         builder1
-                .setMessage("Seus dados foram "+ dice1+ " e " + dice2 +", gostaria de somar ou subtrair")
+               // .setMessage("Seus dados foram "+ dice1+ " e " + dice2 +", gostaria de somar ou subtrair")
+                .setMessage("Seus dados foram "+ dice1+ " e " + dice2 +", gostaria de somar ou subtrair?" )
                 .setNegativeButton(
-                "SUBTRAIR ( " + (dice1 - dice2) + " )",
+
+                "SUBTRAIR = " + diceSubtrair,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        Auxiliar = Auxiliar + diceSubtrair;
+                        cacheDice.setCache(sharedPreferencedice, "pinoCasa", Integer.toString(Auxiliar));
                         dialog.cancel();
+                        showPergunta();
                     }
                 })
                 .setPositiveButton(
-                        "SOMAR ( " + (dice1 + dice2) + " )",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
+                "SOMAR = " + diceSomar,
+                 new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
 
+                         Auxiliar = Auxiliar + diceSomar;
+                         cacheDice.setCache(sharedPreferencedice, "pinoCasa",  Integer.toString(Auxiliar));
+                         dialog.cancel();
+                        showPergunta();
+                     }
+                  });
 
         AlertDialog alert11 = builder1.create();
         alert11.show();
@@ -196,5 +226,75 @@ public class tela_tabuleiro extends AppCompatActivity {
                 tv_timer.setText("Sem tempo");
             }
         }.start();
+    }
+
+    private void showPergunta(){
+       // SystemClock.sleep(2000);
+
+        final String closeDialog = "";
+
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.unica_pergunta);
+        dialog.setTitle("");
+
+        TextView tvPergunta = (TextView)dialog.findViewById(R.id.tv_pergunta_dialig);
+        RadioButton rbPergunta1 = (RadioButton)dialog.findViewById(R.id.rb_pergunta_1_dialog);
+        RadioButton rbPergunta2 = (RadioButton)dialog.findViewById(R.id.rb_pergunta_2_dialog);
+        RadioButton rbPergunta3 = (RadioButton)dialog.findViewById(R.id.rb_pergunta_3_dialog);
+        RadioButton rbPergunta4 = (RadioButton)dialog.findViewById(R.id.rb_pergunta_4_dialog);
+        final RadioGroup rbgPergunta = (RadioGroup)dialog.findViewById(R.id.rbg_pergunta_dialog);
+
+
+        tvPergunta.setText("PERGUNTA AQUI ESTAMOS BLA BLA BLA BLA BLA ?" +
+                "PERGUNTA AQUI ESTAMOS BLA BLA BLA BLA BLA ?" +
+                "PERGUNTA AQUI ESTAMOS BLA BLA BLA BLA BLA ?" +
+                "PERGUNTA AQUI ESTAMOS BLA BLA BLA BLA BLA ?" +
+                "");
+
+        rbPergunta1.setText("ROBSON BLA BLA BLA BLA BLA BLA BDSASDJAJSDOAJSDASDJASODJASO");
+        rbPergunta2.setText("de");
+        rbPergunta3.setText("Oliveira");
+        rbPergunta4.setText("Su");
+
+        Button button = (Button)dialog.findViewById(R.id.bt_pergunta);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int selectedId = rbgPergunta.getCheckedRadioButtonId();
+                rbEscolhido = (RadioButton)findViewById(selectedId);
+                teste(Escolhido);
+                dialog.cancel();
+            }
+        });
+
+
+        rbgPergunta.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+                {
+                    public void onCheckedChanged(RadioGroup group, int checkedId) {
+                        switch(checkedId){
+                            case R.id.rb_pergunta_1_dialog:
+                                Escolhido = "1";
+                                break;
+                            case R.id.rb_pergunta_2_dialog:
+                                Escolhido = "2";
+                                break;
+                            case R.id.rb_pergunta_3_dialog:
+                                Escolhido = "3";
+                                break;
+                            case R.id.rb_pergunta_4_dialog:
+                                Escolhido = "4";
+                                break;
+                        }
+                    }
+                });
+
+        dialog.show();
+    }
+
+    private String teste(String S) {
+
+        String d = S;
+        return "AQUI";
     }
 }

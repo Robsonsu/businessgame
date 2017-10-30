@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <TextView
+        android:id="@+id/tv_pergunta_dialig"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.23"
+        android:textSize="15sp"
+        android:text="TextView" />
+
+    <RadioGroup
+        android:id="@+id/rbg_pergunta_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="145dp">
+
+        <RadioButton
+            android:id="@+id/rb_pergunta_1_dialog"
+            android:layout_width="348dp"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="" />
+
+        <RadioButton
+            android:id="@+id/rb_pergunta_2_dialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="" />
+
+        <RadioButton
+            android:id="@+id/rb_pergunta_3_dialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="" />
+
+        <RadioButton
+            android:id="@+id/rb_pergunta_4_dialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/bt_pergunta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Confirmar" />
+</LinearLayout>

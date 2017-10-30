@@ -3,6 +3,8 @@ package com.example.kaua.businessgame;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -68,7 +70,7 @@ public class tela_login extends AppCompatActivity {
                 Intent it = new Intent(tela_login.this, tela_principal.class);
                 Bundle bundle = new Bundle();
 //                bundle.putString("fragment", "TelaCadastro");
-                bundle.putString("fragment", "TelaNovaPartida");
+
                 it.putExtras(bundle);
                 startActivity(it);
             }
