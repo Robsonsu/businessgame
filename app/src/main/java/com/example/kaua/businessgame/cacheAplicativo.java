@@ -12,6 +12,7 @@ public class cacheAplicativo {
     private static responseEfetuarLogin responseEfetuarLogin;
     private static String tokenpartida;
     private static int qtdEquipes;
+    private static String idConectado;
 
     public static responseEfetuarLogin getResponseEfetuarLogin() {
         return responseEfetuarLogin;
@@ -35,5 +36,13 @@ public class cacheAplicativo {
 
     public static void setQtdEquipes(int qtdEquipes) {
         cacheAplicativo.qtdEquipes = qtdEquipes;
+    }
+
+    public static String getIdConectado() {
+        return idConectado;
+    }
+
+    public static void setIdConectado(String idConectado) {
+        cacheAplicativo.idConectado = idConectado;
     }
 }

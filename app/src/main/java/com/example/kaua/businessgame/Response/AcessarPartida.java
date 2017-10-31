@@ -19,6 +19,4 @@ public class AcessarPartida {
     public String getCd_equipe(){return this.cd_equipe; };
     public String getNm_equipe(){return this.nm_equipe; };
     public String getLider(){return this.getLider(); };
-
-
 }

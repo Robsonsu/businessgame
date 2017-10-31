@@ -1,11 +1,13 @@
 package com.example.kaua.businessgame;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +16,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kaua.businessgame.Model.GrupoPergunta;
+import com.example.kaua.businessgame.Response.AcessarPartida;
 import com.example.kaua.businessgame.Response.ResponseTokenPartida;
 import com.example.kaua.businessgame.Response.RespostaServidor;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,6 +34,7 @@ public class TelaToken extends Fragment {
     private ProgressBar pb;
     private TextView tvToken;
     private TextView tvParticipantes;
+    private TextView tvEquipes;
     private Button btnCancelar;
     private Button btnAvancar;
     private Context context;
@@ -51,6 +59,7 @@ public class TelaToken extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tela_token, container, false);
 
         setView(view);
+        setAcoesViews();
 
         // Inflate the layout for this fragment
         return view;
@@ -62,34 +71,61 @@ public class TelaToken extends Fragment {
         tvParticipantes = (TextView) v.findViewById(R.id.tvPartConectados);
         btnCancelar = (Button) v.findViewById(R.id.btnCancelarToken);
         btnAvancar = (Button) v.findViewById(R.id.btnAvancarToken);
+        tvEquipes = (TextView) v.findViewById(R.id.tvNmEquipes);
 
         tvToken.setText(cacheAplicativo.getTokenpartida());
         tvParticipantes.setText(getString(R.string.usuarioConectados, "0"));
 
         btnAvancar.setVisibility(View.GONE);
+
+        try{
+            atualizarEquipes();
+        }catch (InterruptedException e){}
     }
 
     public void setAcoesViews(){
-
+        btnAvancar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                context.startActivity(new Intent(context, tela_tabuleiro.class));
+            }
+        });
     }
 
-    public void IniciarPartida(String qt_grupo, String cd_grupo) {
+    public void verificaEquipes() {
         RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
-        Call<RespostaServidor> call = service.acessarPartida("id", "token");
+        Call<RespostaServidor> call = service.acessarPartida(cacheAplicativo.getIdConectado(), cacheAplicativo.getTokenpartida());
 
         call.enqueue(new Callback<RespostaServidor>() {
             @Override
             public void onResponse(Call<RespostaServidor> call, Response<RespostaServidor> response) {
                 if (response.isSuccessful()) {
                     try {
-//                        if (response.body().getSucess().equals("true")) {
-//                            String tk = response.body().getToken_partida();
-//                            cacheAplicativo.setTokenpartida(tk);
-//                            System.out.println("TOKEN " + cacheAplicativo.getTokenpartida());
-//                        } else {
-//                            System.out.println(response.body().getMessage());
-//                            //MOSTRA ERRO NA TELA
-//                        }
+                        if (!response.body().isSucess()){
+                            Gson gson = new Gson();
+                            JsonArray json = response.body().getData();
+                            String[] nm_equipes = new String[json.size()];
+                            String[] nm_lider = new String[json.size()];
+                            tvParticipantes.setText(getString(R.string.usuarioConectados, String.valueOf(json.size())));
+                            int i = 0;
+                            for (JsonElement j : json) {
+                                AcessarPartida ap = gson.fromJson(j.toString(), AcessarPartida.class);
+                                nm_equipes[i] = ap.getNm_equipe();
+                                nm_lider[i] = ap.getLider();
+                                i++;
+                                tvEquipes.setText(
+                                        "Líder: ".concat(nm_lider[i].concat(
+                                        " Equipe: ".concat(nm_equipes[i].concat(((i > 0) ? "\n": "")))))
+                                );
+                            }
+
+                            try{
+                                atualizarEquipes();
+                            }catch (InterruptedException e){}
+                        } else {
+                            tvParticipantes.setText("Todos prontos!");
+                            btnAvancar.setVisibility(View.VISIBLE);
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -105,6 +141,17 @@ public class TelaToken extends Fragment {
             }
         });
 
+    }
+
+    public void atualizarEquipes() throws InterruptedException {
+        Thread td = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                verificaEquipes();
+            }
+        });
+        Thread.sleep(5000);
+        td.start();
     }
 
     // TODO: Rename method, update argument and hook method into UI event

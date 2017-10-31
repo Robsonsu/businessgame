@@ -112,8 +112,7 @@ public class tela_login extends AppCompatActivity {
                 try
                 {
                     if (response.isSuccessful()) {
-                        String json = response.body().getSucess();
-                        if (json.equals("true")) {
+                        if (response.body().getSucess().equals("true")) {
 
                             //  ResponseEfetuarLogin respostaServidor = response.body();
 

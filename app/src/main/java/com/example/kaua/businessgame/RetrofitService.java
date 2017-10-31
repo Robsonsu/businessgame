@@ -1,5 +1,6 @@
 package com.example.kaua.businessgame;
 
+import com.example.kaua.businessgame.Response.AcessarPartida;
 import com.example.kaua.businessgame.Response.ResponseTokenPartida;
 import com.example.kaua.businessgame.Response.responseEfetuarLogin;
 import com.example.kaua.businessgame.Response.RespostaServidor;
@@ -44,7 +45,7 @@ public interface RetrofitService {
 
     @GET("partida/acessar")
     Call<RespostaServidor> acessarPartida(@Query("id") String id,
-                                          @Query("token") String qt);
+                                        @Query("token") String qt);
 
     @GET("perguntasMateria/getall")
     Call<RespostaServidor> getAllMateria();
