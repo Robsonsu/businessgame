@@ -88,8 +88,8 @@ public class tela_tabuleiro extends AppCompatActivity {
                 Animation rotate = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate);
                 iv_dice1.startAnimation(rotate);
                 iv_dice2.startAnimation(rotate);
-                timer();
                 mostrarPerguntaSomarSubtrair(dice1Throw,dice2Throw);
+                rlDados.setEnabled(false);
             }
         });
     }
@@ -189,6 +189,7 @@ public class tela_tabuleiro extends AppCompatActivity {
                         Auxiliar = Auxiliar + diceSubtrair;
                         cacheDice.setCache(sharedPreferencedice, "pinoCasa", Integer.toString(Auxiliar));
                         dialog.cancel();
+                        timer();
                         showPergunta();
                     }
                 })
@@ -200,6 +201,7 @@ public class tela_tabuleiro extends AppCompatActivity {
                          Auxiliar = Auxiliar + diceSomar;
                          cacheDice.setCache(sharedPreferencedice, "pinoCasa",  Integer.toString(Auxiliar));
                          dialog.cancel();
+                        timer();
                         showPergunta();
                      }
                   });
@@ -217,7 +219,8 @@ public class tela_tabuleiro extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                tv_timer.setText("Sem tempo");
+                rlDados.setEnabled(true);
+                tv_timer.setText("00");
             }
         }.start();
     }
@@ -257,7 +260,6 @@ public class tela_tabuleiro extends AppCompatActivity {
             public void onClick(View view) {
                 int selectedId = rbgPergunta.getCheckedRadioButtonId();
                 rbEscolhido = (RadioButton)findViewById(selectedId);
-                teste(Escolhido);
                 dialog.cancel();
             }
         });
@@ -284,11 +286,5 @@ public class tela_tabuleiro extends AppCompatActivity {
                 });
 
         dialog.show();
-    }
-
-    private String teste(String S) {
-
-        String d = S;
-        return "AQUI";
     }
 }
