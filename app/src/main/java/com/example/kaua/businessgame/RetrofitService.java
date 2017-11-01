@@ -36,16 +36,19 @@ public interface RetrofitService {
 
     @GET("partida/conectaLider")
     Call<RespostaServidor> conectaLider(@Query("id") String id,
-                                        @Query("tokenPartida") String qt,
+                                        @Query("tokenPartida") String tokenPartida,
                                         @Query("nmEquipe") String nmEquipe);
 
     @GET("partida/conectaJogador")
     Call<RespostaServidor> conectaJogador(@Query("id") String id,
-                                        @Query("token") String qt);
+                                        @Query("token") String token);
 
     @GET("partida/acessar")
     Call<RespostaServidor> acessarPartida(@Query("id") String id,
-                                        @Query("token") String qt);
+                                        @Query("token") String token);
+
+    @GET("partida/encerrar")
+    Call<RespostaServidor> encerrarPartida(@Query("token_partida") String tokenPartida);
 
     @GET("perguntasMateria/getall")
     Call<RespostaServidor> getAllMateria();

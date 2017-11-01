@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +39,7 @@ public class TelaToken extends Fragment {
     private Button btnCancelar;
     private Button btnAvancar;
     private Context context;
+    private LinearLayout llLoadEquipes;
 
     public TelaToken() {
         // Required empty public constructor
@@ -72,6 +74,7 @@ public class TelaToken extends Fragment {
         btnCancelar = (Button) v.findViewById(R.id.btnCancelarToken);
         btnAvancar = (Button) v.findViewById(R.id.btnAvancarToken);
         tvEquipes = (TextView) v.findViewById(R.id.tvNmEquipes);
+        llLoadEquipes = (LinearLayout) v.findViewById(R.id.llLoadEquipes);
 
         tvToken.setText(cacheAplicativo.getTokenpartida());
         tvParticipantes.setText(getString(R.string.usuarioConectados, "0"));
@@ -97,6 +100,13 @@ public class TelaToken extends Fragment {
                 context.startActivity(new Intent(context, tela_tabuleiro.class));
             }
         });
+
+        btnCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                encerrarPartida();
+            }
+        });
     }
 
     public void verificaEquipes() {
@@ -108,28 +118,36 @@ public class TelaToken extends Fragment {
             public void onResponse(Call<RespostaServidor> call, Response<RespostaServidor> response) {
                 if (response.isSuccessful()) {
                     try {
+                        Gson gson = new Gson();
+                        JsonArray json = response.body().getData();
+                        String[] nm_equipes = new String[json.size()];
+                        String[] nm_lider = new String[json.size()];
+                        tvParticipantes.setText(getString(R.string.usuarioConectados, String.valueOf(json.size())));
+                        int i = 0;
+                        for (JsonElement j : json) {
+                            AcessarPartida ap = gson.fromJson(j.toString(), AcessarPartida.class);
+                            nm_equipes[i] = ap.getNm_equipe();
+                            nm_lider[i] = ap.getLider();
+                            i++;
+                        }
+
+                        String equipeConectadas = "";
+                        for (int j = 0; j < i; j++){
+                            equipeConectadas +=
+                                    "Líder: ".concat(nm_lider[j].concat(
+                                            "\nEquipe: ".concat(nm_equipes[j].concat((j+1 != i) ? "\n\n" : ""))));
+
+                        }
+
                         if (!response.body().isSucess()){
-                            Gson gson = new Gson();
-                            JsonArray json = response.body().getData();
-                            String[] nm_equipes = new String[json.size()];
-                            String[] nm_lider = new String[json.size()];
-                            tvParticipantes.setText(getString(R.string.usuarioConectados, String.valueOf(json.size())));
-                            int i = 0;
-                            for (JsonElement j : json) {
-                                AcessarPartida ap = gson.fromJson(j.toString(), AcessarPartida.class);
-                                nm_equipes[i] = ap.getNm_equipe();
-                                nm_lider[i] = ap.getLider();
-                                i++;
-                                tvEquipes.setText(
-                                        "Líder: ".concat(nm_lider[i].concat(
-                                        " Equipe: ".concat(nm_equipes[i].concat(((i > 0) ? "\n": "")))))
-                                );
-                            }
+                            tvEquipes.setText(equipeConectadas);
 
                             try{
                                 atualizarEquipes();
                             }catch (InterruptedException e){}
                         } else {
+                            llLoadEquipes.setVisibility(View.GONE);
+                            tvEquipes.setText(equipeConectadas);
                             tvParticipantes.setText("Todos prontos!");
                             btnAvancar.setVisibility(View.VISIBLE);
                         }
@@ -170,6 +188,39 @@ public class TelaToken extends Fragment {
         });
 
         td.start();
+    }
+
+    public void encerrarPartida() {
+        RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
+        Call<RespostaServidor> call = service.encerrarPartida(cacheAplicativo.getTokenpartida());
+
+        call.enqueue(new Callback<RespostaServidor>() {
+            @Override
+            public void onResponse(Call<RespostaServidor> call, Response<RespostaServidor> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        if (!response.body().isSucess()){
+                            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                            fragmentTransaction.replace(R.id.fl_principal, new TelaConfiguracoes());
+                            fragmentTransaction.commit();
+                        } else {
+                            Toast.makeText(context, "Erro: ".concat(response.body().getMessage()), Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(context, "Erro: ".concat(response.body().getMessage()), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+
+            @Override
+            public void onFailure(Call<RespostaServidor> call, Throwable t) {
+                Toast.makeText(context, "Erro na chamada ao servidor", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

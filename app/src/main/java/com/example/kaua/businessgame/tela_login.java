@@ -128,6 +128,7 @@ public class tela_login extends AppCompatActivity {
 
                             cacheAplicativo.setResponseEfetuarLogin(response.body());
                             cacheAplicativo.setIdConectado(response.body().getCd_usuario());
+                            cacheAplicativo.setTpAcesso(response.body().getTp_usuario());
 
                             // progress.dismiss();
 //                            mostrarData(respostaAPi.getMessage() + "\n");

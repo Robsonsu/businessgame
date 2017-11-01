@@ -84,6 +84,20 @@
                     android:hint="@string/hintToken" />
             </android.support.design.widget.TextInputLayout>
 
+            <android.support.design.widget.TextInputLayout
+                android:visibility="gone"
+                android:id="@+id/tilEquipe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edtNmEquipe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textVisiblePassword"
+                    android:hint="@string/nomeEquipe" />
+            </android.support.design.widget.TextInputLayout>
+
             <Button
                 android:id="@+id/btnConectarPartida"
                 android:layout_width="wrap_content"

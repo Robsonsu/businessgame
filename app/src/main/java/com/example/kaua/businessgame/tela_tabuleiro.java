@@ -1,25 +1,17 @@
 package com.example.kaua.businessgame;
 
 import android.app.Dialog;
-import android.content.Context;
 
 
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.media.Image;
 import android.os.CountDownTimer;
-import android.os.SystemClock;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.annotation.SuppressLint;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -27,9 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Random;
 
@@ -42,7 +32,7 @@ public class tela_tabuleiro extends AppCompatActivity {
     private ImageView iv_dice1, iv_dice2;
     private TextView tv_dice1, tv_dice2, tv_timer;
     private WebView wv_tabuleiro;
-    private LinearLayout rlDados;
+    private LinearLayout llDados;
     private RadioButton rb1, rb2,rb3,rb4, rbEscolhido;
     private int diceSubtrair, diceSomar, Auxiliar;
     private String CasaTotal, Escolhido;
@@ -59,6 +49,10 @@ public class tela_tabuleiro extends AppCompatActivity {
         setContentView(R.layout.activity_tela_tabuleiro);
         sharedPreferencedice = getSharedPreferences("telatabuleiro",MODE_PRIVATE);
 
+        if (cacheAplicativo.getTpAcesso().equals("1")){
+            tv_timer.setVisibility(View.GONE);
+            llDados.setVisibility(View.GONE);
+        }
 
         wv_tabuleiro = (WebView) findViewById(R.id.wv_tabuleiro);
         iv_dice1 = (ImageView) findViewById(R.id.dice1);
@@ -67,12 +61,12 @@ public class tela_tabuleiro extends AppCompatActivity {
         tv_dice2 = (TextView) findViewById(R.id.tv_dice2);
         tv_timer = (TextView) findViewById(R.id.tvTimer);
 
-        rlDados = (LinearLayout) findViewById(R.id.rlDados);
+        llDados = (LinearLayout) findViewById(R.id.rlDados);
         r = new Random();
 
         setWebView();
 
-        rlDados.setOnClickListener(new View.OnClickListener(){
+        llDados.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
 

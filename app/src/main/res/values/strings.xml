@@ -48,6 +48,7 @@
     <string name="iniciarPartida">Iniciar Partida</string>
     <string name="insiraToken">Aguarde instruções do professor e insira o token informado</string>
     <string name="hintToken">Token</string>
+    <string name="nomeEquipe">Nome equipe</string>
     <string name="conectar">Conectar</string>
     <string name="lider">Líder</string>
     <string name="integrante">Integrante</string>
