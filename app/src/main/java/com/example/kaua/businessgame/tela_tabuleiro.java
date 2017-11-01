@@ -36,6 +36,7 @@ public class tela_tabuleiro extends AppCompatActivity {
     private RadioButton rb1, rb2,rb3,rb4, rbEscolhido;
     private int diceSubtrair, diceSomar, Auxiliar;
     private String CasaTotal, Escolhido;
+    private CountDownTimer countDownTimer;
 
     SharedPreferences sharedPreferencedice;
     CacheTool cacheDice = new CacheTool();
@@ -49,10 +50,10 @@ public class tela_tabuleiro extends AppCompatActivity {
         setContentView(R.layout.activity_tela_tabuleiro);
         sharedPreferencedice = getSharedPreferences("telatabuleiro",MODE_PRIVATE);
 
-        if (cacheAplicativo.getTpAcesso().equals("1")){
-            tv_timer.setVisibility(View.GONE);
-            llDados.setVisibility(View.GONE);
-        }
+//        if (cacheAplicativo.getTpAcesso().equals("1") && !cacheAplicativo.getTpAcesso().equals(null) ){
+//            tv_timer.setVisibility(View.GONE);
+//            llDados.setVisibility(View.GONE);
+//        }
 
         wv_tabuleiro = (WebView) findViewById(R.id.wv_tabuleiro);
         iv_dice1 = (ImageView) findViewById(R.id.dice1);
@@ -60,11 +61,12 @@ public class tela_tabuleiro extends AppCompatActivity {
 //        tv_dice1 = (TextView) findViewById(R.id.tv_dice1);
         tv_dice2 = (TextView) findViewById(R.id.tv_dice2);
         tv_timer = (TextView) findViewById(R.id.tvTimer);
+        tv_timer.setText("60");
 
         llDados = (LinearLayout) findViewById(R.id.rlDados);
         r = new Random();
 
-        setWebView();
+        setWebView("");
 
         llDados.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -94,14 +96,13 @@ public class tela_tabuleiro extends AppCompatActivity {
         });
     }
 
-    public void setWebView(){
-        String url ="http://189.50.177.229:8090/tcc/tabuleiro?token_partida=2838023A";
+    public void setWebView(String token){
+        ServiceGenerator lurl = new ServiceGenerator();
+        String url =lurl.getUrl() + "/tcc/tabuleiro?token_partida=" + token;
         //String url = "http://3.bp.blogspot.com/-UMYjDIJ13kY/T0-VjDIxWbI/AAAAAAAAAV4/CnKed9Fhn-g/s1600/jogo+do+resto.jpg";
 
         // set web view client
         wv_tabuleiro.setWebViewClient(new MyWebViewClient());
-
-// string url which you have to load into a web view
         wv_tabuleiro.getSettings().setJavaScriptEnabled(true);
         wv_tabuleiro.loadUrl(url); // load the url on the web view
 
@@ -211,7 +212,7 @@ public class tela_tabuleiro extends AppCompatActivity {
     }
 
     private void timer(){
-        CountDownTimer countDownTimer = new CountDownTimer(60 * 1000,1000) {
+        countDownTimer = new CountDownTimer(60 * 1000,1000) {
             @Override
             public void onTick(long l) {
                 tv_timer.setText("" + (l/1000));
@@ -261,6 +262,8 @@ public class tela_tabuleiro extends AppCompatActivity {
                 int selectedId = rbgPergunta.getCheckedRadioButtonId();
                 rbEscolhido = (RadioButton)findViewById(selectedId);
                 dialog.cancel();
+                countDownTimer.cancel();
+
             }
         });
 
