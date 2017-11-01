@@ -78,9 +78,16 @@ public class TelaToken extends Fragment {
 
         btnAvancar.setVisibility(View.GONE);
 
-        try{
-            atualizarEquipes();
-        }catch (InterruptedException e){}
+        Thread td2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    atualizarEquipes();
+                }catch (InterruptedException e){}
+            }
+        });
+
+        td2.start();
     }
 
     public void setAcoesViews(){
@@ -130,14 +137,20 @@ public class TelaToken extends Fragment {
                         e.printStackTrace();
                     }
                 } else {
-                    Toast.makeText(context, "Resposta não foi sucesso", Toast.LENGTH_SHORT).show();
+                    try{
+                        atualizarEquipes();
+                    }catch (InterruptedException e){}
+//                    Toast.makeText(context, "Resposta não foi sucesso", Toast.LENGTH_SHORT).show();
                 }
             }
 
 
             @Override
             public void onFailure(Call<RespostaServidor> call, Throwable t) {
-                Toast.makeText(context, "Erro na chamada ao servidor", Toast.LENGTH_SHORT).show();
+                try{
+                    atualizarEquipes();
+                }catch (InterruptedException e){}
+//                Toast.makeText(context, "Erro na chamada ao servidor", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -147,10 +160,15 @@ public class TelaToken extends Fragment {
         Thread td = new Thread(new Runnable() {
             @Override
             public void run() {
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 verificaEquipes();
             }
         });
-        Thread.sleep(5000);
+
         td.start();
     }
 
@@ -164,7 +182,7 @@ public class TelaToken extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
+        this.context = context;
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {

@@ -103,7 +103,6 @@ public class TelaConfiguracoes extends Fragment {
                 cacheAplicativo.setQtdEquipes(spnQtdGrupos.getSelectedItemPosition() + 2);
 
                 IniciarPartida(String.valueOf(qt), String.valueOf(itemPosition));
-                FragmentManager   myFragmentManager = getFragmentManager();
 
                 //if's the first time created
 //                Fragment tela_token = new TelaToken();
@@ -112,10 +111,6 @@ public class TelaConfiguracoes extends Fragment {
 //                fragmentTransaction.remove(config);
 //                fragmentTransaction.replace( android.R.id.content, tela_token, "TelaToken");
 //                fragmentTransaction.commit();
-
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fl_principal, new TelaToken());
-                fragmentTransaction.commit();
             }
         });
     }
@@ -130,11 +125,13 @@ public class TelaConfiguracoes extends Fragment {
             public void onResponse(Call<ResponseTokenPartida> call, Response<ResponseTokenPartida> response) {
                 if (response.isSuccessful()) {
                     try {
-                        response.body();
                         if (response.body().getSucess().equals("true")) {
                             String tk = response.body().getToken_partida();
                             cacheAplicativo.setTokenpartida(tk);
-                            System.out.println("TOKEN " + cacheAplicativo.getTokenpartida());
+
+                            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                            fragmentTransaction.replace(R.id.fl_principal, new TelaToken());
+                            fragmentTransaction.commit();
                         } else {
                             System.out.println(response.body().getMessage());
                             //MOSTRA ERRO NA TELA
