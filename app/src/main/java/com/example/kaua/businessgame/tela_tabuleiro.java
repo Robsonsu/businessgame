@@ -89,7 +89,7 @@ public class tela_tabuleiro extends AppCompatActivity {
                 iv_dice1.startAnimation(rotate);
                 iv_dice2.startAnimation(rotate);
                 mostrarPerguntaSomarSubtrair(dice1Throw,dice2Throw);
-                rlDados.setEnabled(false);
+                llDados.setEnabled(false);
             }
         });
     }
@@ -219,7 +219,7 @@ public class tela_tabuleiro extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                rlDados.setEnabled(true);
+                llDados.setEnabled(true);
                 tv_timer.setText("00");
             }
         }.start();
