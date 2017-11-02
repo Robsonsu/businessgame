@@ -11,15 +11,19 @@
         android:roundIcon="@drawable/logotcc"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".tela_login">
+
+        <activity android:name=".tela_login"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".tela_principal" />
-        <activity android:name=".tela_tabuleiro" />
+        <activity android:name=".tela_principal"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".tela_tabuleiro"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
