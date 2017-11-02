@@ -42,6 +42,7 @@
         </LinearLayout>
 
         <RadioGroup
+            android:id="@+id/rgTpAcessoPartida"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -81,7 +82,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textVisiblePassword"
-                    android:hint="@string/hintToken" />
+                    android:hint="@string/hintToken"
+                    android:text="26C0A195"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout

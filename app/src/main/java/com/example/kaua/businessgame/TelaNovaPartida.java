@@ -1,10 +1,13 @@
 package com.example.kaua.businessgame;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.kaua.businessgame.Response.AcessarPartida;
+import com.example.kaua.businessgame.Response.ResponseConectaLider;
 import com.example.kaua.businessgame.Response.RespostaServidor;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -61,7 +65,7 @@ public class TelaNovaPartida extends Fragment {
     }
 
     public void setView(View v){
-        rgTpAcesso = (RadioGroup) v.findViewById(R.id.rgTpAcesso);
+        rgTpAcesso = (RadioGroup) v.findViewById(R.id.rgTpAcessoPartida);
         edtToken = (EditText) v.findViewById(R.id.edtTokenPartida);
         tilEquipe = (TextInputLayout) v.findViewById(R.id.tilEquipe);
         edtNmEquipe = (EditText) v.findViewById(R.id.edtNmEquipe);
@@ -69,35 +73,36 @@ public class TelaNovaPartida extends Fragment {
     }
 
     public void setAcoesView(){
-        rgTpAcesso.setOnClickListener(new View.OnClickListener() {
+        rgTpAcesso.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) {
-                if (rgTpAcesso.getId() == R.id.rbLider){
-                    tilEquipe.setVisibility(View.VISIBLE);
-                }
-
-                if (rgTpAcesso.getId() == R.id.rbIntegrante){
-                    tilEquipe.setVisibility(View.GONE);
+            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
+                switch (radioGroup.getCheckedRadioButtonId()){
+                    case R.id.rbLider:
+                        tilEquipe.setVisibility(View.VISIBLE);
+                        break;
+                    case R.id.rbIntegrante:
+                        tilEquipe.setVisibility(View.GONE);
+                        break;
                 }
             }
         });
-
         btnConectar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (rgTpAcesso.getId() == R.id.rbLider){
-                    conectaLider(
-                            cacheAplicativo.getIdConectado(),
-                            cacheAplicativo.getTokenpartida(),
-                            edtNmEquipe.getText().toString()
-                    );
-                }
-
-                if (rgTpAcesso.getId() == R.id.rbIntegrante){
-                    conectaIntegrante(
-                            cacheAplicativo.getIdConectado(),
-                            cacheAplicativo.getTokenpartida()
-                    );
+                switch (rgTpAcesso.getCheckedRadioButtonId()){
+                    case R.id.rbLider:
+                        conectaLider(
+                                cacheAplicativo.getIdConectado(),
+                                cacheAplicativo.getTokenpartida(),
+                                edtNmEquipe.getText().toString()
+                        );
+                        break;
+                    case R.id.rbIntegrante:
+                        conectaIntegrante(
+                                cacheAplicativo.getIdConectado(),
+                                cacheAplicativo.getTokenpartida()
+                        );
+                        break;
                 }
             }
         });
@@ -106,15 +111,22 @@ public class TelaNovaPartida extends Fragment {
 
     public void conectaLider(String id, String token, String nmEquipe) {
         RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
-        Call<RespostaServidor> call = service.conectaLider(id, token, nmEquipe);
+        Call<ResponseConectaLider> call = service.conectaLider(id, token, nmEquipe);
 
-        call.enqueue(new Callback<RespostaServidor>() {
+        call.enqueue(new Callback<ResponseConectaLider>() {
             @Override
-            public void onResponse(Call<RespostaServidor> call, Response<RespostaServidor> response) {
+            public void onResponse(Call<ResponseConectaLider> call, Response<ResponseConectaLider> response) {
                 if (response.isSuccessful()) {
                     try {
-                        if (!response.body().isSucess()){
+                        if (!response.body().getSucess().equals("true")){
+                            String tk = response.body().getToken_equipe();
+                            cacheAplicativo.setTokenpartida(tk);
+
+                            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                            fragmentTransaction.replace(R.id.fl_principal, new TelaToken());
+                            fragmentTransaction.commit();
                         } else {
+                            Toast.makeText(context, "Erro: ".concat(response.body().getMessage()), Toast.LENGTH_SHORT).show();
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -126,7 +138,7 @@ public class TelaNovaPartida extends Fragment {
 
 
             @Override
-            public void onFailure(Call<RespostaServidor> call, Throwable t) {
+            public void onFailure(Call<ResponseConectaLider> call, Throwable t) {
                 Toast.makeText(context, "Erro na chamada ao servidor", Toast.LENGTH_SHORT).show();
             }
         });
