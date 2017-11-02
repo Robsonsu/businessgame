@@ -1,5 +1,6 @@
 package com.example.kaua.businessgame;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -86,6 +87,7 @@ public class TelaNovaPartida extends Fragment {
                 }
             }
         });
+
         btnConectar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,23 +95,30 @@ public class TelaNovaPartida extends Fragment {
                     case R.id.rbLider:
                         conectaLider(
                                 cacheAplicativo.getIdConectado(),
-                                cacheAplicativo.getTokenpartida(),
+                                edtToken.getText().toString(),
                                 edtNmEquipe.getText().toString()
                         );
                         break;
                     case R.id.rbIntegrante:
                         conectaIntegrante(
                                 cacheAplicativo.getIdConectado(),
-                                cacheAplicativo.getTokenpartida()
+                                edtToken.getText().toString()
                         );
                         break;
                 }
             }
         });
-
     }
 
     public void conectaLider(String id, String token, String nmEquipe) {
+        final ProgressDialog dialog;
+        dialog = new ProgressDialog(context); // this = YourActivity
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setMessage("Carregando. Aguarde...");
+        dialog.setIndeterminate(true);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
         RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
         Call<ResponseConectaLider> call = service.conectaLider(id, token, nmEquipe);
 
@@ -117,13 +126,15 @@ public class TelaNovaPartida extends Fragment {
             @Override
             public void onResponse(Call<ResponseConectaLider> call, Response<ResponseConectaLider> response) {
                 if (response.isSuccessful()) {
+                    if (dialog.isShowing())
+                        dialog.dismiss();
                     try {
-                        if (!response.body().getSucess().equals("true")){
+                        if (response.body().getSucess().equals("true")){
                             String tk = response.body().getToken_equipe();
                             cacheAplicativo.setTokenpartida(tk);
 
                             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                            fragmentTransaction.replace(R.id.fl_principal, new TelaToken());
+                            fragmentTransaction.replace(R.id.fl_principal, TelaToken.newInstance(true));
                             fragmentTransaction.commit();
                         } else {
                             Toast.makeText(context, "Erro: ".concat(response.body().getMessage()), Toast.LENGTH_SHORT).show();
@@ -132,6 +143,8 @@ public class TelaNovaPartida extends Fragment {
                         e.printStackTrace();
                     }
                 } else {
+                    if (dialog.isShowing())
+                        dialog.dismiss();
                     Toast.makeText(context, "Erro: ".concat(response.body().getMessage()), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -139,6 +152,8 @@ public class TelaNovaPartida extends Fragment {
 
             @Override
             public void onFailure(Call<ResponseConectaLider> call, Throwable t) {
+                if (dialog.isShowing())
+                    dialog.dismiss();
                 Toast.makeText(context, "Erro na chamada ao servidor", Toast.LENGTH_SHORT).show();
             }
         });
@@ -154,7 +169,9 @@ public class TelaNovaPartida extends Fragment {
                 if (response.isSuccessful()) {
                     try {
                         if (!response.body().isSucess()){
+                            startActivity(new Intent(context, tela_tabuleiro.class));
                         } else {
+                            Toast.makeText(context, "Erro: ".concat(response.body().getMessage()), Toast.LENGTH_SHORT).show();
                         }
                     } catch (Exception e) {
                         e.printStackTrace();

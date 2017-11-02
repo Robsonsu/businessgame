@@ -41,7 +41,7 @@
     <string name="tokenAcesso">Token de Acesso</string>
     <string name="aguardandoParticipantes">Aguardando participantes&#8230;</string>
     <string name="usuarioConectados">%s usuários conectados&#8230;</string>
-    <string name="nmEquipes">Nomes equipes</string>
+    <string name="nmParticipantes">Nomes participantes</string>
     <string name="avancar">Avançar</string>
 
     <!--Tela Iniciar Partida-->
