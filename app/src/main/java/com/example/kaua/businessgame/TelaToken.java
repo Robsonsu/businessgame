@@ -17,9 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.kaua.businessgame.Model.GrupoPergunta;
 import com.example.kaua.businessgame.Response.AcessarPartida;
-import com.example.kaua.businessgame.Response.ResponseTokenPartida;
 import com.example.kaua.businessgame.Response.RespostaServidor;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -40,11 +38,13 @@ public class TelaToken extends Fragment {
     private Button btnAvancar;
     private Context context;
     private LinearLayout llLoadEquipes;
+    private static boolean bLider = false;
 
     public TelaToken() {
         // Required empty public constructor
     }
-    public static TelaToken newInstance() {
+    public static TelaToken newInstance(boolean lider) {
+        bLider = lider;
         return new TelaToken();
     }
 
@@ -77,20 +77,29 @@ public class TelaToken extends Fragment {
         llLoadEquipes = (LinearLayout) v.findViewById(R.id.llLoadEquipes);
 
         tvToken.setText(cacheAplicativo.getTokenpartida());
-        tvParticipantes.setText(getString(R.string.usuarioConectados, "0"));
 
-        btnAvancar.setVisibility(View.GONE);
+        if (bLider){
+            btnCancelar.setVisibility(View.GONE);
+            llLoadEquipes.setVisibility(View.GONE);
+            tvParticipantes.setText("Informe o token para os integrantes da sua equipe");
+            tvEquipes.setVisibility(View.GONE);
+        } else {
+            tvParticipantes.setText(getString(R.string.usuarioConectados, "0"));
 
-        Thread td2 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try{
-                    atualizarEquipes();
-                }catch (InterruptedException e){}
-            }
-        });
+            btnAvancar.setVisibility(View.GONE);
 
-        td2.start();
+            Thread td2 = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        atualizarEquipes();
+                    } catch (InterruptedException e) {
+                    }
+                }
+            });
+
+            td2.start();
+        }
     }
 
     public void setAcoesViews(){
@@ -200,9 +209,15 @@ public class TelaToken extends Fragment {
                 if (response.isSuccessful()) {
                     try {
                         if (!response.body().isSucess()){
-                            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                            fragmentTransaction.replace(R.id.fl_principal, new TelaConfiguracoes());
-                            fragmentTransaction.commit();
+                            if (bLider){
+                                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                                fragmentTransaction.replace(R.id.fl_principal, new TelaNovaPartida());
+                                fragmentTransaction.commit();
+                            } else {
+                                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                                fragmentTransaction.replace(R.id.fl_principal, new TelaConfiguracoes());
+                                fragmentTransaction.commit();
+                            }
                         } else {
                             Toast.makeText(context, "Erro: ".concat(response.body().getMessage()), Toast.LENGTH_SHORT).show();
                         }

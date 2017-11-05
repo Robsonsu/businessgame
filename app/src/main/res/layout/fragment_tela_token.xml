@@ -70,7 +70,7 @@
             android:id="@+id/tvNmEquipes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/nmEquipes"
+            android:text="@string/nmParticipantes"
             android:textColor="@color/colorSecondaryDark"
             android:gravity="center"
             android:layout_marginTop="15dp"/>
@@ -88,7 +88,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
 
             <Button
                 android:id="@+id/btnCancelarToken"

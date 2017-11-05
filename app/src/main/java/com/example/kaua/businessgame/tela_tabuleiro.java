@@ -98,7 +98,7 @@ public class tela_tabuleiro extends AppCompatActivity {
 
     public void setWebView(String token){
         ServiceGenerator lurl = new ServiceGenerator();
-        String url =lurl.getUrl() + "/tcc/tabuleiro?token_partida=" + token;
+        String url =lurl.getUrl() + "/tcc/tabuleiro?token_partida=" + cacheAplicativo.getTokenpartida();
         //String url = "http://3.bp.blogspot.com/-UMYjDIJ13kY/T0-VjDIxWbI/AAAAAAAAAV4/CnKed9Fhn-g/s1600/jogo+do+resto.jpg";
 
         // set web view client
