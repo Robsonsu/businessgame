@@ -14,7 +14,7 @@ public class GetVezEquipe {
     @SerializedName("token_equipe")
     private String token_equipe;
 
-    @SerializedName("token_equipe")
+    @SerializedName("ordem_partida")
     private String ordem_partida;
 
     public String getNm_equipe(){return this.nm_equipe; };
