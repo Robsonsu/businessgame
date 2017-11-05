@@ -153,7 +153,8 @@ public class TelaNovaPartida extends Fragment {
             public void onResponse(Call<RespostaServidor> call, Response<RespostaServidor> response) {
                 if (response.isSuccessful()) {
                     try {
-                        if (!response.body().isSucess()){
+                        if (response.body().isSucess()){
+                            context.startActivity(new Intent(context, tela_tabuleiro.class));
                         } else {
                         }
                     } catch (Exception e) {
