@@ -168,9 +168,13 @@ public class TelaNovaPartida extends Fragment {
             public void onResponse(Call<RespostaServidor> call, Response<RespostaServidor> response) {
                 if (response.isSuccessful()) {
                     try {
+<<<<<<< HEAD
+                        if (!response.body().isSucess()){
+                            startActivity(new Intent(context, tela_tabuleiro.class));
+=======
                         if (response.body().isSucess()){
                             context.startActivity(new Intent(context, tela_tabuleiro.class));
-                            startActivity(new Intent(context, tela_tabuleiro.class));
+>>>>>>> 2368870bc1e305460fc3f4c0112a3cd4cb08d18f
                         } else {
                             Toast.makeText(context, "Erro: ".concat(response.body().getMessage()), Toast.LENGTH_SHORT).show();
                         }

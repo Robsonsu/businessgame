@@ -143,7 +143,9 @@ public class tela_principal extends AppCompatActivity
                 transaction.commit();
                 break;
             case R.id.nav_encerrar:
+                finish();
                 break;
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
