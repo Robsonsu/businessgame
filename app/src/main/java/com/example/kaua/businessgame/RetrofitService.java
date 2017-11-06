@@ -72,7 +72,8 @@ public interface RetrofitService {
 
 
     @GET("perguntasdesafio/getByTabuleiro")
-    Call<PerguntasDesafio> getByPerguntaDesafio(@Query("token_equipe") String token_equipe, @Query("dado") String dado);
+    Call<PerguntasDesafio> getByPerguntaDesafio(@Query("token_equipe") String token_equipe,
+                                                @Query("dado") String dado);
 
     @GET("perguntasdesafio/getByUser")
     Call<RespostaServidor> getByUserDesafio(@Query("id") String id);
@@ -102,8 +103,8 @@ public interface RetrofitService {
     @GET("grupo/getByUser")
     Call<RespostaServidor> getByUserGrupo(@Query("id") String id);
 
-    @GET("partida/perguntasmateria")
-    Call<PerguntasMateria> getPergunta(@Query("token_partida") String tokenPartida,
+    @GET("perguntasmateria/getbytabuleiro")
+    Call<PerguntasMateria> getPergunta(@Query("token_equipe") String tokenPartida,
                                        @Query("dado") String dado);
 
     @GET("partida/finalizarjogada")

@@ -267,16 +267,16 @@ public class TelaTabuleiro extends Fragment {
         // SystemClock.sleep(2000);
         perguntaCorretaDesafio = correta;
 
-        final Dialog dialog = new Dialog(context);
-        dialog.setContentView(R.layout.unica_pergunta);
-        dialog.setTitle("");
+        final Dialog dialog1 = new Dialog(context);
+        dialog1.setContentView(R.layout.unica_pergunta);
+        dialog1.setTitle("");
 
-        TextView tvPergunta = (TextView)dialog.findViewById(R.id.tv_pergunta_dialig);
-        RadioButton rbPergunta1 = (RadioButton)dialog.findViewById(R.id.rb_pergunta_1_dialog);
-        RadioButton rbPergunta2 = (RadioButton)dialog.findViewById(R.id.rb_pergunta_2_dialog);
-        RadioButton rbPergunta3 = (RadioButton)dialog.findViewById(R.id.rb_pergunta_3_dialog);
-        RadioButton rbPergunta4 = (RadioButton)dialog.findViewById(R.id.rb_pergunta_4_dialog);
-        final RadioGroup rbgPergunta = (RadioGroup)dialog.findViewById(R.id.rbg_pergunta_dialog);
+        TextView tvPergunta = (TextView)dialog1.findViewById(R.id.tv_pergunta_dialig);
+        RadioButton rbPergunta1 = (RadioButton)dialog1.findViewById(R.id.rb_pergunta_1_dialog);
+        RadioButton rbPergunta2 = (RadioButton)dialog1.findViewById(R.id.rb_pergunta_2_dialog);
+        RadioButton rbPergunta3 = (RadioButton)dialog1.findViewById(R.id.rb_pergunta_3_dialog);
+        RadioButton rbPergunta4 = (RadioButton)dialog1.findViewById(R.id.rb_pergunta_4_dialog);
+        final RadioGroup rbgPergunta = (RadioGroup)dialog1.findViewById(R.id.rbg_pergunta_dialog);
 
 
         tvPergunta.setText(pergunta);
@@ -285,50 +285,13 @@ public class TelaTabuleiro extends Fragment {
         rbPergunta3.setText(alternativa3);
         rbPergunta4.setText(alternativa4);
 
-        Button button = (Button)dialog.findViewById(R.id.bt_pergunta);
+        Button button = (Button)dialog1.findViewById(R.id.bt_pergunta);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // int selectedId = rbgPergunta.getCheckedRadioButtonId();
-                // rbEscolhido = (RadioButton)dialog.findViewById(selectedId);
-
-                //getPerguntaEstaCorreta?
-                if(perguntaCorretaDesafio == Escolhido){
-                    getPerguntaMateria(tokenPartida,String.valueOf(AuxiDado));
-
-                }else{
-                    final Dialog dialog = new Dialog(context);
-                    dialog.setContentView(R.layout.comprar_pergunta);
-                    dialog.setTitle("");
-                    bt_Comprar_Sim = (Button)dialog.findViewById(R.id.btComprar1);
-                    bt_Comprar_Nao = (Button)dialog.findViewById(R.id.btComprar2);
-
-                    bt_Comprar_Sim.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            getPerguntaMateria(tokenPartida,String.valueOf(AuxiDado));
-                        }
-                    });
-
-                    bt_Comprar_Nao.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            getPerguntaMateria(tokenPartida,String.valueOf(AuxiDado));
-                        }
-                    });
-
-
-
-                    dialog.show();
-                }
-
-                int selectedId = rbgPergunta.getCheckedRadioButtonId();
-                rbEscolhido = (RadioButton) dialog.findViewById(selectedId);
-
-                dialog.cancel();
-                countDownTimer.cancel();
-
+                dialog1.cancel();
+                showSimOUNao();
             }
         });
 
@@ -352,10 +315,45 @@ public class TelaTabuleiro extends Fragment {
                 }
             }
         });
-
-        dialog.show();
+        dialog1.show();
     }
 
+    public void showSimOUNao(){
+        // int selectedId = rbgPergunta.getCheckedRadioButtonId();
+        // rbEscolhido = (RadioButton)dialog.findViewById(selectedId);
+
+        //getPerguntaEstaCorreta?
+        if(perguntaCorretaDesafio.equals(Escolhido) ){
+            getPerguntaMateria(tokenPartida,String.valueOf(AuxiDado));
+
+        }else{
+            final Dialog dialog = new Dialog(context);
+            dialog.setContentView(R.layout.comprar_pergunta);
+            dialog.setTitle("");
+            bt_Comprar_Sim = (Button)dialog.findViewById(R.id.btComprar1);
+            bt_Comprar_Nao = (Button)dialog.findViewById(R.id.btComprar2);
+
+            bt_Comprar_Sim.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.cancel();
+                    getPerguntaMateria(tokenPartida,String.valueOf(AuxiDado));
+                }
+            });
+
+            bt_Comprar_Nao.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.cancel();
+                }
+            });
+
+            dialog.show();
+        }
+
+        countDownTimer.cancel();
+
+    }
     public void showPerguntaMateria(String alternativa0, String alternativa1, String alternativa2, String correta){
         perguntaCorretaMateria = correta;
         AuxiliarResposta = 0;
@@ -470,7 +468,7 @@ public class TelaTabuleiro extends Fragment {
         dialog.show();
 
         RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
-        Call<PerguntasMateria> call = service.getPergunta(token, dado);
+        Call<PerguntasMateria> call = service.getPergunta(cacheAplicativo.getTokenEquipe(), dado);
 
         call.enqueue(new Callback<PerguntasMateria>() {
             @Override
@@ -478,15 +476,13 @@ public class TelaTabuleiro extends Fragment {
                 if (dialog.isShowing())
                     dialog.dismiss();
                 if (response.isSuccessful()) {
-                    try {
                         if (response.body().isSucess()){
+                            String teste = response.body().getQuestao1();
                             showPerguntaMateria(response.body().getQuestao1(), response.body().getQuestao2(),
                                     response.body().getQuestao3(), response.body().getSomaresultado());
                         } else {
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+
                 } else {
                     Toast.makeText(context, "Erro: ".concat(response.body().getMessage()), Toast.LENGTH_SHORT).show();
                 }
@@ -501,6 +497,8 @@ public class TelaTabuleiro extends Fragment {
         });
 
     }
+
+
     public void checkVez()
     {
 
