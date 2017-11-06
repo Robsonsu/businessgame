@@ -50,15 +50,17 @@ public class AdapterPerguntasDesafio extends RecyclerView.Adapter<AdapterPergunt
         holder.btnPergunta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialogPerguntas cdd=new dialogPerguntas(context, obj);
+                dialogPerguntas cdd=new dialogPerguntas(context, obj, AdapterPerguntasDesafio.this);
                 cdd.show();
             }
         });
 
         if (obj.isRespondida()){
             holder.btnPergunta.setBackground(ContextCompat.getDrawable(context, R.drawable.selector_button_green));
+            holder.btnPergunta.setTextColor(ContextCompat.getColor(context, android.R.color.white));
         } else {
             holder.btnPergunta.setBackground(ContextCompat.getDrawable(context, R.drawable.selector_button_gray));
+            holder.btnPergunta.setTextColor(ContextCompat.getColor(context, android.R.color.black));
         }
     }
 

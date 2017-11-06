@@ -269,7 +269,7 @@ public class TelaTabuleiro extends Fragment {
             @Override
             public void onClick(View view) {
                 int selectedId = rbgPergunta.getCheckedRadioButtonId();
-//                rbEscolhido = (RadioButton) findViewById(selectedId);
+                rbEscolhido = (RadioButton) dialog.findViewById(selectedId);
                 dialog.cancel();
                 countDownTimer.cancel();
 

@@ -21,90 +21,35 @@
         android:layout_margin="20dp"/>
 
     <RadioGroup
+        android:id="@+id/rgRespostaDesafio"
         android:layout_margin="20dp"
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:orientation="horizontal"
+       <RadioButton
+            android:id="@+id/rbADesafio"
+            android:text="Antonio"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="a)"
-                android:textSize="18sp"
-                android:textColor="@android:color/black"
-                android:layout_marginEnd="10dp"/>
-
-            <RadioButton
-                android:id="@+id/rbADesafio"
-                android:text="Antonio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
+        <RadioButton
+            android:id="@+id/rbBDesafio"
+            android:text="Carlos"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="b)"
-                android:textSize="18sp"
-                android:textColor="@android:color/black"
-                android:layout_marginEnd="10dp"/>
-
-            <RadioButton
-                android:id="@+id/rbBDesafio"
-                android:text="Carlos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
+        <RadioButton
+            android:id="@+id/rbCDesafio"
+            android:text="Jurandir"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="c)"
-                android:textSize="18sp"
-                android:textColor="@android:color/black"
-                android:layout_marginEnd="10dp"/>
-
-            <RadioButton
-                android:id="@+id/rbCDesafio"
-                android:text="Jurandir"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
+        <RadioButton
+            android:id="@+id/rbDDesafio"
+            android:text="Dirceu"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="d)"
-                android:textSize="18sp"
-                android:textColor="@android:color/black"
-                android:layout_marginEnd="10dp"/>
-
-            <RadioButton
-                android:id="@+id/rbDDesafio"
-                android:text="Dirceu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+            android:layout_height="wrap_content" />
     </RadioGroup>
 
     <Button
