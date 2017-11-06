@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 public class GetVezEquipe {
 
     @SerializedName("sucess")
-    private boolean sucess;
+    private String sucess;
 
     @SerializedName("nm_equipe")
     private String nm_equipe;
@@ -23,17 +23,23 @@ public class GetVezEquipe {
     @SerializedName("message")
     private String message;
 
-    public boolean isSucess() {
+    public String getSucess() {
         return sucess;
     }
 
-    public void setSucess(boolean sucess) {
+    public void setSucess(String sucess) {
         this.sucess = sucess;
     }
 
     public String getNm_equipe(){return this.nm_equipe; };
     public String getToken_equipe(){return this.token_equipe; };
     public String getOrdem_partida(){return this.ordem_partida; };
+
+    public void setNm_equipe(String nm){ nm_equipe = nm;}
+    public void setToken_equipe(String tk){ token_equipe = tk;}
+
+    public void setOrdem_partida(String ordem){ ordem_partida = ordem;}
+
 
     public String getMessage() {
         return message;

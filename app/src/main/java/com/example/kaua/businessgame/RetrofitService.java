@@ -71,8 +71,8 @@ public interface RetrofitService {
     Call<RespostaServidor> getByIDDesafio(@Query("id") String id);
 
 
-    @GET("perguntasdesafio/getByID")
-    Call<PerguntasDesafio> getByPerguntaDesafio(@Query("id") String id);
+    @GET("perguntasdesafio/getByTabuleiro")
+    Call<PerguntasDesafio> getByPerguntaDesafio(@Query("token_equipe") String token_equipe, @Query("dado") String dado);
 
     @GET("perguntasdesafio/getByUser")
     Call<RespostaServidor> getByUserDesafio(@Query("id") String id);
