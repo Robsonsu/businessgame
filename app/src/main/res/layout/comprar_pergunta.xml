@@ -6,9 +6,10 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="261dp"
+        android:layout_width="288dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.09"
+        android:layout_weight="0.06"
+        android:textSize="25dp"
         android:text="Deseja comprar a pergunta??" />
 
     <LinearLayout

@@ -57,7 +57,11 @@ public class TelaTabuleiro extends Fragment {
     private Boolean iniciarJogada;
 
 
-    private String tokenPartida = cacheAplicativo.getTokenpartida();
+    //private String tokenPartida = cacheAplicativo.getTokenpartida();
+    private String tokenPartida ="26C0A195";
+    private String perguntaCorretaMateria, perguntaCorretaDesafio;
+
+
 
     SharedPreferences sharedPreferencedice;
     CacheTool cacheDice = new CacheTool();
@@ -239,7 +243,7 @@ public class TelaTabuleiro extends Fragment {
                                 cacheDice.setCache(sharedPreferencedice, "pinoCasa", String.valueOf(AuxiDado));
                                 dialog.cancel();
                                 timer();
-                                getPerguntaDesafio(tokenPartida);
+                                getPerguntaDesafio(String.valueOf(AuxiDado));
                             }
                         })
                 .setPositiveButton(
@@ -261,7 +265,7 @@ public class TelaTabuleiro extends Fragment {
 
     private void showPerguntaDesafio( String pergunta, String alternativa1, String alternativa2, String alternativa3, String alternativa4, String correta){
         // SystemClock.sleep(2000);
-        final String PerguntaCorreta = correta;
+        perguntaCorretaDesafio = correta;
 
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.unica_pergunta);
@@ -290,7 +294,8 @@ public class TelaTabuleiro extends Fragment {
                 // rbEscolhido = (RadioButton)dialog.findViewById(selectedId);
 
                 //getPerguntaEstaCorreta?
-                if(PerguntaCorreta == Escolhido){
+                if(perguntaCorretaDesafio == Escolhido){
+                    getPerguntaMateria(tokenPartida,String.valueOf(AuxiDado));
 
                 }else{
                     final Dialog dialog = new Dialog(context);
@@ -303,15 +308,13 @@ public class TelaTabuleiro extends Fragment {
                         @Override
                         public void onClick(View view) {
                             getPerguntaMateria(tokenPartida,String.valueOf(AuxiDado));
-
                         }
                     });
 
                     bt_Comprar_Nao.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-
-
+                            getPerguntaMateria(tokenPartida,String.valueOf(AuxiDado));
                         }
                     });
 
@@ -354,7 +357,7 @@ public class TelaTabuleiro extends Fragment {
     }
 
     public void showPerguntaMateria(String alternativa0, String alternativa1, String alternativa2, String correta){
-        final String perguntaCorreta = correta;
+        perguntaCorretaMateria = correta;
         AuxiliarResposta = 0;
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.unica_pergunta_materia);
@@ -393,7 +396,7 @@ public class TelaTabuleiro extends Fragment {
                     AuxiliarResposta+= 4;
 
                 }
-                if(perguntaCorreta == String.valueOf(AuxiliarResposta)){
+                if(perguntaCorretaMateria == String.valueOf(AuxiliarResposta)){
 
                 }
                 dialog.cancel();
@@ -536,7 +539,7 @@ public class TelaTabuleiro extends Fragment {
         iniciarJogada = false;
 
         RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
-        Call<GetVezEquipe> call = service.getVezJogada("26C0A195");
+        Call<GetVezEquipe> call = service.getVezJogada(token);
 
         call.enqueue(new Callback<GetVezEquipe>() {
             @Override
@@ -544,9 +547,10 @@ public class TelaTabuleiro extends Fragment {
                 try {
                 if (response.isSuccessful()) {
                     try {
-                        if (response.body().getSucess().equals("true")){
+                        if (response.body().getNm_equipe().toString() == tokenPartida){
                            iniciarJogada = true;
                         } else {
+                            iniciarJogada = false;
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -568,9 +572,10 @@ public class TelaTabuleiro extends Fragment {
         });
     }
 
-    public void getPerguntaDesafio(String valor_dador){
+    public void getPerguntaDesafio(String valor_dado){
         RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
-        Call<PerguntasDesafio> call = service.getByPerguntaDesafio(cacheAplicativo.getTokenEquipe(),valor_dador);
+
+        Call<PerguntasDesafio> call = service.getByPerguntaDesafio(cacheAplicativo.getTokenEquipe(),valor_dado);
 
         call.enqueue(new Callback<PerguntasDesafio>() {
             @Override
