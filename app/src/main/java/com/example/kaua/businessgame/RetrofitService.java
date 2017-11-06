@@ -1,5 +1,6 @@
 package com.example.kaua.businessgame;
 
+import com.example.kaua.businessgame.Model.PerguntasMateria;
 import com.example.kaua.businessgame.Response.AcessarPartida;
 import com.example.kaua.businessgame.Response.GetVezEquipe;
 import com.example.kaua.businessgame.Response.ResponseConectaLider;
@@ -95,6 +96,10 @@ public interface RetrofitService {
 
     @GET("grupo/getByUser")
     Call<RespostaServidor> getByUserGrupo(@Query("id") String id);
+
+    @GET("partida/perguntasmateria")
+    Call<PerguntasMateria> getPergunta(@Query("token_partida") String tokenPartida,
+                                       @Query("dado") String dado);
 
     @GET("partida/finalizarjogada")
     Call<getFinalizaPartida> getInfoPartida(@Query("token_partida") String tokenPartida,
