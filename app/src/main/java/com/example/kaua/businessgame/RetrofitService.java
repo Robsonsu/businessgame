@@ -41,7 +41,7 @@ public interface RetrofitService {
                                             @Query("nmEquipe") String nmEquipe);
 
     @GET("partida/conectaJogador")
-    Call<RespostaServidor> conectaJogador(@Query("id") String id,
+    Call<ResponseTokenPartida> conectaJogador(@Query("id") String id,
                                         @Query("token") String token);
 
     @GET("partida/acessar")

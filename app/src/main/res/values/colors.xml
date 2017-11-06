@@ -16,6 +16,10 @@
     <color name="color_btnfoco_blue">#3347b4</color>
     <color name="color_default_blue">#3f51b5</color>
 
+    <color name="color_btnpress_green">#2d7327</color>
+    <color name="color_btnfoco_green">#44b433</color>
+    <color name="color_default_green">#49b53f</color>
+
     <color name="color_btnpress_gray">#666666</color>
     <color name="color_btnfoco_gray">#b3b3b3</color>
     <color name="color_default_gray">#d6d7d7</color>

@@ -20,7 +20,6 @@ public class RespostaServidor {
 
     public RespostaServidor(){  }
 
-
     public boolean isSucess() {
         return sucess;
     }

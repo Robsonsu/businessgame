@@ -34,6 +34,9 @@ public class PerguntasDesafio {
     @SerializedName("add_por")
     private String add_por;
 
+    private boolean respondida = false;
+    private String respostaParticipante;
+
     public  PerguntasDesafio()
     {
 
@@ -83,5 +86,21 @@ public class PerguntasDesafio {
 
     public void setAdd_por(String add_por) {
         this.add_por = add_por;
+    }
+
+    public boolean isRespondida() {
+        return respondida;
+    }
+
+    public void setRespondida(boolean respondida) {
+        this.respondida = respondida;
+    }
+
+    public String getRespostaParticipante() {
+        return respostaParticipante;
+    }
+
+    public void setRespostaParticipante(String respostaParticipante) {
+        this.respostaParticipante = respostaParticipante;
     }
 }

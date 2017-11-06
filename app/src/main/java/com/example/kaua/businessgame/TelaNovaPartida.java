@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.kaua.businessgame.Response.AcessarPartida;
 import com.example.kaua.businessgame.Response.ResponseConectaLider;
+import com.example.kaua.businessgame.Response.ResponseTokenPartida;
 import com.example.kaua.businessgame.Response.RespostaServidor;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -59,6 +60,7 @@ public class TelaNovaPartida extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tela_nova_partida, container, false);
 
+        ((tela_principal) context).toolbar.setVisibility(View.GONE);
         setView(view);
         setAcoesView();
 
@@ -160,17 +162,30 @@ public class TelaNovaPartida extends Fragment {
     }
 
     public void conectaIntegrante(String id, String token) {
-        RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
-        Call<RespostaServidor> call = service.conectaJogador(id, token);
+        final ProgressDialog dialog;
+        dialog = new ProgressDialog(context); // this = YourActivity
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setMessage("Carregando. Aguarde...");
+        dialog.setIndeterminate(true);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
 
-        call.enqueue(new Callback<RespostaServidor>() {
+        RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
+        Call<ResponseTokenPartida> call = service.conectaJogador(id, token);
+
+        call.enqueue(new Callback<ResponseTokenPartida>() {
             @Override
-            public void onResponse(Call<RespostaServidor> call, Response<RespostaServidor> response) {
+            public void onResponse(Call<ResponseTokenPartida> call, Response<ResponseTokenPartida> response) {
+                if (dialog.isShowing())
+                    dialog.dismiss();
                 if (response.isSuccessful()) {
                     try {
-                        if (response.body().isSucess()){
-                            context.startActivity(new Intent(context, tela_tabuleiro.class));
-                            startActivity(new Intent(context, tela_tabuleiro.class));
+                        if (response.body().getSucess().equals("true")){
+                            cacheAplicativo.setTokenpartida(response.body().getToken_partida());
+//                            startActivity(new Intent(context, tela_tabuleiro.class));
+                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                            transaction.replace(R.id.fl_principal, new TelaTabuleiro());
+                            transaction.commit();
                         } else {
                             Toast.makeText(context, "Erro: ".concat(response.body().getMessage()), Toast.LENGTH_SHORT).show();
                         }
@@ -182,9 +197,10 @@ public class TelaNovaPartida extends Fragment {
                 }
             }
 
-
             @Override
-            public void onFailure(Call<RespostaServidor> call, Throwable t) {
+            public void onFailure(Call<ResponseTokenPartida> call, Throwable t) {
+                if (dialog.isShowing())
+                    dialog.dismiss();
                 Toast.makeText(context, "Erro na chamada ao servidor", Toast.LENGTH_SHORT).show();
             }
         });

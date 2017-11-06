@@ -60,6 +60,7 @@ public class TelaToken extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tela_token, container, false);
 
+        ((tela_principal) context).toolbar.setVisibility(View.VISIBLE);
         setView(view);
         setAcoesViews();
 
@@ -106,7 +107,10 @@ public class TelaToken extends Fragment {
         btnAvancar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                context.startActivity(new Intent(context, tela_tabuleiro.class));
+//                context.startActivity(new Intent(context, tela_tabuleiro.class));
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fl_principal, new TelaTabuleiro());
+                transaction.commit();
             }
         });
 

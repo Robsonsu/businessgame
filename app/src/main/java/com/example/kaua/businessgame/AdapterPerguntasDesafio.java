@@ -1,6 +1,7 @@
 package com.example.kaua.businessgame;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,17 +43,23 @@ public class AdapterPerguntasDesafio extends RecyclerView.Adapter<AdapterPergunt
     // binds the data to the textview in each cell
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        PerguntasDesafio obj = mList.get(position);
+        final PerguntasDesafio obj = mList.get(position);
 
         holder.btnPergunta.setText(obj.getCdPergunta());
 
         holder.btnPergunta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialogPerguntas cdd=new dialogPerguntas(context);
+                dialogPerguntas cdd=new dialogPerguntas(context, obj);
                 cdd.show();
             }
         });
+
+        if (obj.isRespondida()){
+            holder.btnPergunta.setBackground(ContextCompat.getDrawable(context, R.drawable.selector_button_green));
+        } else {
+            holder.btnPergunta.setBackground(ContextCompat.getDrawable(context, R.drawable.selector_button_gray));
+        }
     }
 
     // total number of cells

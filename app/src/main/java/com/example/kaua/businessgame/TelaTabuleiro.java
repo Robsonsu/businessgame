@@ -1,15 +1,17 @@
 package com.example.kaua.businessgame;
 
 import android.app.Dialog;
-
-
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.os.CountDownTimer;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
@@ -23,11 +25,12 @@ import android.widget.TextView;
 
 import java.util.Random;
 
-public class tela_tabuleiro extends AppCompatActivity {
+import static android.content.Context.MODE_PRIVATE;
 
-    public tela_tabuleiro(){
+public class TelaTabuleiro extends Fragment {
 
-    }
+    private OnFragmentInteractionListener mListener;
+    private Context context;
 
     private ImageView iv_dice1, iv_dice2;
     private TextView tv_dice1, tv_dice2, tv_timer;
@@ -44,26 +47,48 @@ public class tela_tabuleiro extends AppCompatActivity {
 
     int dice1Point = 0, dice2Point = 0;
 
+    public TelaTabuleiro() {
+        // Required empty public constructor
+    }
+
+    public static TelaTabuleiro newInstance() {
+        return new TelaTabuleiro();
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tela_tabuleiro);
-        sharedPreferencedice = getSharedPreferences("telatabuleiro",MODE_PRIVATE);
+        if (getArguments() != null) {
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_tela_tabuleiro, container, false);
+
+        ((tela_principal) context).toolbar.setVisibility(View.VISIBLE);
+        sharedPreferencedice = context.getSharedPreferences("telatabuleiro",MODE_PRIVATE);
+        setView(view);
 
 //        if (cacheAplicativo.getTpAcesso().equals("1") && !cacheAplicativo.getTpAcesso().equals(null) ){
 //            tv_timer.setVisibility(View.GONE);
 //            llDados.setVisibility(View.GONE);
 //        }
 
-        wv_tabuleiro = (WebView) findViewById(R.id.wv_tabuleiro);
-        iv_dice1 = (ImageView) findViewById(R.id.dice1);
-        iv_dice2 = (ImageView) findViewById(R.id.dice2);
-//        tv_dice1 = (TextView) findViewById(R.id.tv_dice1);
-        tv_dice2 = (TextView) findViewById(R.id.tv_dice2);
-        tv_timer = (TextView) findViewById(R.id.tvTimer);
+        return view;
+    }
+
+    public void setView(View v){
+        wv_tabuleiro = (WebView) v.findViewById(R.id.wv_tabuleiro);
+        iv_dice1 = (ImageView) v.findViewById(R.id.dice1);
+        iv_dice2 = (ImageView) v.findViewById(R.id.dice2);
+//        tv_dice1 = (TextView) v.findViewById(R.id.tv_dice1);
+        tv_dice2 = (TextView) v.findViewById(R.id.tv_dice2);
+        tv_timer = (TextView) v.findViewById(R.id.tvTimer);
         tv_timer.setText("60");
 
-        llDados = (LinearLayout) findViewById(R.id.rlDados);
+        llDados = (LinearLayout) v.findViewById(R.id.rlDados);
         r = new Random();
 
         setWebView("");
@@ -84,10 +109,10 @@ public class tela_tabuleiro extends AppCompatActivity {
                     dice2Point++;
                 }
 
-               // tv_dice1.setText("DICE1: " + dice1Point);
+                // tv_dice1.setText("DICE1: " + dice1Point);
                 tv_dice2.setText(getString(R.string.valor, String.valueOf(diceSoma)));
 
-                Animation rotate = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate);
+                Animation rotate = AnimationUtils.loadAnimation(context, R.anim.rotate);
                 iv_dice1.startAnimation(rotate);
                 iv_dice2.startAnimation(rotate);
                 mostrarPerguntaSomarSubtrair(dice1Throw,dice2Throw);
@@ -102,13 +127,21 @@ public class tela_tabuleiro extends AppCompatActivity {
         //String url = "http://3.bp.blogspot.com/-UMYjDIJ13kY/T0-VjDIxWbI/AAAAAAAAAV4/CnKed9Fhn-g/s1600/jogo+do+resto.jpg";
 
         // set web view client
-        wv_tabuleiro.setWebViewClient(new MyWebViewClient());
+        wv_tabuleiro.setWebViewClient(new TelaTabuleiro.MyWebViewClient());
         wv_tabuleiro.getSettings().setJavaScriptEnabled(true);
         wv_tabuleiro.loadUrl(url); // load the url on the web view
 
 //        WebSettings webSettings = wv_tabuleiro.getSettings();
 //        webSettings.setJavaScriptEnabled(true);
 //        wv_tabuleiro.loadUrl(url);
+    }
+
+    private class MyWebViewClient extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url); // load the url
+            return true;
+        }
     }
 
     public void setImagedice1(int num){
@@ -156,82 +189,58 @@ public class tela_tabuleiro extends AppCompatActivity {
         }
     }
 
-    // custom web view client class who extends WebViewClient
-    private class MyWebViewClient extends WebViewClient {
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url); // load the url
-            return true;
-        }
-    }
-
     public void mostrarPerguntaSomarSubtrair(final int dice1,final int dice2){
 
 
-        sharedPreferencedice = getSharedPreferences("telatabuleiro",MODE_PRIVATE);
+        sharedPreferencedice = context.getSharedPreferences("telatabuleiro", MODE_PRIVATE);
         CasaTotal = cacheDice.getCache(sharedPreferencedice,"telatabuleiro");
         //if(CasaTotal != ""){Auxiliar =  Integer.parseInt(CasaTotal);}
 
 
-         diceSubtrair = dice1 - dice2;
-         diceSomar = dice1 + dice2;
+        diceSubtrair = dice1 - dice2;
+        diceSomar = dice1 + dice2;
 
         if(diceSubtrair < 0){  diceSubtrair = diceSubtrair * (-1);     }
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(tela_tabuleiro.this);
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
         builder1.setCancelable(true);
         builder1
-               // .setMessage("Seus dados foram "+ dice1+ " e " + dice2 +", gostaria de somar ou subtrair")
+                // .setMessage("Seus dados foram "+ dice1+ " e " + dice2 +", gostaria de somar ou subtrair")
                 .setMessage("Seus dados foram "+ dice1+ " e " + dice2 +", gostaria de somar ou subtrair?" )
                 .setNegativeButton(
 
-                "SUBTRAIR = " + diceSubtrair,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Auxiliar = Auxiliar + diceSubtrair;
-                        cacheDice.setCache(sharedPreferencedice, "pinoCasa", Integer.toString(Auxiliar));
-                        dialog.cancel();
-                        timer();
-                        showPergunta();
-                    }
-                })
+                        "SUBTRAIR = " + diceSubtrair,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Auxiliar = Auxiliar + diceSubtrair;
+                                cacheDice.setCache(sharedPreferencedice, "pinoCasa", Integer.toString(Auxiliar));
+                                dialog.cancel();
+                                timer();
+                                showPergunta();
+                            }
+                        })
                 .setPositiveButton(
-                "SOMAR = " + diceSomar,
-                 new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
+                        "SOMAR = " + diceSomar,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
 
-                         Auxiliar = Auxiliar + diceSomar;
-                         cacheDice.setCache(sharedPreferencedice, "pinoCasa",  Integer.toString(Auxiliar));
-                         dialog.cancel();
-                        timer();
-                        showPergunta();
-                     }
-                  });
+                                Auxiliar = Auxiliar + diceSomar;
+                                cacheDice.setCache(sharedPreferencedice, "pinoCasa",  Integer.toString(Auxiliar));
+                                dialog.cancel();
+                                timer();
+                                showPergunta();
+                            }
+                        });
 
         AlertDialog alert11 = builder1.create();
         alert11.show();
     }
 
-    private void timer(){
-        countDownTimer = new CountDownTimer(60 * 1000,1000) {
-            @Override
-            public void onTick(long l) {
-                tv_timer.setText("" + (l/1000));
-            }
-
-            @Override
-            public void onFinish() {
-                llDados.setEnabled(true);
-                tv_timer.setText("00");
-            }
-        }.start();
-    }
-
     private void showPergunta(){
-       // SystemClock.sleep(2000);
+        // SystemClock.sleep(2000);
 
         final String closeDialog = "";
 
-        final Dialog dialog = new Dialog(this);
+        final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.unica_pergunta);
         dialog.setTitle("");
 
@@ -260,7 +269,7 @@ public class tela_tabuleiro extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 int selectedId = rbgPergunta.getCheckedRadioButtonId();
-                rbEscolhido = (RadioButton)findViewById(selectedId);
+//                rbEscolhido = (RadioButton) findViewById(selectedId);
                 dialog.cancel();
                 countDownTimer.cancel();
 
@@ -269,25 +278,70 @@ public class tela_tabuleiro extends AppCompatActivity {
 
 
         rbgPergunta.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-                {
-                    public void onCheckedChanged(RadioGroup group, int checkedId) {
-                        switch(checkedId){
-                            case R.id.rb_pergunta_1_dialog:
-                                Escolhido = "1";
-                                break;
-                            case R.id.rb_pergunta_2_dialog:
-                                Escolhido = "2";
-                                break;
-                            case R.id.rb_pergunta_3_dialog:
-                                Escolhido = "3";
-                                break;
-                            case R.id.rb_pergunta_4_dialog:
-                                Escolhido = "4";
-                                break;
-                        }
-                    }
-                });
+        {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch(checkedId){
+                    case R.id.rb_pergunta_1_dialog:
+                        Escolhido = "1";
+                        break;
+                    case R.id.rb_pergunta_2_dialog:
+                        Escolhido = "2";
+                        break;
+                    case R.id.rb_pergunta_3_dialog:
+                        Escolhido = "3";
+                        break;
+                    case R.id.rb_pergunta_4_dialog:
+                        Escolhido = "4";
+                        break;
+                }
+            }
+        });
 
         dialog.show();
+    }
+
+    private void timer(){
+        countDownTimer = new CountDownTimer(60 * 1000,1000) {
+            @Override
+            public void onTick(long l) {
+                tv_timer.setText("" + (l/1000));
+            }
+
+            @Override
+            public void onFinish() {
+                llDados.setEnabled(true);
+                tv_timer.setText("00");
+            }
+        }.start();
+    }
+
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = context;
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
     }
 }

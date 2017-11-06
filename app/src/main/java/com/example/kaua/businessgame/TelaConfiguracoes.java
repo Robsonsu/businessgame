@@ -67,6 +67,7 @@ public class TelaConfiguracoes extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tela_configuracoes, container, false);
 
+        ((tela_principal) context).toolbar.setVisibility(View.VISIBLE);
         setView(view);
         setAcoesView();
 

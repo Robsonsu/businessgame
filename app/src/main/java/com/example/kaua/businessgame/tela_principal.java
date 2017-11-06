@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class tela_principal extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -20,7 +21,10 @@ public class tela_principal extends AppCompatActivity
         TelaConfiguracoes.OnFragmentInteractionListener,
         TelaCadastro.OnFragmentInteractionListener,
         TelaNovaPartida.OnFragmentInteractionListener,
-        TelaPergunta.OnFragmentInteractionListener{
+        TelaPergunta.OnFragmentInteractionListener,
+        TelaTabuleiro.OnFragmentInteractionListener{
+
+    public Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +37,7 @@ public class tela_principal extends AppCompatActivity
     }
 
     public void setView(){
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         //       setSupportActionBar(toolbar);
 
@@ -65,19 +69,28 @@ public class tela_principal extends AppCompatActivity
         if (sFrag != null){
             switch (sFrag){
                 case "TelaCadastro":
+                    toolbar.setVisibility(View.GONE);
                     transaction.replace(R.id.fl_principal, new TelaCadastro()); // newInstance() is a static factory method.
                     break;
                 case "TelaToken":
+                    toolbar.setVisibility(View.VISIBLE);
                     transaction.replace(R.id.fl_principal, new TelaToken()); // newInstance() is a static factory method.
                     break;
                 case "TelaNovaPartida":
+                    toolbar.setVisibility(View.GONE);
                     transaction.replace(R.id.fl_principal, new TelaNovaPartida()); // newInstance() is a static factory method.
                     break;
                 case "TelaConfiguracoes":
+                    toolbar.setVisibility(View.VISIBLE);
                     transaction.replace(R.id.fl_principal, new TelaConfiguracoes());
                     break;
                 case "TelaPergunta":
+                    toolbar.setVisibility(View.VISIBLE);
                     transaction.replace(R.id.fl_principal, new TelaPergunta());
+                    break;
+                case "TelaTabuleiro":
+                    toolbar.setVisibility(View.VISIBLE);
+                    transaction.replace(R.id.fl_principal, new TelaTabuleiro());
                     break;
             }
 
@@ -111,9 +124,9 @@ public class tela_principal extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -132,9 +145,13 @@ public class tela_principal extends AppCompatActivity
                 transaction.commit();
                 break;
             case R.id.nav_tabuleiro:
-                startActivity(new Intent(tela_principal.this, tela_tabuleiro.class));
+//                startActivity(new Intent(tela_principal.this, tela_tabuleiro.class));
+                transaction.replace(R.id.fl_principal, new TelaTabuleiro());
+                transaction.commit();
                 break;
             case R.id.nav_perguntas:
+                transaction.replace(R.id.fl_principal, new TelaPergunta());
+                transaction.commit();
                 break;
             case R.id.nav_equipes:
                 break;
