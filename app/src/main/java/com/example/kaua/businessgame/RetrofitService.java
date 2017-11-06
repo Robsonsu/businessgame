@@ -9,6 +9,7 @@ import com.example.kaua.businessgame.Response.ResponseTokenPartida;
 import com.example.kaua.businessgame.Response.responseEfetuarLogin;
 import com.example.kaua.businessgame.Response.RespostaServidor;
 import com.example.kaua.businessgame.Response.getFinalizaPartida;
+import com.example.kaua.businessgame.Response.setPontos;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -113,4 +114,9 @@ public interface RetrofitService {
 
     @GET("partida/getvezequipe")
     Call<GetVezEquipe> getVezJogada(@Query("token_partida") String tokenPartida);
+
+    @GET("partida/setPontos")
+    Call<setPontos> getSetPontos(@Query("acertou") boolean acertou,
+                                 @Query("token_equipe") String tokenEquipe,
+                                 @Query("casas") String casas);
 }

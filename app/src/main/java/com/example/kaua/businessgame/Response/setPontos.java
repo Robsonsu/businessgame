@@ -3,11 +3,12 @@ package com.example.kaua.businessgame.Response;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by Robson on 05/11/2017.
+ * Created by Robson on 06/11/2017.
  */
 
-public class getFinalizaPartida {
-
+public class setPontos {
+    @SerializedName("sucess")
+    private boolean sucess;
 
     @SerializedName("cd_equipe")
     private String cd_equipe;
@@ -36,6 +37,19 @@ public class getFinalizaPartida {
     @SerializedName("minha_vez")
     private String minha_vez;
 
+    @SerializedName("message")
+    private String message;
+
+    public setPontos(){}
+
+    public boolean isSucess() {
+        return sucess;
+    }
+
+    public void setSucess(boolean sucess) {
+        this.sucess = sucess;
+    }
+
     public String getCd_equipe(){return this.cd_equipe; };
     public String getNm_equipe(){return this.nm_equipe; };
     public String getPontos(){return this.pontos; };
@@ -45,4 +59,11 @@ public class getFinalizaPartida {
     public String getCo_lider(){return this.co_lider; };
     public String getOrdem_partida(){return this.ordem_partida; };
     public String getMinha_vez(){return this.minha_vez; };
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }

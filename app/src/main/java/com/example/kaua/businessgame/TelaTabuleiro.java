@@ -29,7 +29,9 @@ import android.widget.Toast;
 import com.example.kaua.businessgame.Model.PerguntasDesafio;
 import com.example.kaua.businessgame.Model.PerguntasMateria;
 import com.example.kaua.businessgame.Response.GetVezEquipe;
+import com.example.kaua.businessgame.Response.getFinalizaPartida;
 import com.example.kaua.businessgame.Response.responseEfetuarLogin;
+import com.example.kaua.businessgame.Response.setPontos;
 
 import java.util.Random;
 
@@ -55,7 +57,7 @@ public class TelaTabuleiro extends Fragment {
     private CountDownTimer countDownTimer;
     private Button bt_Comprar_Sim,bt_Comprar_Nao;
     private Boolean iniciarJogada;
-
+    private String alternativa_0,alternativa_1,alternativa_2,correta_materia;
 
     //private String tokenPartida = cacheAplicativo.getTokenpartida();
     private String tokenPartida ="26C0A195";
@@ -355,6 +357,7 @@ public class TelaTabuleiro extends Fragment {
 
     }
     public void showPerguntaMateria(String alternativa0, String alternativa1, String alternativa2, String correta){
+        alternativa_0=alternativa0; alternativa_1=alternativa1;  alternativa_2 = alternativa2;  correta_materia = correta;
         perguntaCorretaMateria = correta;
         AuxiliarResposta = 0;
         final Dialog dialog = new Dialog(context);
@@ -374,7 +377,7 @@ public class TelaTabuleiro extends Fragment {
         rbPergunta3.setText("(4) " +alternativa2);
 
 
-        Button button = (Button)dialog.findViewById(R.id.bt_pergunta);
+        Button button = (Button)dialog.findViewById(R.id.bt_pergunta_materia);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -383,19 +386,50 @@ public class TelaTabuleiro extends Fragment {
                 rb_pergunta_2_materia = (RadioButton)dialog.findViewById(R.id.rb_pergunta_materia2);
                 rb_pergunta_3_materia = (RadioButton)dialog.findViewById(R.id.rb_pergunta_materia3);
 
-                if(rb_pergunta_1_materia.isSelected()){
+                if(rb_pergunta_1_materia.isChecked()){
                     AuxiliarResposta+= 1;
                 }
-                if(rb_pergunta_2_materia.isSelected()){
+                if(rb_pergunta_2_materia.isChecked()){
                     AuxiliarResposta+= 2;
 
                 }
-                if(rb_pergunta_3_materia.isSelected()){
+                if(rb_pergunta_3_materia.isChecked()){
                     AuxiliarResposta+= 4;
 
                 }
-                if(perguntaCorretaMateria == String.valueOf(AuxiliarResposta)){
+                if(perguntaCorretaMateria.equals(String.valueOf(AuxiliarResposta)) ){
 
+                    RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
+
+                    Call<setPontos> call = service.getSetPontos(true,
+                            cacheAplicativo.getTokenEquipe(),String.valueOf(AuxiDado));
+
+                    call.enqueue(new Callback<setPontos>() {
+                        @Override
+                        public void onResponse(Call<setPontos> call, Response<setPontos> response) {
+                            if (response.isSuccessful()) {
+
+                                    if (response.body().isSucess()){
+                                        RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
+                                        Call<getFinalizaPartida> call1 = service.getInfoPartida( tokenPartida,
+                                                cacheAplicativo.getTokenEquipe());
+
+                                    } else {
+                                        Toast.makeText(context, "Erro: Envio da resposta, Favora enviar de novo", Toast.LENGTH_SHORT).show();
+                                        showPerguntaMateria( alternativa_0, alternativa_1,  alternativa_2,  correta_materia);
+                                    }
+
+                            } else {
+                                Toast.makeText(context, "Erro: ".concat(response.body().getMessage()), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<setPontos> call, Throwable t) {
+                            Toast.makeText(context, "Erro na chamada ao servidor", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    //  getSetPontos
                 }
                 dialog.cancel();
                 //countDownTimer.cancel();
@@ -477,7 +511,6 @@ public class TelaTabuleiro extends Fragment {
                     dialog.dismiss();
                 if (response.isSuccessful()) {
                         if (response.body().isSucess()){
-                            String teste = response.body().getQuestao1();
                             showPerguntaMateria(response.body().getQuestao1(), response.body().getQuestao2(),
                                     response.body().getQuestao3(), response.body().getSomaresultado());
                         } else {
