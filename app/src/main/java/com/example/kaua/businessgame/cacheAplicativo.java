@@ -11,9 +11,11 @@ public class cacheAplicativo {
 
     private static responseEfetuarLogin responseEfetuarLogin;
     private static String tokenpartida;
+    private static String tokenEquipe;
     private static int qtdEquipes;
     private static String idConectado;
     private static String tpAcesso;
+    private static String minhaVez;
 
     public static responseEfetuarLogin getResponseEfetuarLogin() {
         return responseEfetuarLogin;
@@ -53,5 +55,20 @@ public class cacheAplicativo {
 
     public static void setTpAcesso(String tpAcesso) {
         cacheAplicativo.tpAcesso = tpAcesso;
+    }
+    public static String getTokenEquipe() {
+        return tokenEquipe;
+    }
+
+    public static void setTokenEquipe(String tkEquipe) {
+        tokenEquipe = tkEquipe;
+    }
+
+    public static String getMinhaVez() {
+        return minhaVez;
+    }
+
+    public static void setMinhaVez(String vez) {
+        minhaVez = vez;
     }
 }

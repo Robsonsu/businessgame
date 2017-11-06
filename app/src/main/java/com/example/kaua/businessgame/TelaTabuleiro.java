@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,9 +29,11 @@ import android.widget.Toast;
 import com.example.kaua.businessgame.Model.PerguntasDesafio;
 import com.example.kaua.businessgame.Model.PerguntasMateria;
 import com.example.kaua.businessgame.Response.GetVezEquipe;
+import com.example.kaua.businessgame.Response.responseEfetuarLogin;
 
 import java.util.Random;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -110,8 +113,9 @@ public class TelaTabuleiro extends Fragment {
         llDados.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                minhaVez(tokenPartida);
-                if(iniciarJogada){
+               minhaVez(tokenPartida);
+                //checkVez();
+                if(true){
                     int dice1Throw = r.nextInt(6) + 1;
                     int dice2Throw = r.nextInt(6) + 1;
                     int diceSoma = dice1Throw + dice2Throw;
@@ -143,7 +147,7 @@ public class TelaTabuleiro extends Fragment {
 
     public void setWebView(String token){
         ServiceGenerator lurl = new ServiceGenerator();
-        String url =lurl.getUrl() + "/tcc/tabuleiro?token_partida=" + tokenPartida;
+        String url =lurl.getUrl() + "/tcc/tabuleiro?token_partida=" + "26C0A195";
         //String url = "http://3.bp.blogspot.com/-UMYjDIJ13kY/T0-VjDIxWbI/AAAAAAAAAV4/CnKed9Fhn-g/s1600/jogo+do+resto.jpg";
 
         // set web view client
@@ -247,7 +251,7 @@ public class TelaTabuleiro extends Fragment {
                                 cacheDice.setCache(sharedPreferencedice, "pinoCasa",  String.valueOf(AuxiDado));
                                 dialog.cancel();
                                 timer();
-                                getPerguntaDesafio(tokenPartida);
+                                getPerguntaDesafio(String.valueOf(AuxiDado));
                             }
                         });
 
@@ -494,21 +498,54 @@ public class TelaTabuleiro extends Fragment {
         });
 
     }
+    public void checkVez()
+    {
+
+        RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
+
+        Call<GetVezEquipe> call = service.getVezJogada("26C0A195");
+
+        call.enqueue(new Callback<GetVezEquipe>() {
+
+            @Override
+            public void onResponse(Call<GetVezEquipe> call, Response<GetVezEquipe> response) {
+                //  dialog.dismiss();
+                try {
+                    if (response.isSuccessful()) {
+                        if (response.body().getSucess().equals("true")) {
+
+
+                        }
+                    } else {
+                        //    Toast.makeText(getApplicationContext(), "Resposta não foi sucesso", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+            @Override
+            public void onFailure(Call<GetVezEquipe> call, Throwable t) {
+
+            }
+        });}
+
+
 
     public void minhaVez(String token){
         iniciarJogada = false;
 
         RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
-        Call<GetVezEquipe> call = service.getVezJogada(token);
+        Call<GetVezEquipe> call = service.getVezJogada("26C0A195");
 
         call.enqueue(new Callback<GetVezEquipe>() {
             @Override
             public void onResponse(Call<GetVezEquipe> call, Response<GetVezEquipe> response) {
+                try {
                 if (response.isSuccessful()) {
                     try {
-                        if (response.body().isSucess()){
-                            iniciarJogada = true;
-
+                        if (response.body().getSucess().equals("true")){
+                           iniciarJogada = true;
                         } else {
                         }
                     } catch (Exception e) {
@@ -518,6 +555,11 @@ public class TelaTabuleiro extends Fragment {
                     Toast.makeText(context, "Erro: ".concat(response.body().getMessage()), Toast.LENGTH_SHORT).show();
                 }
             }
+             catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
 
             @Override
             public void onFailure(Call<GetVezEquipe> call, Throwable t) {
@@ -526,9 +568,9 @@ public class TelaTabuleiro extends Fragment {
         });
     }
 
-    public void getPerguntaDesafio(String token){
+    public void getPerguntaDesafio(String valor_dado){
         RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
-        Call<PerguntasDesafio> call = service.getByPerguntaDesafio(token);
+        Call<PerguntasDesafio> call = service.getByPerguntaDesafio(cacheAplicativo.getTokenEquipe(),"5");
 
         call.enqueue(new Callback<PerguntasDesafio>() {
             @Override

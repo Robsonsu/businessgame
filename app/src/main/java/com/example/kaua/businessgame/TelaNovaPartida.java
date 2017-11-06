@@ -133,7 +133,7 @@ public class TelaNovaPartida extends Fragment {
                                 try {
                                     if (response.body().getSucess().equals("true")){
                                         String tk = response.body().getToken_equipe();
-                                        cacheAplicativo.setTokenpartida(tk);
+                                        cacheAplicativo.setTokenEquipe(tk);
 
                                         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                                         fragmentTransaction.replace(R.id.fl_principal, TelaToken.newInstance(true));
