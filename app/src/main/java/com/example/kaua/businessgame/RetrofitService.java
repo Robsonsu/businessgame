@@ -104,7 +104,7 @@ public interface RetrofitService {
     Call<RespostaServidor> getByUserGrupo(@Query("id") String id);
 
     @GET("perguntasmateria/getbytabuleiro")
-    Call<PerguntasMateria> getPergunta(@Query("token_equipe") String tokenPartida,
+    Call<PerguntasMateria> getPergunta(@Query("token_equipe") String tokenEquipe,
                                        @Query("dado") String dado);
 
     @GET("partida/finalizarjogada")
