@@ -1,7 +1,6 @@
 package com.example.kaua.businessgame;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -9,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,19 +22,8 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.example.kaua.businessgame.Model.PerguntasDesafio;
-import com.example.kaua.businessgame.Model.PerguntasMateria;
-import com.example.kaua.businessgame.Response.GetVezEquipe;
-import com.example.kaua.businessgame.Response.ResponseTokenPartida;
-import com.example.kaua.businessgame.Response.RespostaServidor;
 
 import java.util.Random;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -49,14 +36,10 @@ public class TelaTabuleiro extends Fragment {
     private TextView tv_dice1, tv_dice2, tv_timer;
     private WebView wv_tabuleiro;
     private LinearLayout llDados;
-    private RadioButton rb1, rb2,rb3,rb4, rbEscolhido, rb_pergunta_1_materia, rb_pergunta_2_materia,rb_pergunta_3_materia;
-    private int diceSubtrair, diceSomar, AuxiDado, AuxiliarResposta;
+    private RadioButton rb1, rb2,rb3,rb4, rbEscolhido;
+    private int diceSubtrair, diceSomar, Auxiliar;
     private String CasaTotal, Escolhido;
     private CountDownTimer countDownTimer;
-    private Button bt_Comprar_Sim,bt_Comprar_Nao;
-    private Boolean iniciarJogada;
-
-    private String tokenPartida = cacheAplicativo.getTokenpartida();
 
     SharedPreferences sharedPreferencedice;
     CacheTool cacheDice = new CacheTool();
@@ -100,6 +83,7 @@ public class TelaTabuleiro extends Fragment {
         wv_tabuleiro = (WebView) v.findViewById(R.id.wv_tabuleiro);
         iv_dice1 = (ImageView) v.findViewById(R.id.dice1);
         iv_dice2 = (ImageView) v.findViewById(R.id.dice2);
+//        tv_dice1 = (TextView) v.findViewById(R.id.tv_dice1);
         tv_dice2 = (TextView) v.findViewById(R.id.tv_dice2);
         tv_timer = (TextView) v.findViewById(R.id.tvTimer);
         tv_timer.setText("60");
@@ -112,39 +96,34 @@ public class TelaTabuleiro extends Fragment {
         llDados.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                minhaVez(tokenPartida);
-                if(iniciarJogada){
-                    int dice1Throw = r.nextInt(6) + 1;
-                    int dice2Throw = r.nextInt(6) + 1;
-                    int diceSoma = dice1Throw + dice2Throw;
-                    setImagedice1(dice1Throw);
-                    setImagedice2(dice2Throw);
 
-                    if(dice1Throw > dice2Throw){
-                        dice1Point++;
-                    }else{
-                        dice2Point++;
-                    }
+                int dice1Throw = r.nextInt(6) + 1;
+                int dice2Throw = r.nextInt(6) + 1;
+                int diceSoma = dice1Throw + dice2Throw;
+                setImagedice1(dice1Throw);
+                setImagedice2(dice2Throw);
 
-                    tv_dice2.setText(getString(R.string.valor, String.valueOf(diceSoma)));
-
-                    Animation rotate = AnimationUtils.loadAnimation(context, R.anim.rotate);
-                    iv_dice1.startAnimation(rotate);
-                    iv_dice2.startAnimation(rotate);
-                    mostrarPerguntaSomarSubtrair(dice1Throw,dice2Throw);
-                    llDados.setEnabled(false);
-                } else{
-                    Toast.makeText(context, "Ainda não é sua vez", Toast.LENGTH_SHORT).show();
-
+                if(dice1Throw > dice2Throw){
+                    dice1Point++;
+                }else{
+                    dice2Point++;
                 }
 
+                // tv_dice1.setText("DICE1: " + dice1Point);
+                tv_dice2.setText(getString(R.string.valor, String.valueOf(diceSoma)));
+
+                Animation rotate = AnimationUtils.loadAnimation(context, R.anim.rotate);
+                iv_dice1.startAnimation(rotate);
+                iv_dice2.startAnimation(rotate);
+                mostrarPerguntaSomarSubtrair(dice1Throw,dice2Throw);
+                llDados.setEnabled(false);
             }
         });
     }
 
     public void setWebView(String token){
         ServiceGenerator lurl = new ServiceGenerator();
-        String url =lurl.getUrl() + "/tcc/tabuleiro?token_partida=" + tokenPartida;
+        String url =lurl.getUrl() + "/tcc/tabuleiro?token_partida=" + cacheAplicativo.getTokenpartida();
         //String url = "http://3.bp.blogspot.com/-UMYjDIJ13kY/T0-VjDIxWbI/AAAAAAAAAV4/CnKed9Fhn-g/s1600/jogo+do+resto.jpg";
 
         // set web view client
@@ -232,11 +211,11 @@ public class TelaTabuleiro extends Fragment {
                         "SUBTRAIR = " + diceSubtrair,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                AuxiDado = AuxiDado + diceSubtrair;
-                                cacheDice.setCache(sharedPreferencedice, "pinoCasa", String.valueOf(AuxiDado));
+                                Auxiliar = Auxiliar + diceSubtrair;
+                                cacheDice.setCache(sharedPreferencedice, "pinoCasa", Integer.toString(Auxiliar));
                                 dialog.cancel();
                                 timer();
-                                getPerguntaDesafio(tokenPartida);
+                                showPergunta();
                             }
                         })
                 .setPositiveButton(
@@ -244,11 +223,11 @@ public class TelaTabuleiro extends Fragment {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
 
-                                AuxiDado = AuxiDado + diceSomar;
-                                cacheDice.setCache(sharedPreferencedice, "pinoCasa",  String.valueOf(AuxiDado));
+                                Auxiliar = Auxiliar + diceSomar;
+                                cacheDice.setCache(sharedPreferencedice, "pinoCasa",  Integer.toString(Auxiliar));
                                 dialog.cancel();
                                 timer();
-                                getPerguntaDesafio(tokenPartida);
+                                showPergunta();
                             }
                         });
 
@@ -256,9 +235,10 @@ public class TelaTabuleiro extends Fragment {
         alert11.show();
     }
 
-    private void showPerguntaDesafio( String pergunta, String alternativa1, String alternativa2, String alternativa3, String alternativa4, String correta){
+    private void showPergunta(){
         // SystemClock.sleep(2000);
-        final String PerguntaCorreta = correta;
+
+        final String closeDialog = "";
 
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.unica_pergunta);
@@ -272,50 +252,24 @@ public class TelaTabuleiro extends Fragment {
         final RadioGroup rbgPergunta = (RadioGroup)dialog.findViewById(R.id.rbg_pergunta_dialog);
 
 
-        tvPergunta.setText(pergunta);
-        rbPergunta1.setText(alternativa1);
-        rbPergunta2.setText(alternativa2);
-        rbPergunta3.setText(alternativa3);
-        rbPergunta4.setText(alternativa4);
+        tvPergunta.setText("PERGUNTA AQUI ESTAMOS BLA BLA BLA BLA BLA ?" +
+                "PERGUNTA AQUI ESTAMOS BLA BLA BLA BLA BLA ?" +
+                "PERGUNTA AQUI ESTAMOS BLA BLA BLA BLA BLA ?" +
+                "PERGUNTA AQUI ESTAMOS BLA BLA BLA BLA BLA ?" +
+                "");
+
+        rbPergunta1.setText("ROBSON BLA BLA BLA BLA BLA BLA BDSASDJAJSDOAJSDASDJASODJASO");
+        rbPergunta2.setText("de");
+        rbPergunta3.setText("Oliveira");
+        rbPergunta4.setText("Su");
 
         Button button = (Button)dialog.findViewById(R.id.bt_pergunta);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // int selectedId = rbgPergunta.getCheckedRadioButtonId();
-               // rbEscolhido = (RadioButton)dialog.findViewById(selectedId);
-
-                //getPerguntaEstaCorreta?
-                if(PerguntaCorreta == Escolhido){
-
-                }else{
-                    final Dialog dialog = new Dialog(context);
-                    dialog.setContentView(R.layout.comprar_pergunta);
-                    dialog.setTitle("");
-                    bt_Comprar_Sim = (Button)dialog.findViewById(R.id.btComprar1);
-                    bt_Comprar_Nao = (Button)dialog.findViewById(R.id.btComprar2);
-
-                    bt_Comprar_Sim.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                        getPerguntaMateria(tokenPartida,String.valueOf(AuxiDado));
-
-                        }
-                    });
-
-                    bt_Comprar_Nao.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-
-
-                        }
-                    });
-
-
-
-                    dialog.show();
-                }
+                int selectedId = rbgPergunta.getCheckedRadioButtonId();
+                rbEscolhido = (RadioButton) dialog.findViewById(selectedId);
                 dialog.cancel();
                 countDownTimer.cancel();
 
@@ -344,59 +298,6 @@ public class TelaTabuleiro extends Fragment {
         });
 
         dialog.show();
-    }
-
-    public void showPerguntaMateria(String alternativa0, String alternativa1, String alternativa2, String correta){
-        final String perguntaCorreta = correta;
-        AuxiliarResposta = 0;
-        final Dialog dialog = new Dialog(context);
-        dialog.setContentView(R.layout.unica_pergunta_materia);
-        dialog.setTitle("");
-
-        TextView tvPerguntaMateria = (TextView)dialog.findViewById(R.id.tv_pergunta_materia);
-        RadioButton rbPergunta1 = (RadioButton)dialog.findViewById(R.id.rb_pergunta_materia1);
-        RadioButton rbPergunta2 = (RadioButton)dialog.findViewById(R.id.rb_pergunta_materia2);
-        RadioButton rbPergunta3 = (RadioButton)dialog.findViewById(R.id.rb_pergunta_materia3);
-        //RadioButton rbPergunta4 = (RadioButton)dialog.findViewById(R.id.rb_pergunta_4_dialog);
-
-
-
-        rbPergunta1.setText("(1) " +alternativa0);
-        rbPergunta2.setText("(2) " +alternativa1);
-        rbPergunta3.setText("(4) " +alternativa2);
-
-
-        Button button = (Button)dialog.findViewById(R.id.bt_pergunta);
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                rb_pergunta_1_materia = (RadioButton)dialog.findViewById(R.id.rb_pergunta_materia1);
-                rb_pergunta_2_materia = (RadioButton)dialog.findViewById(R.id.rb_pergunta_materia2);
-                rb_pergunta_3_materia = (RadioButton)dialog.findViewById(R.id.rb_pergunta_materia3);
-
-                if(rb_pergunta_1_materia.isSelected()){
-                    AuxiliarResposta+= 1;
-                }
-                if(rb_pergunta_2_materia.isSelected()){
-                    AuxiliarResposta+= 2;
-
-                }
-                if(rb_pergunta_3_materia.isSelected()){
-                    AuxiliarResposta+= 4;
-
-                }
-                if(perguntaCorreta == String.valueOf(AuxiliarResposta)){
-
-                }
-                dialog.cancel();
-                //countDownTimer.cancel();
-
-            }
-        });
-
-        dialog.show();
-
     }
 
     private void timer(){
@@ -444,107 +345,8 @@ public class TelaTabuleiro extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public void getPerguntaMateria(String token, String dado){
-        final ProgressDialog dialog;
-        dialog = new ProgressDialog(context); // this = YourActivity
-        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialog.setMessage("Carregando. Aguarde...");
-        dialog.setIndeterminate(true);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.show();
+    public void getPergunta(){
 
-        RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
-        Call<PerguntasMateria> call = service.getPergunta(token, dado);
-
-        call.enqueue(new Callback<PerguntasMateria>() {
-            @Override
-            public void onResponse(Call<PerguntasMateria> call, Response<PerguntasMateria> response) {
-                if (dialog.isShowing())
-                    dialog.dismiss();
-                if (response.isSuccessful()) {
-                    try {
-                        if (response.body().isSucess()){
-                            showPerguntaMateria(response.body().getQuestao1(), response.body().getQuestao2(),
-                                    response.body().getQuestao3(), response.body().getSomaresultado());
-                        } else {
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    Toast.makeText(context, "Erro: ".concat(response.body().getMessage()), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<PerguntasMateria> call, Throwable t) {
-                if (dialog.isShowing())
-                    dialog.dismiss();
-                Toast.makeText(context, "Erro na chamada ao servidor", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
-
-    public void minhaVez(String token){
-        iniciarJogada = false;
-
-        RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
-        Call<GetVezEquipe> call = service.getVezJogada(token);
-
-        call.enqueue(new Callback<GetVezEquipe>() {
-            @Override
-            public void onResponse(Call<GetVezEquipe> call, Response<GetVezEquipe> response) {
-                if (response.isSuccessful()) {
-                    try {
-                        if (response.body().isSucess()){
-                            iniciarJogada = true;
-
-                        } else {
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    Toast.makeText(context, "Erro: ".concat(response.body().getMessage()), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<GetVezEquipe> call, Throwable t) {
-                Toast.makeText(context, "Erro na chamada ao servidor", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    public void getPerguntaDesafio(String token){
-        RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
-        Call<PerguntasDesafio> call = service.getByPerguntaDesafio(token);
-
-        call.enqueue(new Callback<PerguntasDesafio>() {
-            @Override
-            public void onResponse(Call<PerguntasDesafio> call, Response<PerguntasDesafio> response) {
-                if (response.isSuccessful()) {
-                    try {
-                        if (response.body().isSucess()){
-                            showPerguntaDesafio(response.body().getDsPergunta(),response.body().getDsResposta1(),
-                                    response.body().getDsResposta2(),response.body().getDsResposta3(),
-                                    response.body().getDsResposta4(),response.body().getCorreta() );
-                        } else {
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    Toast.makeText(context, "Erro: ".concat(response.body().getMessage()), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<PerguntasDesafio> call, Throwable t) {
-                Toast.makeText(context, "Erro na chamada ao servidor", Toast.LENGTH_SHORT).show();
-            }
-        });
 
     }
 }

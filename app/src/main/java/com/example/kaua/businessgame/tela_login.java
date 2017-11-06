@@ -69,8 +69,8 @@ public class tela_login extends AppCompatActivity {
             public void onClick(View view) {
                 Intent it = new Intent(tela_login.this, tela_principal.class);
                 Bundle bundle = new Bundle();
-//                bundle.putString("fragment", "TelaCadastro");
-
+                bundle.putString("fragment", "TelaCadastro");
+//                bundle.putString("fragment", "TelaPergunta");
                 it.putExtras(bundle);
                 startActivity(it);
             }
