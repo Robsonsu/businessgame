@@ -1,10 +1,12 @@
 package com.example.kaua.businessgame;
 
 import com.example.kaua.businessgame.Response.AcessarPartida;
+import com.example.kaua.businessgame.Response.GetVezEquipe;
 import com.example.kaua.businessgame.Response.ResponseConectaLider;
 import com.example.kaua.businessgame.Response.ResponseTokenPartida;
 import com.example.kaua.businessgame.Response.responseEfetuarLogin;
 import com.example.kaua.businessgame.Response.RespostaServidor;
+import com.example.kaua.businessgame.Response.getFinalizaPartida;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -93,4 +95,11 @@ public interface RetrofitService {
 
     @GET("grupo/getByUser")
     Call<RespostaServidor> getByUserGrupo(@Query("id") String id);
+
+    @GET("partida/finalizarjogada")
+    Call<getFinalizaPartida> getInfoPartida(@Query("token_partida") String tokenPartida,
+                                            @Query("token_equipe") String tokenEquipe);
+
+    @GET("partida/getvezequipe")
+    Call<GetVezEquipe> getVezJogada(@Query("token_partida") String tokenPartida);
 }
