@@ -8,6 +8,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class GetVezEquipe {
 
+    @SerializedName("sucess")
+    private boolean sucess;
+
     @SerializedName("nm_equipe")
     private String nm_equipe;
 
@@ -17,8 +20,27 @@ public class GetVezEquipe {
     @SerializedName("ordem_partida")
     private String ordem_partida;
 
+    @SerializedName("message")
+    private String message;
+
+    public boolean isSucess() {
+        return sucess;
+    }
+
+    public void setSucess(boolean sucess) {
+        this.sucess = sucess;
+    }
+
     public String getNm_equipe(){return this.nm_equipe; };
     public String getToken_equipe(){return this.token_equipe; };
     public String getOrdem_partida(){return this.ordem_partida; };
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
 }

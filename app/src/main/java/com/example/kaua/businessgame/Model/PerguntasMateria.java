@@ -8,6 +8,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class PerguntasMateria {
 
+    @SerializedName("sucess")
+    private boolean sucess;
+
     @SerializedName("cd_pergunta")
     private String cd_pergunta;
 
@@ -29,6 +32,17 @@ public class PerguntasMateria {
     @SerializedName("add_por")
     private String add_por;
 
+    @SerializedName("message")
+    private String message;
+
+    public boolean isSucess() {
+        return sucess;
+    }
+
+    public void setSucess(boolean sucess) {
+        this.sucess = sucess;
+    }
+
     public String getCd_pergunta(){ return  this.cd_pergunta; }
     public String getQuestao1(){ return  this.questao1; }
     public String getQuestao2(){ return  this.questao2; }
@@ -36,4 +50,12 @@ public class PerguntasMateria {
     public String getSomaresultado(){ return  this.somaresultado; }
     public String getCd_categoria(){ return  this.cd_categoria; }
     public String getAdd_por(){ return  this.add_por; }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }

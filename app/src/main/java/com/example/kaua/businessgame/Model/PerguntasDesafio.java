@@ -7,6 +7,11 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class PerguntasDesafio {
+
+
+    @SerializedName("sucess")
+    private boolean sucess;
+
     @SerializedName("cdPergunta")
     private String cdPergunta;
 
@@ -40,6 +45,17 @@ public class PerguntasDesafio {
     public  PerguntasDesafio()
     {
 
+    }
+
+    @SerializedName("message")
+    private String message;
+
+    public boolean isSucess() {
+        return sucess;
+    }
+
+    public void setSucess(boolean sucess) {
+        this.sucess = sucess;
     }
 
     public String getCdPergunta(){return this.cdPergunta; };
@@ -102,5 +118,12 @@ public class PerguntasDesafio {
 
     public void setRespostaParticipante(String respostaParticipante) {
         this.respostaParticipante = respostaParticipante;
+    }
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

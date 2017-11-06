@@ -114,38 +114,38 @@ public class TelaNovaPartida extends Fragment {
 
     public void conectaLider(String id, String token, String nmEquipe) {
         final ProgressDialog dialog;
-        dialog = new ProgressDialog(context); // this = YourActivity
-        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialog.setMessage("Carregando. Aguarde...");
-        dialog.setIndeterminate(true);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.show();
+                    dialog = new ProgressDialog(context); // this = YourActivity
+                    dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    dialog.setMessage("Carregando. Aguarde...");
+                    dialog.setIndeterminate(true);
+                    dialog.setCanceledOnTouchOutside(false);
+                    dialog.show();
 
-        RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
-        Call<ResponseConectaLider> call = service.conectaLider(id, token, nmEquipe);
+                    RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
+                    Call<ResponseConectaLider> call = service.conectaLider(id, token, nmEquipe);
 
-        call.enqueue(new Callback<ResponseConectaLider>() {
-            @Override
-            public void onResponse(Call<ResponseConectaLider> call, Response<ResponseConectaLider> response) {
-                if (response.isSuccessful()) {
-                    if (dialog.isShowing())
-                        dialog.dismiss();
-                    try {
-                        if (response.body().getSucess().equals("true")){
-                            String tk = response.body().getToken_equipe();
-                            cacheAplicativo.setTokenpartida(tk);
+                    call.enqueue(new Callback<ResponseConectaLider>() {
+                        @Override
+                        public void onResponse(Call<ResponseConectaLider> call, Response<ResponseConectaLider> response) {
+                            if (response.isSuccessful()) {
+                                if (dialog.isShowing())
+                                    dialog.dismiss();
+                                try {
+                                    if (response.body().getSucess().equals("true")){
+                                        String tk = response.body().getToken_equipe();
+                                        cacheAplicativo.setTokenpartida(tk);
 
-                            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                            fragmentTransaction.replace(R.id.fl_principal, TelaToken.newInstance(true));
-                            fragmentTransaction.commit();
-                        } else {
-                            Toast.makeText(context, "Erro: ".concat(response.body().getMessage()), Toast.LENGTH_SHORT).show();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    if (dialog.isShowing())
+                                        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                                        fragmentTransaction.replace(R.id.fl_principal, TelaToken.newInstance(true));
+                                        fragmentTransaction.commit();
+                                    } else {
+                                        Toast.makeText(context, "Erro: ".concat(response.body().getMessage()), Toast.LENGTH_SHORT).show();
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            } else {
+                                if (dialog.isShowing())
                         dialog.dismiss();
                     Toast.makeText(context, "Erro: ".concat(response.body().getMessage()), Toast.LENGTH_SHORT).show();
                 }
