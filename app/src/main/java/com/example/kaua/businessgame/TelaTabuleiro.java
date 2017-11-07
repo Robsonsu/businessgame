@@ -480,6 +480,8 @@ public class TelaTabuleiro extends Fragment {
                     AuxiDado = 0;
                     RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
 
+
+
                     Call<setPontos> call = service.getSetPontos("true",
                             tokenEquipe,String.valueOf(NumeroCasaAtual));
 
