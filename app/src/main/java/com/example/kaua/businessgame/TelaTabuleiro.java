@@ -316,7 +316,8 @@ public class TelaTabuleiro extends Fragment {
             @Override
             public void onClick(View view) {
                 dialog1.cancel();
-
+                tv_timer.setText("60");
+                countDownTimer.cancel();
                 RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
                 Call<getFinalizaPartida> call = service.getInfoPartida(tokenPartida,
                         cacheAplicativo.getTokenEquipe());
@@ -474,6 +475,8 @@ public class TelaTabuleiro extends Fragment {
                     Toast.makeText(context, "Pergunta errada", Toast.LENGTH_SHORT).show();
 
                 }
+                tv_timer.setText("60");
+                countDownTimer.cancel();
                 dialog.cancel();
                 //countDownTimer.cancel();
 
