@@ -28,8 +28,8 @@ public class setPontos {
     @SerializedName("token_equipe")
     private String token_equipe;
 
-    @SerializedName("co_lider")
-    private String co_lider;
+    @SerializedName("cd_lider")
+    private String cd_lider;
 
     @SerializedName("ordem_partida")
     private String ordem_partida;
@@ -56,7 +56,7 @@ public class setPontos {
     public String getPos_tabuleiro(){return this.pos_tabuleiro; };
     public String getToken_partida(){return this.token_partida; };
     public String getToken_equipe(){return this.token_equipe; };
-    public String getCo_lider(){return this.co_lider; };
+    public String getCo_lider(){return this.cd_lider; };
     public String getOrdem_partida(){return this.ordem_partida; };
     public String getMinha_vez(){return this.minha_vez; };
     public String getMessage() {

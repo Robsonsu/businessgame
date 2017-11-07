@@ -532,7 +532,7 @@ public class TelaTabuleiro extends Fragment {
         dialog.show();
 
         RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
-        Call<PerguntasMateria> call = service.getPergunta(cacheAplicativo.getTokenEquipe(), dado);
+        Call<PerguntasMateria> call = service.getPergunta(cacheAplicativo.getTokenLider(), dado);
 
         call.enqueue(new Callback<PerguntasMateria>() {
             @Override
@@ -561,41 +561,6 @@ public class TelaTabuleiro extends Fragment {
 
     }
 
-
-    public void checkVez()
-    {
-
-        RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
-
-        Call<GetVezEquipe> call = service.getVezJogada("26C0A195");
-
-        call.enqueue(new Callback<GetVezEquipe>() {
-
-            @Override
-            public void onResponse(Call<GetVezEquipe> call, Response<GetVezEquipe> response) {
-                //  dialog.dismiss();
-                try {
-                    if (response.isSuccessful()) {
-                        if (response.body().getSucess().equals("true")) {
-
-
-                        }
-                    } else {
-                        //    Toast.makeText(getApplicationContext(), "Resposta não foi sucesso", Toast.LENGTH_SHORT).show();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
-            @Override
-            public void onFailure(Call<GetVezEquipe> call, Throwable t) {
-
-            }
-        });}
-
-
-
     public void minhaVez(String token){
         iniciarJogada = false;
 
@@ -608,7 +573,7 @@ public class TelaTabuleiro extends Fragment {
                 try {
                 if (response.isSuccessful()) {
                     try {
-                        if (response.body().getNm_equipe().toString() == tokenPartida){
+                        if (response.body().getNm_equipe().equals(tokenPartida)){
                            iniciarJogada = true;
                         } else {
                             iniciarJogada = false;
@@ -635,8 +600,8 @@ public class TelaTabuleiro extends Fragment {
 
     public void getPerguntaDesafio(String valor_dado){
         RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
-
-        Call<PerguntasDesafio> call = service.getByPerguntaDesafio(cacheAplicativo.getTokenEquipe(),valor_dado);
+        String token_equipe = cacheAplicativo.getTokenLider();
+        Call<PerguntasDesafio> call = service.getByPerguntaDesafio(token_equipe,valor_dado);
 
         call.enqueue(new Callback<PerguntasDesafio>() {
             @Override
