@@ -50,7 +50,7 @@
             android:imeOptions="actionDone"
             android:inputType="text"
             android:maxLines="1"
-            android:text=""/>
+            android:text="gabriel"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -70,7 +70,7 @@
             android:inputType="numberPassword"
             android:maxLines="1"
             android:hint="@string/senha"
-            android:text=""/>
+            android:text="111111"/>
     </android.support.design.widget.TextInputLayout>
 
 

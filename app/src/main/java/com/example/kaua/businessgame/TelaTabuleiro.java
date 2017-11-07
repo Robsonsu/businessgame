@@ -323,8 +323,26 @@ public class TelaTabuleiro extends Fragment {
                 tv_timer.setText("60");
                 countDownTimer.cancel();
                 RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
-                Call<getFinalizaPartida> call = service.getInfoPartida(tokenPartida,
-                        tokenEquipe);
+                String tk_partida = cacheAplicativo.getTokenpartida();
+                String tk_equipe = cacheAplicativo.getTokenLider();
+                Call<getFinalizaPartida> call = service.getInfoPartida(tk_partida,
+                        tk_equipe);
+                call.enqueue(new Callback<getFinalizaPartida>() {
+                    @Override
+                    public void onResponse(Call<getFinalizaPartida> call, Response<getFinalizaPartida> response) {
+                        try{
+                            response.body();
+                        }
+                        catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<getFinalizaPartida> call, Throwable t) {
+
+                    }
+                });
                 Toast.makeText(context, "Você passou a vez", Toast.LENGTH_SHORT).show();
 
             }
@@ -371,7 +389,12 @@ public class TelaTabuleiro extends Fragment {
             call.enqueue(new Callback<setPontos>() {
                 @Override
                 public void onResponse(Call<setPontos> call, Response<setPontos> response) {
-
+                    try{
+                        response.body();
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 @Override
