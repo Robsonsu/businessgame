@@ -355,6 +355,8 @@ public class TelaTabuleiro extends Fragment {
         //getPerguntaEstaCorreta?
         if(perguntaCorretaDesafio.equals(Escolhido) ){
             getPerguntaMateria(tokenPartida,String.valueOf(AuxiDado));
+            Toast.makeText(context, "Resposta certa", Toast.LENGTH_SHORT).show();
+
 
         }else{
             Toast.makeText(context, "Resposta errada -100 $", Toast.LENGTH_SHORT).show();
@@ -454,7 +456,7 @@ public class TelaTabuleiro extends Fragment {
 //                                                cacheAplicativo.getTokenEquipe());
 
                                     } else {
-                                        Toast.makeText(context, "Erro: Envio da resposta, Favora enviar de novo", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(context, "Erro no envio da resposta, Favora enviar de novo", Toast.LENGTH_SHORT).show();
                                         showPerguntaMateria( alternativa_0, alternativa_1,  alternativa_2,  correta_materia);
                                     }
 
@@ -473,7 +475,7 @@ public class TelaTabuleiro extends Fragment {
                     RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
                     Call<getFinalizaPartida> call = service.getInfoPartida(tokenPartida,
                             cacheAplicativo.getTokenEquipe());
-                    Toast.makeText(context, "Pergunta errada", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Resposta errada", Toast.LENGTH_SHORT).show();
 
                 }
                 tv_timer.setText("60");
