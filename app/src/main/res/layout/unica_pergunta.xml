@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:padding="20dp">
 
     <TextView
         android:id="@+id/tv_pergunta_dialig"
@@ -15,7 +16,8 @@
     <RadioGroup
         android:id="@+id/rbg_pergunta_dialog"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp">
 
         <RadioButton
             android:id="@+id/rb_pergunta_1_dialog"
@@ -50,20 +52,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="0.23"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/bt_pergunta"
-            android:layout_width="153dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Confirmar" />
+        android:orientation="horizontal"
+        android:layout_marginTop="3dp">
 
         <Button
             android:id="@+id/bt_Passar"
             android:layout_width="149dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Passa a vez" />
+            android:background="@color/color_btnfoco_gray"
+            android:text="Passar a vez"
+            android:layout_marginEnd="3dp"/>
+
+        <Button
+            android:id="@+id/bt_pergunta"
+            android:layout_width="153dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/color_btnfoco_blue"
+            android:textColor="@android:color/white"
+            android:layout_marginStart="3dp"
+            android:text="Confirmar" />
     </LinearLayout>
 </LinearLayout>

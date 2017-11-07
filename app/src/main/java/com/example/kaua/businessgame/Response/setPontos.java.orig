@@ -56,7 +56,11 @@ public class setPontos {
     public String getPos_tabuleiro(){return this.pos_tabuleiro; };
     public String getToken_partida(){return this.token_partida; };
     public String getToken_equipe(){return this.token_equipe; };
+<<<<<<< Updated upstream
+    public String getCo_lider(){return this.cd_lider; };
+=======
     public String getCd_lider(){return this.cd_lider; };
+>>>>>>> Stashed changes
     public String getOrdem_partida(){return this.ordem_partida; };
     public String getMinha_vez(){return this.minha_vez; };
     public String getMessage() {
