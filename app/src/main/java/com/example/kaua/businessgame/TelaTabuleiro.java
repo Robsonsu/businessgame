@@ -514,6 +514,7 @@ public class TelaTabuleiro extends Fragment {
                     });
                     //  getSetPontos
                 }else{
+                    AuxiDado = 0;
                     RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
                     Call<getFinalizaPartida> call = service.getInfoPartida(tokenPartida,
                             tokenEquipe);
