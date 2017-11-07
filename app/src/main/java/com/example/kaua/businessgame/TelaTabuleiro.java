@@ -63,7 +63,7 @@ public class TelaTabuleiro extends Fragment {
     private String alternativa_0,alternativa_1,alternativa_2,correta_materia;
 
     private String tokenPartida = cacheAplicativo.getTokenpartida();
-    private String tokenEquipe = cacheAplicativo.getTokenEquipe();
+    private String tokenEquipe = cacheAplicativo.getTokenLider();
    // private String tokenPartida ="26C0A195";
     private String perguntaCorretaMateria, perguntaCorretaDesafio;
 
