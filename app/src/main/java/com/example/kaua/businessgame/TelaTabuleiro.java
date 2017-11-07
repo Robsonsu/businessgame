@@ -63,6 +63,7 @@ public class TelaTabuleiro extends Fragment {
     private String alternativa_0,alternativa_1,alternativa_2,correta_materia;
 
     private String tokenPartida = cacheAplicativo.getTokenpartida();
+    private String tokenEquipe = cacheAplicativo.getTokenEquipe();
    // private String tokenPartida ="26C0A195";
     private String perguntaCorretaMateria, perguntaCorretaDesafio;
 
@@ -322,7 +323,7 @@ public class TelaTabuleiro extends Fragment {
                 countDownTimer.cancel();
                 RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
                 Call<getFinalizaPartida> call = service.getInfoPartida(tokenPartida,
-                        cacheAplicativo.getTokenEquipe());
+                        tokenEquipe);
                 Toast.makeText(context, "Você passou a vez", Toast.LENGTH_SHORT).show();
 
             }
@@ -365,7 +366,7 @@ public class TelaTabuleiro extends Fragment {
 
             RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
             Call<setPontos> call = service.getSetPontos("false",
-                    cacheAplicativo.getTokenEquipe(),"0");
+                    tokenEquipe,"0");
         }
 //        else{
 //            final Dialog dialog = new Dialog(context);
@@ -443,7 +444,7 @@ public class TelaTabuleiro extends Fragment {
                     RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
 
                     Call<setPontos> call = service.getSetPontos("true",
-                            cacheAplicativo.getTokenEquipe(),String.valueOf(AuxiDado));
+                            tokenEquipe,String.valueOf(AuxiDado));
 
                     call.enqueue(new Callback<setPontos>() {
                         @Override
@@ -476,7 +477,7 @@ public class TelaTabuleiro extends Fragment {
                 }else{
                     RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
                     Call<getFinalizaPartida> call = service.getInfoPartida(tokenPartida,
-                            cacheAplicativo.getTokenEquipe());
+                            tokenEquipe);
                     Toast.makeText(context, "Resposta errada", Toast.LENGTH_SHORT).show();
 
                 }
