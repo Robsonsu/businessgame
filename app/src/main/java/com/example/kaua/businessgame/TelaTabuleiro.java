@@ -55,7 +55,7 @@ public class TelaTabuleiro extends Fragment {
     private LinearLayout llDados;
     private RadioButton rb1, rb2,rb3,rb4, rbEscolhido;
     private CheckBox  cb_pergunta_1_materia, cb_pergunta_2_materia,cb_pergunta_3_materia;
-    private int diceSubtrair, diceSomar, Auxiliar, AuxiDado = 0, AuxiliarResposta, NumeroCasaAtual = 0;
+    private int diceSubtrair, diceSomar, Auxiliar, AuxiDado = 0, AuxiliarResposta, NumeroCasaAtual = 1;
     private String CasaTotal, Escolhido;
     private CountDownTimer countDownTimer;
     private Button bt_Comprar_Sim,bt_Comprar_Nao;
@@ -261,6 +261,7 @@ public class TelaTabuleiro extends Fragment {
                                 //cacheDice.setCache(sharedPreferencedice, "pinoCasa", String.valueOf(AuxiDado));
                                 dialog.cancel();
                                 timer();
+                                NumeroCasaAtual +=AuxiDado;
                                 getPerguntaDesafio(String.valueOf(AuxiDado));
                             }
                         })
@@ -272,6 +273,7 @@ public class TelaTabuleiro extends Fragment {
                                 AuxiDado = AuxiDado + diceSomar;
                               //  cacheDice.setCache(sharedPreferencedice, "pinoCasa",  String.valueOf(AuxiDado));
                                 dialog.cancel();
+                                NumeroCasaAtual +=AuxiDado;
                                 timer();
                                 getPerguntaDesafio(String.valueOf(AuxiDado));
                             }
@@ -476,7 +478,6 @@ public class TelaTabuleiro extends Fragment {
 
                 }
                 if(perguntaCorretaMateria.equals(String.valueOf(AuxiliarResposta)) ){
-                    NumeroCasaAtual += AuxiDado;
                     AuxiDado = 0;
                     RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
 
@@ -514,6 +515,7 @@ public class TelaTabuleiro extends Fragment {
                     });
                     //  getSetPontos
                 }else{
+                    NumeroCasaAtual -=AuxiDado;
                     AuxiDado = 0;
                     RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
                     Call<getFinalizaPartida> call = service.getInfoPartida(tokenPartida,
