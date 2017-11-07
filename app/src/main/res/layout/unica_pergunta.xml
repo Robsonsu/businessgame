@@ -46,9 +46,24 @@
             android:text="" />
     </RadioGroup>
 
-    <Button
-        android:id="@+id/bt_pergunta"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Confirmar" />
+        android:layout_height="match_parent"
+        android:layout_weight="0.23"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/bt_pergunta"
+            android:layout_width="153dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Confirmar" />
+
+        <Button
+            android:id="@+id/bt_Passar"
+            android:layout_width="149dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Passa a vez" />
+    </LinearLayout>
 </LinearLayout>
