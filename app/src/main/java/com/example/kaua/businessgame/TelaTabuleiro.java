@@ -55,7 +55,7 @@ public class TelaTabuleiro extends Fragment {
     private LinearLayout llDados;
     private RadioButton rb1, rb2,rb3,rb4, rbEscolhido;
     private CheckBox  cb_pergunta_1_materia, cb_pergunta_2_materia,cb_pergunta_3_materia;
-    private int diceSubtrair, diceSomar, Auxiliar, AuxiDado, AuxiliarResposta;
+    private int diceSubtrair, diceSomar, Auxiliar, AuxiDado = 0, AuxiliarResposta, NumeroCasaAtual = 0;
     private String CasaTotal, Escolhido;
     private CountDownTimer countDownTimer;
     private Button bt_Comprar_Sim,bt_Comprar_Nao;
@@ -476,11 +476,12 @@ public class TelaTabuleiro extends Fragment {
 
                 }
                 if(perguntaCorretaMateria.equals(String.valueOf(AuxiliarResposta)) ){
-
+                    NumeroCasaAtual += AuxiDado;
+                    AuxiDado = 0;
                     RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
 
                     Call<setPontos> call = service.getSetPontos("true",
-                            tokenEquipe,String.valueOf(AuxiDado));
+                            tokenEquipe,String.valueOf(NumeroCasaAtual));
 
                     call.enqueue(new Callback<setPontos>() {
                         @Override
