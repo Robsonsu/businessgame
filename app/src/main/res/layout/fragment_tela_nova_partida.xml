@@ -84,7 +84,7 @@
                     android:inputType="textCapCharacters"
                     android:hint="@string/hintToken"
 
-                    android:text="26C0A195"/>
+                    android:text=""/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout

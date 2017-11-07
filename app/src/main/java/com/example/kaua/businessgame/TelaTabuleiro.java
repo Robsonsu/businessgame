@@ -62,8 +62,8 @@ public class TelaTabuleiro extends Fragment {
     private Boolean iniciarJogada;
     private String alternativa_0,alternativa_1,alternativa_2,correta_materia;
 
-    //private String tokenPartida = cacheAplicativo.getTokenpartida();
-    private String tokenPartida ="26C0A195";
+    private String tokenPartida = cacheAplicativo.getTokenpartida();
+   // private String tokenPartida ="26C0A195";
     private String perguntaCorretaMateria, perguntaCorretaDesafio;
 
 
@@ -155,7 +155,7 @@ public class TelaTabuleiro extends Fragment {
 
     public void setWebView(){
         ServiceGenerator lurl = new ServiceGenerator();
-        String url =lurl.getUrl() + "/tcc/tabuleiro?token_partida=" + "26C0A195";
+        String url =lurl.getUrl() + "/tcc/tabuleiro?token_partida=" + tokenPartida;
         //String url = "http://3.bp.blogspot.com/-UMYjDIJ13kY/T0-VjDIxWbI/AAAAAAAAAV4/CnKed9Fhn-g/s1600/jogo+do+resto.jpg";
 
 
