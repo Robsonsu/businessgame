@@ -258,7 +258,7 @@ public class TelaTabuleiro extends Fragment {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 AuxiDado = AuxiDado + diceSubtrair;
-                                cacheDice.setCache(sharedPreferencedice, "pinoCasa", String.valueOf(AuxiDado));
+                                //cacheDice.setCache(sharedPreferencedice, "pinoCasa", String.valueOf(AuxiDado));
                                 dialog.cancel();
                                 timer();
                                 getPerguntaDesafio(String.valueOf(AuxiDado));
@@ -270,7 +270,7 @@ public class TelaTabuleiro extends Fragment {
                             public void onClick(DialogInterface dialog, int id) {
 
                                 AuxiDado = AuxiDado + diceSomar;
-                                cacheDice.setCache(sharedPreferencedice, "pinoCasa",  String.valueOf(AuxiDado));
+                              //  cacheDice.setCache(sharedPreferencedice, "pinoCasa",  String.valueOf(AuxiDado));
                                 dialog.cancel();
                                 timer();
                                 getPerguntaDesafio(String.valueOf(AuxiDado));
@@ -376,7 +376,7 @@ public class TelaTabuleiro extends Fragment {
 
         //getPerguntaEstaCorreta?
         if(perguntaCorretaDesafio.equals(Escolhido) ){
-            getPerguntaMateria(tokenPartida,String.valueOf(AuxiDado));
+            getPerguntaMateria(tokenPartida,String.valueOf(NumeroCasaAtual));
             Toast.makeText(context, "Resposta certa", Toast.LENGTH_SHORT).show();
 
 
@@ -605,7 +605,7 @@ public class TelaTabuleiro extends Fragment {
         dialog.show();
 
         RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
-        Call<PerguntasMateria> call = service.getPergunta(cacheAplicativo.getTokenLider(), dado);
+        Call<PerguntasMateria> call = service.getPergunta(cacheAplicativo.getTokenLider(), String.valueOf(NumeroCasaAtual));
 
         call.enqueue(new Callback<PerguntasMateria>() {
             @Override
@@ -681,7 +681,7 @@ public class TelaTabuleiro extends Fragment {
         dialog.show();
 
         RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
-        Call<PerguntasDesafio> call = service.getByPerguntaDesafio(cacheAplicativo.getTokenpartida(),valor_dado);
+        Call<PerguntasDesafio> call = service.getByPerguntaDesafio(cacheAplicativo.getTokenpartida(),String.valueOf(NumeroCasaAtual));
 
         call.enqueue(new Callback<PerguntasDesafio>() {
             @Override
