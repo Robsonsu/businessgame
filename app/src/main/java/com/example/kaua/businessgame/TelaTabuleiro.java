@@ -301,6 +301,8 @@ public class TelaTabuleiro extends Fragment {
         rbPergunta4.setText(alternativa4);
 
         Button button = (Button)dialog1.findViewById(R.id.bt_pergunta);
+        Button buttonPasar = (Button)dialog1.findViewById(R.id.bt_Passar);
+
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -310,6 +312,17 @@ public class TelaTabuleiro extends Fragment {
             }
         });
 
+        buttonPasar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog1.cancel();
+
+                RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
+
+                Call<setPontos> call = service.getSetPontos(false,
+                        cacheAplicativo.getTokenEquipe(),"0");
+            }
+        });
 
         rbgPergunta.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
         {
@@ -359,6 +372,10 @@ public class TelaTabuleiro extends Fragment {
             bt_Comprar_Nao.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
+
+                    Call<setPontos> call = service.getSetPontos(false,
+                            cacheAplicativo.getTokenEquipe(),"0");
                     dialog.cancel();
                 }
             });
