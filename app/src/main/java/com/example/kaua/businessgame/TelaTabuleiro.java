@@ -323,6 +323,8 @@ public class TelaTabuleiro extends Fragment {
                 RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
                 Call<getFinalizaPartida> call = service.getInfoPartida(tokenPartida,
                         cacheAplicativo.getTokenEquipe());
+                Toast.makeText(context, "Você passou a vez", Toast.LENGTH_SHORT).show();
+
             }
         });
 
