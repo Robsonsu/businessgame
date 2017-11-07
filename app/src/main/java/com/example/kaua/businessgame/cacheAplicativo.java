@@ -1,7 +1,10 @@
 package com.example.kaua.businessgame;
 
+import com.example.kaua.businessgame.Model.PerguntasDesafio;
 import com.example.kaua.businessgame.Response.ResponseTokenPartida;
 import com.example.kaua.businessgame.Response.responseEfetuarLogin;
+
+import java.util.ArrayList;
 
 /**
  * Created by Robson on 19/10/2017.
@@ -12,10 +15,12 @@ public class cacheAplicativo {
     private static responseEfetuarLogin responseEfetuarLogin;
     private static String tokenpartida;
     private static String tokenEquipe;
+    private static String tokenLider;
     private static int qtdEquipes;
     private static String idConectado;
     private static String tpAcesso;
     private static String minhaVez;
+    private static ArrayList<PerguntasDesafio> perguntasDesafios;
 
     public static responseEfetuarLogin getResponseEfetuarLogin() {
         return responseEfetuarLogin;
@@ -70,5 +75,21 @@ public class cacheAplicativo {
 
     public static void setMinhaVez(String vez) {
         minhaVez = vez;
+    }
+
+    public static ArrayList<PerguntasDesafio> getPerguntasDesafios() {
+        return perguntasDesafios;
+    }
+
+    public static void setPerguntasDesafios(ArrayList<PerguntasDesafio> perguntasDesafios) {
+        cacheAplicativo.perguntasDesafios = perguntasDesafios;
+    }
+
+    public static String getTokenLider() {
+        return tokenLider;
+    }
+
+    public static void setTokenLider(String tokenLider) {
+        cacheAplicativo.tokenLider = tokenLider;
     }
 }

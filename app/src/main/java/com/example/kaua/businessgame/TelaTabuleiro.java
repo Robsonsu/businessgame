@@ -21,6 +21,7 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -114,7 +115,7 @@ public class TelaTabuleiro extends Fragment {
         llDados = (LinearLayout) v.findViewById(R.id.rlDados);
         r = new Random();
 
-        setWebView("");
+        setWebView();
 
         llDados.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -150,14 +151,13 @@ public class TelaTabuleiro extends Fragment {
         });
     }
 
-
-    public void setWebView(String token){
+    public void setWebView(){
         ServiceGenerator lurl = new ServiceGenerator();
         String url =lurl.getUrl() + "/tcc/tabuleiro?token_partida=" + "26C0A195";
         //String url = "http://3.bp.blogspot.com/-UMYjDIJ13kY/T0-VjDIxWbI/AAAAAAAAAV4/CnKed9Fhn-g/s1600/jogo+do+resto.jpg";
 
-        // set web view client
-        wv_tabuleiro.setWebViewClient(new TelaTabuleiro.MyWebViewClient());
+
+        wv_tabuleiro.setWebViewClient(new TelaTabuleiro.MyWebViewClient(context));
         wv_tabuleiro.getSettings().setJavaScriptEnabled(true);
         wv_tabuleiro.loadUrl(url); // load the url on the web view
 
@@ -167,10 +167,23 @@ public class TelaTabuleiro extends Fragment {
     }
 
     private class MyWebViewClient extends WebViewClient {
+        ProgressDialog pd;
+
+        public MyWebViewClient(Context context) {
+            pd = ProgressDialog.show(context, "", "Aguarde, carregando...", true);
+        }
+
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url); // load the url
             return true;
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            // TODO Auto-generated method stub
+            super.onPageFinished(view, url);
+            pd.dismiss();
         }
     }
 
