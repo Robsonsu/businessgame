@@ -288,6 +288,7 @@ public class TelaTabuleiro extends Fragment {
         final Dialog dialog1 = new Dialog(context);
         dialog1.setContentView(R.layout.unica_pergunta);
         dialog1.setTitle("");
+        dialog1.setCancelable(false);
 
         TextView tvPergunta = (TextView)dialog1.findViewById(R.id.tv_pergunta_dialig);
         RadioButton rbPergunta1 = (RadioButton)dialog1.findViewById(R.id.rb_pergunta_1_dialog);
@@ -367,6 +368,17 @@ public class TelaTabuleiro extends Fragment {
             RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
             Call<setPontos> call = service.getSetPontos("false",
                     tokenEquipe,"0");
+            call.enqueue(new Callback<setPontos>() {
+                @Override
+                public void onResponse(Call<setPontos> call, Response<setPontos> response) {
+
+                }
+
+                @Override
+                public void onFailure(Call<setPontos> call, Throwable t) {
+
+                }
+            });
         }
 //        else{
 //            final Dialog dialog = new Dialog(context);
@@ -414,6 +426,7 @@ public class TelaTabuleiro extends Fragment {
         //RadioButton rbPergunta4 = (RadioButton)dialog.findViewById(R.id.rb_pergunta_4_dialog);
 
 
+        dialog.setCancelable(false);
 
         cbPergunta1.setText("(1) " +alternativa0);
         cbPergunta2.setText("(2) " +alternativa1);
@@ -459,7 +472,7 @@ public class TelaTabuleiro extends Fragment {
 //                                                cacheAplicativo.getTokenEquipe());
 
                                     } else {
-                                        Toast.makeText(context, "Erro no envio da resposta, Favora enviar de novo", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(context, "Erro no envio da resposta, Favor enviar de novo", Toast.LENGTH_SHORT).show();
                                         showPerguntaMateria( alternativa_0, alternativa_1,  alternativa_2,  correta_materia);
                                     }
 
@@ -479,6 +492,17 @@ public class TelaTabuleiro extends Fragment {
                     Call<getFinalizaPartida> call = service.getInfoPartida(tokenPartida,
                             tokenEquipe);
                     Toast.makeText(context, "Resposta errada", Toast.LENGTH_SHORT).show();
+//                    call.enqueue(new Callback<getFinalizaPartida>() {
+//                        @Override
+//                        public void onResponse(Call<getFinalizaPartida> call, Response<getFinalizaPartida> response) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<getFinalizaPartida> call, Throwable t) {
+//
+//                        }
+//                    });
 
                 }
                 tv_timer.setText("60");
@@ -621,12 +645,22 @@ public class TelaTabuleiro extends Fragment {
     }
 
     public void getPerguntaDesafio(String valor_dado){
+        final ProgressDialog dialog;
+        dialog = new ProgressDialog(context); // this = YourActivity
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setMessage("Carregando. Aguarde...");
+        dialog.setIndeterminate(true);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
         RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
         Call<PerguntasDesafio> call = service.getByPerguntaDesafio(cacheAplicativo.getTokenpartida(),valor_dado);
 
         call.enqueue(new Callback<PerguntasDesafio>() {
             @Override
             public void onResponse(Call<PerguntasDesafio> call, Response<PerguntasDesafio> response) {
+                if (dialog.isShowing())
+                    dialog.dismiss();
                 if (response.isSuccessful()) {
                     try {
                         if (response.body().isSucess()){
@@ -645,6 +679,8 @@ public class TelaTabuleiro extends Fragment {
 
             @Override
             public void onFailure(Call<PerguntasDesafio> call, Throwable t) {
+                if (dialog.isShowing())
+                    dialog.dismiss();
                 Toast.makeText(context, "Erro na chamada ao servidor", Toast.LENGTH_SHORT).show();
             }
         });

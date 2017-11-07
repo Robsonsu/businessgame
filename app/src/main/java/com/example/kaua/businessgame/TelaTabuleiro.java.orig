@@ -19,6 +19,7 @@ import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -52,7 +53,8 @@ public class TelaTabuleiro extends Fragment {
     private TextView tv_dice1, tv_dice2, tv_timer;
     private WebView wv_tabuleiro;
     private LinearLayout llDados;
-    private RadioButton rb1, rb2,rb3,rb4, rbEscolhido, rb_pergunta_1_materia, rb_pergunta_2_materia,rb_pergunta_3_materia;
+    private RadioButton rb1, rb2,rb3,rb4, rbEscolhido;
+    private CheckBox  cb_pergunta_1_materia, cb_pergunta_2_materia,cb_pergunta_3_materia;
     private int diceSubtrair, diceSomar, Auxiliar, AuxiDado, AuxiliarResposta;
     private String CasaTotal, Escolhido;
     private CountDownTimer countDownTimer;
@@ -60,8 +62,9 @@ public class TelaTabuleiro extends Fragment {
     private Boolean iniciarJogada;
     private String alternativa_0,alternativa_1,alternativa_2,correta_materia;
 
-    //private String tokenPartida = cacheAplicativo.getTokenpartida();
-    private String tokenPartida ="26C0A195";
+    private String tokenPartida = cacheAplicativo.getTokenpartida();
+    private String tokenEquipe = cacheAplicativo.getTokenLider();
+   // private String tokenPartida ="26C0A195";
     private String perguntaCorretaMateria, perguntaCorretaDesafio;
 
 
@@ -153,7 +156,7 @@ public class TelaTabuleiro extends Fragment {
 
     public void setWebView(){
         ServiceGenerator lurl = new ServiceGenerator();
-        String url =lurl.getUrl() + "/tcc/tabuleiro?token_partida=" + "26C0A195";
+        String url =lurl.getUrl() + "/tcc/tabuleiro?token_partida=" + tokenPartida;
         //String url = "http://3.bp.blogspot.com/-UMYjDIJ13kY/T0-VjDIxWbI/AAAAAAAAAV4/CnKed9Fhn-g/s1600/jogo+do+resto.jpg";
 
 
@@ -285,6 +288,7 @@ public class TelaTabuleiro extends Fragment {
         final Dialog dialog1 = new Dialog(context);
         dialog1.setContentView(R.layout.unica_pergunta);
         dialog1.setTitle("");
+        dialog1.setCancelable(false);
 
         TextView tvPergunta = (TextView)dialog1.findViewById(R.id.tv_pergunta_dialig);
         RadioButton rbPergunta1 = (RadioButton)dialog1.findViewById(R.id.rb_pergunta_1_dialog);
@@ -316,11 +320,13 @@ public class TelaTabuleiro extends Fragment {
             @Override
             public void onClick(View view) {
                 dialog1.cancel();
-
+                tv_timer.setText("60");
+                countDownTimer.cancel();
                 RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
+                Call<getFinalizaPartida> call = service.getInfoPartida(tokenPartida,
+                        tokenEquipe);
+                Toast.makeText(context, "Você passou a vez", Toast.LENGTH_SHORT).show();
 
-                Call<setPontos> call = service.getSetPontos(false,
-                        cacheAplicativo.getTokenEquipe(),"0");
             }
         });
 
@@ -353,36 +359,59 @@ public class TelaTabuleiro extends Fragment {
         //getPerguntaEstaCorreta?
         if(perguntaCorretaDesafio.equals(Escolhido) ){
             getPerguntaMateria(tokenPartida,String.valueOf(AuxiDado));
+            Toast.makeText(context, "Resposta certa", Toast.LENGTH_SHORT).show();
+
 
         }else{
-            final Dialog dialog = new Dialog(context);
-            dialog.setContentView(R.layout.comprar_pergunta);
-            dialog.setTitle("");
-            bt_Comprar_Sim = (Button)dialog.findViewById(R.id.btComprar1);
-            bt_Comprar_Nao = (Button)dialog.findViewById(R.id.btComprar2);
+            Toast.makeText(context, "Resposta errada -100 $", Toast.LENGTH_SHORT).show();
 
-            bt_Comprar_Sim.setOnClickListener(new View.OnClickListener() {
+            RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
+            Call<setPontos> call = service.getSetPontos("false",
+<<<<<<< Updated upstream
+                    tokenEquipe,"0");
+=======
+                    cacheAplicativo.getTokenEquipe(),"0");
+            call.enqueue(new Callback<setPontos>() {
                 @Override
-                public void onClick(View view) {
-                    dialog.cancel();
-                    getPerguntaMateria(tokenPartida,String.valueOf(AuxiDado));
+                public void onResponse(Call<setPontos> call, Response<setPontos> response) {
+
+                }
+
+                @Override
+                public void onFailure(Call<setPontos> call, Throwable t) {
+
                 }
             });
-
-            bt_Comprar_Nao.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
-
-                    Call<setPontos> call = service.getSetPontos(false,
-                            cacheAplicativo.getTokenEquipe(),"0");
-                    dialog.cancel();
-                }
-            });
-
-            dialog.show();
+>>>>>>> Stashed changes
         }
-
+//        else{
+//            final Dialog dialog = new Dialog(context);
+//            dialog.setContentView(R.layout.comprar_pergunta);
+//            dialog.setTitle("");
+//            bt_Comprar_Sim = (Button)dialog.findViewById(R.id.btComprar1);
+//            bt_Comprar_Nao = (Button)dialog.findViewById(R.id.btComprar2);
+//
+//            bt_Comprar_Sim.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    dialog.cancel();
+//                    getPerguntaMateria(tokenPartida,String.valueOf(AuxiDado));
+//                }
+//            });
+//
+//            bt_Comprar_Nao.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
+//
+//                    Call<setPontos> call = service.getSetPontos(false,
+//                            cacheAplicativo.getTokenEquipe(),"0");
+//                    dialog.cancel();
+//                }
+//            });
+//
+//            dialog.show();
+//        }
         countDownTimer.cancel();
 
     }
@@ -395,35 +424,35 @@ public class TelaTabuleiro extends Fragment {
         dialog.setTitle("");
 
         TextView tvPerguntaMateria = (TextView)dialog.findViewById(R.id.tv_pergunta_materia);
-        RadioButton rbPergunta1 = (RadioButton)dialog.findViewById(R.id.rb_pergunta_materia1);
-        RadioButton rbPergunta2 = (RadioButton)dialog.findViewById(R.id.rb_pergunta_materia2);
-        RadioButton rbPergunta3 = (RadioButton)dialog.findViewById(R.id.rb_pergunta_materia3);
+        CheckBox cbPergunta1 = (CheckBox)dialog.findViewById(R.id.cb_1);
+        CheckBox cbPergunta2 = (CheckBox)dialog.findViewById(R.id.cb_2);
+        CheckBox cbPergunta3 = (CheckBox)dialog.findViewById(R.id.cb_3);
         //RadioButton rbPergunta4 = (RadioButton)dialog.findViewById(R.id.rb_pergunta_4_dialog);
 
 
+        dialog.setCancelable(false);
 
-        rbPergunta1.setText("(1) " +alternativa0);
-        rbPergunta2.setText("(2) " +alternativa1);
-        rbPergunta3.setText("(4) " +alternativa2);
-
+        cbPergunta1.setText("(1) " +alternativa0);
+        cbPergunta2.setText("(2) " +alternativa1);
+        cbPergunta3.setText("(4) " +alternativa2);
 
         Button button = (Button)dialog.findViewById(R.id.bt_pergunta_materia);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                rb_pergunta_1_materia = (RadioButton)dialog.findViewById(R.id.rb_pergunta_materia1);
-                rb_pergunta_2_materia = (RadioButton)dialog.findViewById(R.id.rb_pergunta_materia2);
-                rb_pergunta_3_materia = (RadioButton)dialog.findViewById(R.id.rb_pergunta_materia3);
+                cb_pergunta_1_materia = (CheckBox)dialog.findViewById(R.id.cb_1);
+                cb_pergunta_2_materia = (CheckBox)dialog.findViewById(R.id.cb_2);
+                cb_pergunta_3_materia = (CheckBox)dialog.findViewById(R.id.cb_3);
 
-                if(rb_pergunta_1_materia.isChecked()){
+                if(cb_pergunta_1_materia.isChecked()){
                     AuxiliarResposta+= 1;
                 }
-                if(rb_pergunta_2_materia.isChecked()){
+                if(cb_pergunta_2_materia.isChecked()){
                     AuxiliarResposta+= 2;
 
                 }
-                if(rb_pergunta_3_materia.isChecked()){
+                if(cb_pergunta_3_materia.isChecked()){
                     AuxiliarResposta+= 4;
 
                 }
@@ -431,8 +460,8 @@ public class TelaTabuleiro extends Fragment {
 
                     RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
 
-                    Call<setPontos> call = service.getSetPontos(true,
-                            cacheAplicativo.getTokenEquipe(),String.valueOf(AuxiDado));
+                    Call<setPontos> call = service.getSetPontos("true",
+                            tokenEquipe,String.valueOf(AuxiDado));
 
                     call.enqueue(new Callback<setPontos>() {
                         @Override
@@ -440,12 +469,14 @@ public class TelaTabuleiro extends Fragment {
                             if (response.isSuccessful()) {
 
                                     if (response.body().isSucess()){
-                                        RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
-                                        Call<getFinalizaPartida> call1 = service.getInfoPartida( tokenPartida,
-                                                cacheAplicativo.getTokenEquipe());
+                                        Toast.makeText(context, "Resposta Certa", Toast.LENGTH_SHORT).show();
+
+//                                        RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
+//                                        Call<getFinalizaPartida> call1 = service.getInfoPartida( tokenPartida,
+//                                                cacheAplicativo.getTokenEquipe());
 
                                     } else {
-                                        Toast.makeText(context, "Erro: Envio da resposta, Favora enviar de novo", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(context, "Erro no envio da resposta, Favor enviar de novo", Toast.LENGTH_SHORT).show();
                                         showPerguntaMateria( alternativa_0, alternativa_1,  alternativa_2,  correta_materia);
                                     }
 
@@ -460,7 +491,26 @@ public class TelaTabuleiro extends Fragment {
                         }
                     });
                     //  getSetPontos
+                }else{
+                    RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
+                    Call<getFinalizaPartida> call = service.getInfoPartida(tokenPartida,
+                            tokenEquipe);
+                    Toast.makeText(context, "Resposta errada", Toast.LENGTH_SHORT).show();
+                    call.enqueue(new Callback<getFinalizaPartida>() {
+                        @Override
+                        public void onResponse(Call<getFinalizaPartida> call, Response<getFinalizaPartida> response) {
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<getFinalizaPartida> call, Throwable t) {
+
+                        }
+                    });
+
                 }
+                tv_timer.setText("60");
+                countDownTimer.cancel();
                 dialog.cancel();
                 //countDownTimer.cancel();
 
@@ -599,18 +649,22 @@ public class TelaTabuleiro extends Fragment {
     }
 
     public void getPerguntaDesafio(String valor_dado){
-        RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
-<<<<<<< Updated upstream
-        String token_equipe = cacheAplicativo.getTokenLider();
-        Call<PerguntasDesafio> call = service.getByPerguntaDesafio(token_equipe,valor_dado);
-=======
+        final ProgressDialog dialog;
+        dialog = new ProgressDialog(context); // this = YourActivity
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setMessage("Carregando. Aguarde...");
+        dialog.setIndeterminate(true);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
 
+        RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
         Call<PerguntasDesafio> call = service.getByPerguntaDesafio(cacheAplicativo.getTokenpartida(),valor_dado);
->>>>>>> Stashed changes
 
         call.enqueue(new Callback<PerguntasDesafio>() {
             @Override
             public void onResponse(Call<PerguntasDesafio> call, Response<PerguntasDesafio> response) {
+                if (dialog.isShowing())
+                    dialog.dismiss();
                 if (response.isSuccessful()) {
                     try {
                         if (response.body().isSucess()){
@@ -629,6 +683,8 @@ public class TelaTabuleiro extends Fragment {
 
             @Override
             public void onFailure(Call<PerguntasDesafio> call, Throwable t) {
+                if (dialog.isShowing())
+                    dialog.dismiss();
                 Toast.makeText(context, "Erro na chamada ao servidor", Toast.LENGTH_SHORT).show();
             }
         });
