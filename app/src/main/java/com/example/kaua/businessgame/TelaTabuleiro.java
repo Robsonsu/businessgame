@@ -144,7 +144,7 @@ public class TelaTabuleiro extends Fragment {
                     iv_dice1.startAnimation(rotate);
                     iv_dice2.startAnimation(rotate);
                     mostrarPerguntaSomarSubtrair(dice1Throw,dice2Throw);
-                    llDados.setEnabled(false);
+//                    llDados.setEnabled(false);
                 } else{
                     Toast.makeText(context, "Ainda não é sua vez", Toast.LENGTH_SHORT).show();
 
@@ -515,17 +515,17 @@ public class TelaTabuleiro extends Fragment {
                     Call<getFinalizaPartida> call = service.getInfoPartida(tokenPartida,
                             tokenEquipe);
                     Toast.makeText(context, "Resposta errada", Toast.LENGTH_SHORT).show();
-//                    call.enqueue(new Callback<getFinalizaPartida>() {
-//                        @Override
-//                        public void onResponse(Call<getFinalizaPartida> call, Response<getFinalizaPartida> response) {
-//
-//                        }
-//
-//                        @Override
-//                        public void onFailure(Call<getFinalizaPartida> call, Throwable t) {
-//
-//                        }
-//                    });
+                    call.enqueue(new Callback<getFinalizaPartida>() {
+                        @Override
+                        public void onResponse(Call<getFinalizaPartida> call, Response<getFinalizaPartida> response) {
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<getFinalizaPartida> call, Throwable t) {
+
+                        }
+                    });
 
                 }
                 tv_timer.setText("60");
