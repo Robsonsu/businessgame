@@ -77,14 +77,14 @@ public class TelaToken extends Fragment {
         tvEquipes = (TextView) v.findViewById(R.id.tvNmEquipes);
         llLoadEquipes = (LinearLayout) v.findViewById(R.id.llLoadEquipes);
 
-        tvToken.setText(cacheAplicativo.getTokenpartida());
-
         if (bLider){
+            tvToken.setText(cacheAplicativo.getTokenLider());
             btnCancelar.setVisibility(View.GONE);
             llLoadEquipes.setVisibility(View.GONE);
             tvParticipantes.setText("Informe o token para os integrantes da sua equipe");
             tvEquipes.setVisibility(View.GONE);
         } else {
+            tvToken.setText(cacheAplicativo.getTokenpartida());
             tvParticipantes.setText(getString(R.string.usuarioConectados, "0"));
 
             btnAvancar.setVisibility(View.GONE);

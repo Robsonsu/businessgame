@@ -14,18 +14,18 @@
             android:id="@+id/nav_perguntas"
             android:icon="@drawable/comment_question_outline"
             android:title="@string/perguntas" />
-        <item
-            android:id="@+id/nav_equipes"
-            android:icon="@drawable/account_multiple"
-            android:title="@string/equipes" />
-        <item
-            android:id="@+id/nav_configuracoes"
-            android:icon="@drawable/settings"
-            android:title="@string/configuracoes" />
-        <item
-            android:id="@+id/nav_encerrar"
-            android:icon="@drawable/logout"
-            android:title="@string/encerrar" />
+        <!--<item-->
+            <!--android:id="@+id/nav_equipes"-->
+            <!--android:icon="@drawable/account_multiple"-->
+            <!--android:title="@string/equipes" />-->
+        <!--<item-->
+            <!--android:id="@+id/nav_configuracoes"-->
+            <!--android:icon="@drawable/settings"-->
+            <!--android:title="@string/configuracoes" />-->
+        <!--<item-->
+            <!--android:id="@+id/nav_encerrar"-->
+            <!--android:icon="@drawable/logout"-->
+            <!--android:title="@string/encerrar" />-->
     </group>
 
     <!--<item android:title="Communicate">-->

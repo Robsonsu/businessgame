@@ -57,7 +57,7 @@ public class TelaPergunta extends Fragment {
 
         ((tela_principal) context).toolbar.setVisibility(View.VISIBLE);
         setView(view);
-//        carregarPerguntas();
+        carregarPerguntas();
 
         // Inflate the layout for this fragment
         return view;
@@ -71,25 +71,25 @@ public class TelaPergunta extends Fragment {
 // Attach the layout manager to the recycler view
         rvPerguntasDesafio.setLayoutManager(gridLayoutManager);
 
-        ArrayList<PerguntasDesafio> perguntasDesafios = new ArrayList<>();
-        for (int i = 0; i < 50; i++){
-            PerguntasDesafio perguntasDesafio = new PerguntasDesafio();
-            perguntasDesafio.setCdPergunta(String.valueOf(i+1));
-            perguntasDesafio.setCdCategoria("Desafio");
-            perguntasDesafio.setDsPergunta("Ao final de uma corrida com 5 atletas, sabe-se" +
-                    "que Antonio chegou depois de Carlos. Ricardo e Jurandir chegaram ao mesmo" +
-                    "tempo. Dirceu chegou antes de Carlos. O corredor que ganhou, chegou sozinho." +
-                    "Quem ganhou a corrida?");
-            perguntasDesafio.setDsResposta1("Antonio");
-            perguntasDesafio.setDsResposta2("Carlos");
-            perguntasDesafio.setDsResposta3("Jurandir");
-            perguntasDesafio.setDsResposta4("Dirceu");
-            perguntasDesafio.setCorreta("Dirceu");
-            perguntasDesafios.add(perguntasDesafio);
-        }
-
-        AdapterPerguntasDesafio adapterPerguntasDesafio = new AdapterPerguntasDesafio(context, perguntasDesafios);
-        rvPerguntasDesafio.setAdapter(adapterPerguntasDesafio);
+//        ArrayList<PerguntasDesafio> perguntasDesafios = new ArrayList<>();
+//        for (int i = 0; i < 50; i++){
+//            PerguntasDesafio perguntasDesafio = new PerguntasDesafio();
+//            perguntasDesafio.setCdPergunta(String.valueOf(i+1));
+//            perguntasDesafio.setCdCategoria("Desafio");
+//            perguntasDesafio.setDsPergunta("Ao final de uma corrida com 5 atletas, sabe-se" +
+//                    "que Antonio chegou depois de Carlos. Ricardo e Jurandir chegaram ao mesmo" +
+//                    "tempo. Dirceu chegou antes de Carlos. O corredor que ganhou, chegou sozinho." +
+//                    "Quem ganhou a corrida?");
+//            perguntasDesafio.setDsResposta1("Antonio");
+//            perguntasDesafio.setDsResposta2("Carlos");
+//            perguntasDesafio.setDsResposta3("Jurandir");
+//            perguntasDesafio.setDsResposta4("Dirceu");
+//            perguntasDesafio.setCorreta("Dirceu");
+//            perguntasDesafios.add(perguntasDesafio);
+//        }
+//
+//        AdapterPerguntasDesafio adapterPerguntasDesafio = new AdapterPerguntasDesafio(context, perguntasDesafios);
+//        rvPerguntasDesafio.setAdapter(adapterPerguntasDesafio);
     }
 
     public void carregarPerguntas() {
@@ -121,6 +121,7 @@ public class TelaPergunta extends Fragment {
 
                                 AdapterPerguntasDesafio adapterPerguntasDesafio = new AdapterPerguntasDesafio(context, perguntasDesafios);
                                 rvPerguntasDesafio.setAdapter(adapterPerguntasDesafio);
+                                cacheAplicativo.setPerguntasDesafios(perguntasDesafios);
                             } else{
                                 Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                             }
@@ -134,7 +135,6 @@ public class TelaPergunta extends Fragment {
                     Toast.makeText(context, "Resposta não foi sucesso", Toast.LENGTH_SHORT).show();
                 }
             }
-
 
             @Override
             public void onFailure(Call<RespostaServidor> call, Throwable t) {

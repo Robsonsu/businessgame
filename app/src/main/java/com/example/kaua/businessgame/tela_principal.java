@@ -153,15 +153,15 @@ public class tela_principal extends AppCompatActivity
                 transaction.replace(R.id.fl_principal, new TelaPergunta());
                 transaction.commit();
                 break;
-            case R.id.nav_equipes:
-                break;
-            case R.id.nav_configuracoes:
-                transaction.replace(R.id.fl_principal, TelaConfiguracoes.newInstance());
-                transaction.commit();
-                break;
-            case R.id.nav_encerrar:
-                finish();
-                break;
+//            case R.id.nav_equipes:
+//                break;
+//            case R.id.nav_configuracoes:
+//                transaction.replace(R.id.fl_principal, TelaConfiguracoes.newInstance());
+//                transaction.commit();
+//                break;
+//            case R.id.nav_encerrar:
+//                finish();
+//                break;
 
         }
 

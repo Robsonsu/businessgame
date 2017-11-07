@@ -95,6 +95,7 @@ public class TelaNovaPartida extends Fragment {
             public void onClick(View view) {
                 switch (rgTpAcesso.getCheckedRadioButtonId()){
                     case R.id.rbLider:
+                        cacheAplicativo.setTokenpartida(edtToken.getText().toString());
                         conectaLider(
                                 cacheAplicativo.getIdConectado(),
                                 edtToken.getText().toString(),
@@ -133,7 +134,7 @@ public class TelaNovaPartida extends Fragment {
                                 try {
                                     if (response.body().getSucess().equals("true")){
                                         String tk = response.body().getToken_equipe();
-                                        cacheAplicativo.setTokenEquipe(tk);
+                                        cacheAplicativo.setTokenLider(tk);
 
                                         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                                         fragmentTransaction.replace(R.id.fl_principal, TelaToken.newInstance(true));
