@@ -4,23 +4,23 @@
     android:layout_height="match_parent"
     android:weightSum="1">
 
-    <RadioButton
-        android:id="@+id/rb_pergunta_materia1"
+    <CheckBox
+        android:id="@+id/cb_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="RadioButton" />
+        android:text="CheckBox" />
 
-    <RadioButton
-        android:id="@+id/rb_pergunta_materia2"
+    <CheckBox
+        android:id="@+id/cb_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="RadioButton" />
+        android:text="CheckBox" />
 
-    <RadioButton
-        android:id="@+id/rb_pergunta_materia3"
+    <CheckBox
+        android:id="@+id/cb_3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="RadioButton" />
+        android:text="CheckBox" />
 
     <TextView
         android:id="@+id/tv_pergunta_materia"

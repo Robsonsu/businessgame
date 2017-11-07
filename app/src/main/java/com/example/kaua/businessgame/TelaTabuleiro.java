@@ -19,6 +19,7 @@ import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -52,7 +53,8 @@ public class TelaTabuleiro extends Fragment {
     private TextView tv_dice1, tv_dice2, tv_timer;
     private WebView wv_tabuleiro;
     private LinearLayout llDados;
-    private RadioButton rb1, rb2,rb3,rb4, rbEscolhido, rb_pergunta_1_materia, rb_pergunta_2_materia,rb_pergunta_3_materia;
+    private RadioButton rb1, rb2,rb3,rb4, rbEscolhido;
+    private CheckBox  cb_pergunta_1_materia, cb_pergunta_2_materia,cb_pergunta_3_materia;
     private int diceSubtrair, diceSomar, Auxiliar, AuxiDado, AuxiliarResposta;
     private String CasaTotal, Escolhido;
     private CountDownTimer countDownTimer;
@@ -401,35 +403,34 @@ public class TelaTabuleiro extends Fragment {
         dialog.setTitle("");
 
         TextView tvPerguntaMateria = (TextView)dialog.findViewById(R.id.tv_pergunta_materia);
-        RadioButton rbPergunta1 = (RadioButton)dialog.findViewById(R.id.rb_pergunta_materia1);
-        RadioButton rbPergunta2 = (RadioButton)dialog.findViewById(R.id.rb_pergunta_materia2);
-        RadioButton rbPergunta3 = (RadioButton)dialog.findViewById(R.id.rb_pergunta_materia3);
+        CheckBox cbPergunta1 = (CheckBox)dialog.findViewById(R.id.cb_1);
+        CheckBox cbPergunta2 = (CheckBox)dialog.findViewById(R.id.cb_2);
+        CheckBox cbPergunta3 = (CheckBox)dialog.findViewById(R.id.cb_3);
         //RadioButton rbPergunta4 = (RadioButton)dialog.findViewById(R.id.rb_pergunta_4_dialog);
 
 
 
-        rbPergunta1.setText("(1) " +alternativa0);
-        rbPergunta2.setText("(2) " +alternativa1);
-        rbPergunta3.setText("(4) " +alternativa2);
-
+        cbPergunta1.setText("(1) " +alternativa0);
+        cbPergunta2.setText("(2) " +alternativa1);
+        cbPergunta3.setText("(4) " +alternativa2);
 
         Button button = (Button)dialog.findViewById(R.id.bt_pergunta_materia);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                rb_pergunta_1_materia = (RadioButton)dialog.findViewById(R.id.rb_pergunta_materia1);
-                rb_pergunta_2_materia = (RadioButton)dialog.findViewById(R.id.rb_pergunta_materia2);
-                rb_pergunta_3_materia = (RadioButton)dialog.findViewById(R.id.rb_pergunta_materia3);
+                cb_pergunta_1_materia = (CheckBox)dialog.findViewById(R.id.cb_1);
+                cb_pergunta_2_materia = (CheckBox)dialog.findViewById(R.id.cb_2);
+                cb_pergunta_3_materia = (CheckBox)dialog.findViewById(R.id.cb_3);
 
-                if(rb_pergunta_1_materia.isChecked()){
+                if(cb_pergunta_1_materia.isChecked()){
                     AuxiliarResposta+= 1;
                 }
-                if(rb_pergunta_2_materia.isChecked()){
+                if(cb_pergunta_2_materia.isChecked()){
                     AuxiliarResposta+= 2;
 
                 }
-                if(rb_pergunta_3_materia.isChecked()){
+                if(cb_pergunta_3_materia.isChecked()){
                     AuxiliarResposta+= 4;
 
                 }
