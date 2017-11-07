@@ -364,7 +364,7 @@ public class TelaTabuleiro extends Fragment {
             Toast.makeText(context, "Resposta errada -100 $", Toast.LENGTH_SHORT).show();
 
             RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
-            Call<setPontos> call = service.getSetPontos(false,
+            Call<setPontos> call = service.getSetPontos("false",
                     cacheAplicativo.getTokenEquipe(),"0");
         }
 //        else{
@@ -442,7 +442,7 @@ public class TelaTabuleiro extends Fragment {
 
                     RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
 
-                    Call<setPontos> call = service.getSetPontos(true,
+                    Call<setPontos> call = service.getSetPontos("true",
                             cacheAplicativo.getTokenEquipe(),String.valueOf(AuxiDado));
 
                     call.enqueue(new Callback<setPontos>() {

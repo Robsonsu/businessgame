@@ -116,7 +116,7 @@ public interface RetrofitService {
     Call<GetVezEquipe> getVezJogada(@Query("token_partida") String tokenPartida);
 
     @GET("partida/setPontos")
-    Call<setPontos> getSetPontos(@Query("acertou") boolean acertou,
+    Call<setPontos> getSetPontos(@Query("acertou") String acertou,
                                  @Query("token_equipe") String tokenEquipe,
                                  @Query("casas") String casas);
 }
